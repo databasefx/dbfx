@@ -105,7 +105,7 @@ class MysqlQuery : SQLQuery {
         rowSet.forEach {
             val size = it.size()
             val row = arrayListOf<String>()
-            for (i in 0..size) {
+            for (i in 0 until it.size()) {
                 val value = it.getValue(i)
                 if (value !== null) {
                     row.add(value.toString())
