@@ -70,8 +70,12 @@
     -fx-background-color: transparent;
 }
 
-.tab-pane .tab-header-area .tab:selected {
+.tab-pane .tab-header-area .tab:hover {
+    -fx-background-color: #2b2b2b;
+}
 
+.tab-pane .tab-header-area .tab:selected {
+    -fx-background-color: #4E5254;
     -fx-border-width: 0 0 0.2em 0;
     -fx-border-color: #4A88C7;
 }
