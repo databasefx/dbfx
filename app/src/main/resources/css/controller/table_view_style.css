@@ -19,3 +19,6 @@
 .button:hover {
     -fx-background-color: #4C5052;
 }
+.table-view .table-column .tooltip{
+    -fx-font-size: 0.7em;
+}

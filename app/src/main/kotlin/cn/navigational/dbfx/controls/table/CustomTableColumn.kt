@@ -7,9 +7,13 @@ import cn.navigational.dbfx.kit.model.TableColumnMeta
 import javafx.application.Platform
 import javafx.beans.property.*
 import javafx.collections.ObservableList
+import javafx.scene.control.Button
+import javafx.scene.control.Label
 import javafx.scene.control.TableColumn
+import javafx.scene.control.Tooltip
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
+import javafx.scene.text.Text
 
 class CustomTableColumn : TableColumn<ObservableList<StringProperty>, String> {
     companion object {
@@ -62,10 +66,18 @@ class CustomTableColumn : TableColumn<ObservableList<StringProperty>, String> {
     }
 
     fun updateTableColumn(column: TableColumnMeta) {
+        val colName = column.colName
+        var tip = "$colName:${column.type}"
+        if (column.length != null) {
+            tip += "(${column.length})"
+        }
+        this.tableColumnMeta.set(column)
+        val graphic = Label()
+        graphic.tooltip = Tooltip(tip)
+        graphic.graphic = ImageView(getFieldImage(column.dataType))
         Platform.runLater {
-            this.text = column.colName
-            this.tableColumnMeta.set(column)
-            this.graphic = ImageView(getFieldImage(column.dataType))
+            this.text = colName
+            this.graphic = graphic
         }
     }
 
