@@ -1,0 +1,15 @@
+.root {
+    -fx-background-image: url(../assets/imgs/splash.png);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.bottom-box {
+    -fx-spacing: 0.5em;
+    -fx-padding: 0.5em;
+    -fx-background-color: transparent;
+}
+
+.bottom-box .label {
+    -fx-text-fill: white;
+}

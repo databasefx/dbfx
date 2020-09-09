@@ -1,0 +1,35 @@
+.grid-pane {
+    -fx-vgap: 2em;
+    -fx-hgap: 1em;
+}
+
+.top-grid {
+    -fx-padding: 1em;
+}
+
+.grid-pane .label {
+    -fx-pref-width: 5em;
+}
+
+.center-box {
+    -fx-spacing: 1em;
+    -fx-alignment: center-top;
+}
+
+.top-box {
+    -fx-pref-height: 10em;
+    -fx-end-margin: 0.5em;
+    -fx-background-color: #4b4b4b;
+    -fx-alignment: center;
+    -fx-spacing: 1em;
+}
+
+.db-title {
+    -fx-font-size: 2em;
+    -fx-text-fill: #FEFFFF;
+    -fx-background-color: transparent;
+}
+
+HBox {
+    -fx-alignment: center-left;
+}

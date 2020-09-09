@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.Pagination?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="600.0" prefWidth="700.0">
+    <stylesheets>
+        <URL value="@/css/create_con_style.css"/>
+    </stylesheets>
+    <center>
+        <Pagination pageCount="2" fx:id="page"/>
+    </center>
+    <bottom>
+        <HBox styleClass="bottom-box">
+            <HBox styleClass="l-box">
+                <Button text="测试连接(T)" disable="true" onAction="#testCon" fx:id="test"/>
+            </HBox>
+            <HBox styleClass="r-box" HBox.hgrow="ALWAYS">
+                <Button text="上一步(B)" disable="true" fx:id="last">
+                    <graphic>
+                        <ImageView>
+                            <Image url="@/assets/icons/last.png" requestedWidth="20" requestedHeight="20"
+                                   smooth="true"/>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button text="下一步(N)" contentDisplay="RIGHT" fx:id="next" disable="true">
+                    <graphic>
+                        <ImageView>
+                            <Image url="@/assets/icons/next.png" requestedWidth="20" requestedHeight="20"
+                                   smooth="true"/>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button text="取消" onAction="#cancel"/>
+                <Button text="完成(F)" disable="true" fx:id="finish" onAction="#finish"/>
+            </HBox>
+        </HBox>
+    </bottom>
+</BorderPane>

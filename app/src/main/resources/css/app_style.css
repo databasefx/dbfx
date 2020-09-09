@@ -1,0 +1,224 @@
+* {
+    -fx-font-size: 1.3em;
+    -fx-background-color: #3C3F41;
+    -fx-text-fill: #AFB6A6;
+}
+
+.button {
+    -fx-border-radius: 0.2em;
+    -fx-background-radius: 0.2em;
+    -fx-border-width: 0.1em;
+    -fx-border-color: #4C708C;
+    -fx-background-color: #365880;
+}
+
+.text-field, .choice-box {
+    -fx-border-radius: 0.2em;
+    -fx-border-width: 0.1em;
+    -fx-border-color: #646464;
+}
+
+.choice-box .open-button .arrow {
+    -fx-background-color: #9A9DA1;
+}
+
+.check-box .box {
+    -fx-border-color: #676868;
+    -fx-border-width: 0.1em;
+    -fx-background-radius: 10em;
+}
+
+.check-box:selected .box .mark {
+    -fx-background-color: #A1A2A2;
+}
+
+.text-field:focused {
+    -fx-border-color: #3D6185;
+}
+
+.button:disabled {
+    -fx-background-color: #3C3F41;
+}
+
+.tool-bar, .tree-view, .b-navigator,
+.tab-pane .tab-header-area .tab-header-background, .tab-pane .tab-header-area .tab,
+.tab-pane .tab-content-area, .text-area {
+    -fx-border-color: #323232;
+}
+
+.tool-bar, .tree-view, .b-navigator {
+    -fx-border-width: 0.1em 0 0.1em 0;
+}
+
+.tab-pane .tab-header-area .tab-header-background, .tab-pane .tab-header-area .tab {
+    -fx-border-width: 0 0 0.1em 0;
+}
+
+.tab-pane .tab {
+    -fx-alignment: center;
+}
+
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+    -fx-border-width: 0;
+}
+
+.tab-pane .tab .tab-label {
+    -fx-alignment: CENTER;
+}
+
+.tab-pane .headers-region, .tab-pane .tab, .tab-pane .tab * {
+    -fx-background-color: transparent;
+}
+
+.tab-pane .tab-header-area .tab:selected {
+
+    -fx-border-width: 0 0 0.2em 0;
+    -fx-border-color: #4A88C7;
+}
+
+.tab-pane .tab-content-area {
+    -fx-padding: 1em;
+    -fx-border-width: 0 0.1em 0.1em 0.1em;
+}
+
+.tab-pane .tab .tab-close-button {
+    -fx-background-color: #95998e;
+}
+
+.split-pane .split-pane-divider {
+    -fx-pref-width: 0.1em;
+    -fx-background-color: #323232;
+}
+
+.context-menu, .context-menu .menu-item {
+    -fx-border-color: #BEC4C0;
+}
+
+.context-menu {
+    -fx-min-width: 30em;
+    -fx-padding: 0;
+    -fx-border-width: 0 0.02em 0.02em 0.02em;
+}
+
+.context-menu .menu-item {
+    -fx-pref-height: 2.5em;
+    -fx-border-width: 0.02em 0 0 0;
+}
+
+.context-menu .menu-item:hover {
+    -fx-background-color: #2F65CA;
+}
+
+.context-menu .menu-item * {
+    -fx-background-color: transparent;
+}
+
+.context-menu .menu-item .label {
+    -fx-text-fill: #FEFFFC;
+}
+
+.tree-view {
+    -fx-border-width: 0 0.1em;
+}
+
+.tree-view .tree-cell:selected {
+    -fx-background-color: #2F65CA;
+}
+
+/*TreeItem expand or collapse icon style*/
+.tree-cell .tree-disclosure-node > .arrow {
+    -fx-background-color: #9B9EA0;
+}
+
+.tree-cell .tree-disclosure-node {
+    -fx-background-color: transparent;
+}
+
+/*主界面左侧TreeView样式*/
+.l-navigator {
+    -fx-border-width: 0;
+}
+
+/*主界面下方状态栏*/
+.b-navigator {
+    -fx-min-height: 2em;
+}
+
+/*主界面TabPane*/
+.main-tab-pane, .main-tab-pane .tab-content-area {
+    -fx-padding: 0;
+    -fx-border-width: 0 0 0 0;
+}
+
+
+/*全局TableView样式*/
+.table-view * {
+    -fx-font-size: 1em;
+}
+
+.table-view .column-header-background * {
+    -fx-background-color: #3B3B3B;
+}
+
+.table-view .column-header-background {
+    -fx-border-color: #373737;
+    -fx-border-width: 0 0 0.1em 0;
+}
+
+.table-view .column-header-background .nested-column-header .label .text {
+    -fx-text-fill: #A7B6C1;
+}
+
+.table-view .table-column {
+    -fx-pref-height: 3em;
+    -fx-border-width: 0 0.1em 0 0;
+    -fx-border-color: #373737;
+}
+
+.table-view .index-column {
+    -fx-min-width: 3em;
+    -fx-alignment: center;
+    -fx-background-color: #3B3B3B;
+}
+
+.table-view .table-row-cell:selected .table-cell, .table-view .table-cell:selected, .table-view .table-cell:selected .index-column {
+    -fx-background-color: #214283;
+}
+
+.table-row-cell {
+    -fx-border-color: #373737;
+    -fx-table-cell-border-color: #373737;
+    -fx-table-cell-border-width: 0.1em;
+    -fx-border-width: 0 0 0.1em 0;
+}
+
+.table-view .placeholder, .table-view .placeholder .label {
+    -fx-background-color: #2b2b2b;
+}
+
+.null-style {
+    -fx-text-fill: #7e7e77;
+}
+
+.text-area {
+    -fx-text-fill: #B5B5B0;
+    -fx-border-width: 0.1em;
+}
+
+/*全局滚动条样式*/
+.scroll-bar .thumb {
+    -fx-background-color: #5B5B5B;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+}
+
+.scroll-bar .decrement-button .decrement-arrow, .scroll-bar .increment-button .increment-arrow {
+    visibility: false;
+}
+
+/*分割条全局样式*/
+.separator:vertical *.line {
+    -fx-border-style: solid;
+    -fx-border-width: 0.08em;
+    -fx-border-color: #515151;
+}

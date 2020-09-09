@@ -1,0 +1,45 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+    id 'com.gluonhq.client-gradle-plugin' version '0.1.31'
+}
+
+mainClassName = 'cn.navigational.dbfx.Launcher'
+
+//jvm args
+applicationDefaultJvmArgs = ['-Djdk.gtk.version=2', '-Dsun.java2d.opengl=true', '-XX:+UnlockExperimentalVMOptions', '-XX:+UseZGC', '-Xms512M', '-Xmx1024M']
+
+
+javafx {
+    version = "15"
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.base', 'javafx.graphics', 'javafx.swing']
+}
+
+
+jar {
+    from {
+        //添加依懒到打包文件
+        configurations.runtime.collect { zipTree(it) }
+    }
+    archiveName("dbfx.jar")
+    manifest {
+        attributes 'Multi-Release': true
+        attributes 'Main-Class': mainClassName
+        attributes 'App-Name': rootProject.name
+        attributes "Manifest-Version": project.version
+        attributes 'App-Author': '752544765@qq.com'
+        attributes 'App-Website': 'http://navigational.cn'
+    }
+}
+gluonClient {
+    target="android"
+}
+
+
+dependencies {
+    compile project(":kit")
+    compile group: 'commons-codec', name: 'commons-codec', version: '1.14'
+    compile group: 'org.controlsfx', name: 'controlsfx', version: '11.0.2'
+    compile group: 'org.apache.xmlgraphics', name: 'batik-transcoder', version: '1.13'
+}
+

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="400.0" prefWidth="600.0">
+    <stylesheets>
+        <URL value="@/css/splash_style.css"/>
+    </stylesheets>
+    <bottom>
+        <HBox styleClass="bottom-box">
+            <Label fx:id="title"/>
+        </HBox>
+    </bottom>
+</BorderPane>

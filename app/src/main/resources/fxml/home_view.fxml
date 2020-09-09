@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import java.net.URL?>
+<?import cn.navigational.dbfx.controls.tree.CustomTreeView?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="800.0" prefWidth="1000.0">
+    <stylesheets>
+        <URL value="@/css/home_style.css"/>
+    </stylesheets>
+    <top>
+        <VBox>
+            <MenuBar>
+                <Menu text="文件(F)"/>
+            </MenuBar>
+            <ToolBar>
+                <Button onAction="#createCon">
+                    <graphic>
+                        <ImageView>
+                            <Image url="@/assets/icons/home/con_icon.png" smooth="true" requestedHeight="25"
+                                   requestedWidth="25"/>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="新建连接"/>
+                    </tooltip>
+                </Button>
+                <Button>
+                    <graphic>
+                        <ImageView>
+                            <Image url="@/assets/icons/home/recon-icon.png" smooth="true" requestedHeight="25"
+                                   requestedWidth="25"/>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="断开/重新连接"/>
+                    </tooltip>
+                </Button>
+                <Button>
+                    <graphic>
+                        <ImageView>
+                            <Image url="@/assets/icons/home/break_off_icon.png" smooth="true" requestedHeight="25"
+                                   requestedWidth="25"/>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="断开连接"/>
+                    </tooltip>
+                </Button>
+                <Button>
+                    <graphic>
+                        <ImageView>
+                            <Image url="@/assets/icons/home/sql_edit_icon.png" smooth="true" requestedHeight="25"
+                                   requestedWidth="25"/>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="SQL编辑器"/>
+                    </tooltip>
+                </Button>
+            </ToolBar>
+        </VBox>
+    </top>
+    <center>
+        <SplitPane dividerPositions="0.2" fx:id="splitPane">
+            <CustomTreeView fx:id="navigator" showRoot="false" styleClass="l-navigator"/>
+        </SplitPane>
+    </center>
+    <bottom>
+        <HBox styleClass="b-navigator"/>
+    </bottom>
+</BorderPane>

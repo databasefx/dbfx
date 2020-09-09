@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<?import cn.navigational.dbfx.controls.tree.CustomTreeView?>
+<?import cn.navigational.dbfx.controls.table.CustomTableView?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="400.0" prefWidth="600.0">
+    <stylesheets>
+        <URL value="@/css/controller/table_view_style.css"/>
+    </stylesheets>
+    <top>
+        <VBox>
+            <ToolBar>
+                <Button fx:id="firstPage">
+                    <tooltip>
+                        <Tooltip text="第一页"/>
+                    </tooltip>
+                </Button>
+                <Button fx:id="last">
+                    <tooltip>
+                        <Tooltip text="上一页"/>
+                    </tooltip>
+                </Button>
+                <ChoiceBox fx:id="pageSelector" styleClass="page-box"/>
+                <Label fx:id="numIndicator"/>
+                <Button fx:id="next">
+                    <tooltip>
+                        <Tooltip text="下一页"/>
+                    </tooltip>
+                </Button>
+                <Button fx:id="lastPage">
+                    <tooltip>
+                        <Tooltip text="最后一页"/>
+                    </tooltip>
+                </Button>
+                <Separator orientation="VERTICAL"/>
+                <Button fx:id="flush">
+                    <tooltip>
+                        <Tooltip text="刷新"/>
+                    </tooltip>
+                </Button>
+                <Separator orientation="VERTICAL"/>
+                <Button fx:id="addRow">
+                    <tooltip>
+                        <Tooltip text="新增一行"/>
+                    </tooltip>
+                </Button>
+                <Button fx:id="delRow">
+                    <tooltip>
+                        <Tooltip text="删除一行"/>
+                    </tooltip>
+                </Button>
+            </ToolBar>
+            <HBox styleClass="search-box">
+                <Label fx:id="sIcon"/>
+                <TextField HBox.hgrow="ALWAYS" promptText="搜索"/>
+            </HBox>
+        </VBox>
+    </top>
+    <center>
+        <CustomTableView fx:id="tableView"/>
+    </center>
+</BorderPane>

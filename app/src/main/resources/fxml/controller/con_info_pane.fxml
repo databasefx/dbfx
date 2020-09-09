@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<?import javafx.scene.image.ImageView?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="400.0" prefWidth="600.0" styleClass="root">
+    <stylesheets>
+        <URL value="@/css/controller/con_info_style.css"/>
+    </stylesheets>
+    <top>
+        <VBox>
+            <HBox styleClass="top-box">
+                <ImageView fx:id="icon"/>
+                <Label styleClass="db-title" fx:id="dDescribe"/>
+            </HBox>
+            <GridPane styleClass="grid-pane,top-grid">
+                <HBox GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.columnIndex="0">
+                    <Label text="名称:"/>
+                    <TextField HBox.hgrow="ALWAYS" fx:id="name"/>
+                </HBox>
+                <HBox GridPane.rowIndex="0" GridPane.columnIndex="1">
+                    <Label visible="false"/>
+                    <TextField visible="false"/>
+                </HBox>
+                <HBox GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS">
+                    <Label text="备注:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <TextField HBox.hgrow="ALWAYS" fx:id="comment"/>
+                </HBox>
+                <HBox GridPane.rowIndex="1" GridPane.columnIndex="1">
+                    <Label visible="false"/>
+                    <TextField visible="false"/>
+                </HBox>
+
+            </GridPane>
+        </VBox>
+    </top>
+    <center>
+        <TabPane>
+            <Tab text="基础" closable="false">
+                <GridPane styleClass="grid-pane">
+                    <HBox GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS">
+                        <Label text="主机:"/>
+                        <TextField HBox.hgrow="ALWAYS" fx:id="host"/>
+                    </HBox>
+                    <HBox GridPane.rowIndex="0" GridPane.columnIndex="1">
+                        <Label text="端口:"/>
+                        <TextField HBox.hgrow="ALWAYS" fx:id="port"/>
+                    </HBox>
+                    <HBox GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS">
+                        <Label text="用户名:"/>
+                        <TextField HBox.hgrow="ALWAYS" fx:id="username"/>
+                    </HBox>
+                    <HBox GridPane.rowIndex="1" GridPane.columnIndex="1">
+
+                    </HBox>
+                    <HBox GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS">
+                        <Label text="密码:"/>
+                        <PasswordField HBox.hgrow="ALWAYS" fx:id="password"/>
+                    </HBox>
+                    <HBox GridPane.rowIndex="2" GridPane.columnIndex="1">
+                        <CheckBox text="保存到本地" fx:id="local"/>
+                    </HBox>
+                    <HBox GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS">
+                        <Label text="数据库:"/>
+                        <TextField HBox.hgrow="ALWAYS" fx:id="database"/>
+                    </HBox>
+                </GridPane>
+            </Tab>
+        </TabPane>
+    </center>
+</BorderPane>

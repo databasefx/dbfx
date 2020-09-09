@@ -1,0 +1,21 @@
+.page-box {
+    -fx-min-width: 5em;
+}
+
+.search-box {
+    -fx-alignment: center-left;
+    -fx-padding: 0 0.1em;
+}
+
+.search-box, .search-box * {
+    -fx-background-color: #2B2B2B;
+}
+
+.search-box .text-field {
+    -fx-border-width: 0;
+    -fx-pref-height: 3em;
+}
+
+.button:hover {
+    -fx-background-color: #4C5052;
+}

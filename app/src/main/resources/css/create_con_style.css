@@ -1,0 +1,41 @@
+.pagination-control {
+    visibility: false;
+}
+
+.bottom-box {
+    -fx-padding: 0.5em 0.2em;
+    -fx-alignment: center;
+}
+
+.l-box .button, .r-box .button {
+    -fx-min-width: 8em;
+}
+
+.l-box {
+    -fx-alignment: center-left;
+}
+
+.r-box {
+    -fx-spacing: 1em;
+    -fx-alignment: center-right;
+}
+
+.first-pane {
+    -fx-padding: 1em;
+    -fx-vgap: 1em;
+    -fx-hgap: 1em;
+}
+
+.flow-item {
+    -fx-padding: 0.3em;
+    -fx-border-width: 0.1em;
+    -fx-border-color: #4C708C;
+    -fx-alignment: center;
+}
+.flow-item .label{
+    -fx-background-color: transparent;
+}
+
+.first-pane .active {
+    -fx-background-color: #00BCD4;
+}
