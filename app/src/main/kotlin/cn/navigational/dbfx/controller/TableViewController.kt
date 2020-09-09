@@ -220,7 +220,7 @@ class TableViewController() : Controller<Void, BorderPane>(TABLE_VIEW) {
     }
 
     fun setDataTotal(total: Long) {
-        this.updateIndicator()
         this.dataTotal.set(total)
+        this.updateIndicator()
     }
 }
