@@ -3,7 +3,7 @@ package cn.navigational.dbfx.config
 const val APP_STYLE = "css/app_style.css"
 const val APP_ICON = "assets/icons/icon.svg"
 const val OPEN_ICON = "assets/icons/db/mini/open.svg"
-const val CON_MINI_ICON = "assets/icons/mini/con.svg"
+const val CON_MINI_ICON = "assets/icons/mini/open_con.svg"
 const val DIS_CON_ICON = "assets/icons/mini/dis_con.svg"
 const val SQL_TER_ICON = "assets/icons/mini/terminal.svg"
 const val FLUSH_ICON = "assets/icons/mini/flush.svg"
@@ -35,3 +35,6 @@ const val DES_ICON = "assets/icons/table/des.svg"
 const val NUMBER_FIELD = "assets/icons/table/field/number.svg"
 const val STRING_FIELD = "assets/icons/table/field/letter.svg"
 const val DATE_TIME_FIELD = "assets/icons/table/field/date_time.svg"
+
+//dialog icon
+const val INFO_ICON = "assets/icons/dialog/info.svg"
