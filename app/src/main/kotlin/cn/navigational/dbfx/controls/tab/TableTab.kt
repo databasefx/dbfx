@@ -13,8 +13,10 @@ import javafx.collections.FXCollections
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class TableTab(private val table: String,
-               private val category: String, private val client: SQLClient) : AbstractBaseTab() {
+class TableTab(
+        private val table: String,
+        private val category: String,
+        private val client: SQLClient) : AbstractBaseTab() {
 
     private val controller: TableViewController = TableViewController()
 

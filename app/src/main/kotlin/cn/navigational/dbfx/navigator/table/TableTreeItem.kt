@@ -15,7 +15,6 @@ class TableTreeItem(private val table: String, private val category: String, pri
         setIcon(TABLE_ICON)
         val handler = NavigatorMenuHandler.init(supportMenu)
         handler.getMenuItem("打开", NavigatorMenuHandler.Companion.MenuType.OPEN, this::openTab)
-
     }
 
     suspend fun initField() {
@@ -28,6 +27,7 @@ class TableTreeItem(private val table: String, private val category: String, pri
 
     private suspend fun openTab() {
         val controller = MainTabPaneController.getController()
-        val tab = controller.addTabToPane(TableTab(table, category, currentClient))
+        var tab = TableTab(table, category, currentClient)
+        tab = controller.addTabToPane(tab, fullPath) as TableTab
     }
 }

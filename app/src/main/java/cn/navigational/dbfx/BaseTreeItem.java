@@ -1,5 +1,6 @@
 package cn.navigational.dbfx;
 
+import cn.navigational.dbfx.kit.utils.StringUtils;
 import cn.navigational.dbfx.model.SQLClient;
 import cn.navigational.dbfx.navigator.DatabaseItem;
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder;
@@ -79,12 +80,45 @@ public class BaseTreeItem<T> extends TreeItem<T> {
      */
     protected SQLClient getCurrentClient() {
         var parent = (BaseTreeItem<T>) this;
-        while (parent != null) {
+        while (true) {
             if (parent instanceof DatabaseItem) {
                 return ((DatabaseItem) parent).getSQLClient();
             }
-            parent = (BaseTreeItem<T>) parent.getParent();
+            var temp = parent.getParent();
+            if (temp == null || temp.getParent() == null) {
+                break;
+            }
+            parent = (BaseTreeItem<T>) temp;
         }
         throw new RuntimeException("Not found any DatabaseTreeItem node!");
+    }
+
+    /**
+     * Gets the full path of the current {@link TreeItem}
+     *
+     * @return Full path
+     */
+    protected String getFullPath() {
+        var tabPath = new StringBuilder();
+        var parent = (BaseTreeItem<T>) this;
+        while (true) {
+            var subPath = parent.getValue().toString();
+            if (parent instanceof DatabaseItem) {
+                var client = ((DatabaseItem) parent).getSQLClient();
+                subPath = client.getDbInfo().getUuid();
+            }
+            tabPath.insert(0, "\\" + subPath);
+            var temp = parent.getParent();
+            //If current item is root item,stop loop
+            if (temp == null || temp.getParent() == null) {
+                tabPath = new StringBuilder(tabPath.substring(1));
+                break;
+            }
+            parent = (BaseTreeItem<T>) temp;
+        }
+        if (StringUtils.isEmpty(tabPath.toString())) {
+            throw new RuntimeException("Not found every path for [" + this + "]");
+        }
+        return tabPath.toString();
     }
 }
