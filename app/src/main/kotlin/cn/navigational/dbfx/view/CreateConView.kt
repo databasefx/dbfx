@@ -56,7 +56,7 @@ class CreateConView : View<Void>(CREATE_CON_PAGE) {
     /**
      * Default no select any so that value -1
      */
-    private var selectIndex: Int = -1;
+    private var selectIndex: Int = -1
 
     override fun onCreated(scene: Scene?) {
         initFlow()

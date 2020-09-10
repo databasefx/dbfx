@@ -226,3 +226,21 @@
     -fx-border-width: 0.08em;
     -fx-border-color: #515151;
 }
+
+.alert .button {
+    -fx-padding: 0;
+}
+
+.confirm-alert HBox {
+    -fx-alignment: center;
+    -fx-spacing: 0.5em;
+}
+
+.progress-dialog .progress-bar {
+    -fx-pref-width: 10em;
+    -fx-background-color: red;
+}
+
+.progress-bar .track {
+    -fx-background-color: #6B6B6B;
+}

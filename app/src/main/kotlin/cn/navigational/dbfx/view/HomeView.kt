@@ -12,7 +12,6 @@ import cn.navigational.dbfx.navigator.impl.MysqlItem
 import cn.navigational.dbfx.navigator.impl.PgItem
 import cn.navigational.dbfx.kit.enums.Clients
 import cn.navigational.dbfx.utils.AlertUtils
-import javafx.application.Platform
 import javafx.collections.ListChangeListener
 import javafx.fxml.FXML
 import javafx.scene.Scene
@@ -65,8 +64,12 @@ class HomeView : View<Void>(HOME_PAGE) {
     }
 
 
-    override fun onClose(event: WindowEvent?) {
-        super.onClose(event)
-        Platform.exit()
+    override fun onClose(event: WindowEvent) {
+        val result = AlertUtils.showSimpleConfirmDialog("你确定要退出应用程序?")
+        if (!result) {
+            event.consume()
+        }
+        //Execute close resource operation
+
     }
 }

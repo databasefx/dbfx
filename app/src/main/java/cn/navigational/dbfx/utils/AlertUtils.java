@@ -1,7 +1,11 @@
 package cn.navigational.dbfx.utils;
 
+import cn.navigational.dbfx.dialogs.SimpleConfirmDialog;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import org.controlsfx.dialog.ExceptionDialog;
 
 import static cn.navigational.dbfx.config.AppConstantsKt.APP_STYLE;
@@ -55,5 +59,39 @@ public class AlertUtils {
             ex.getDialogPane().getStylesheets().add(APP_STYLE);
             ex.show();
         });
+    }
+
+    /**
+     * Show a simple confirm dialog.
+     * More detail:{@link AlertUtils#showConfirmDialog(String, String)}</p>
+     *
+     * @param content Confirm content
+     * @return Action result
+     */
+    public static boolean showSimpleConfirmDialog(String content) {
+        return showConfirmDialog(null, content);
+    }
+
+    /**
+     * Show a confirm dialog use fix title and content.
+     * <note>
+     * That method must call in Javafx Thread,or else throw `Not FX Thread` exception
+     * </note>
+     *
+     * @param title   Dialog title
+     * @param content Dialog content
+     * @return Action result
+     */
+    public static boolean showConfirmDialog(String title, String content) {
+        var dialog = new SimpleConfirmDialog(content);
+        if (title != null) {
+            dialog.setTitle(title);
+        }
+        var optional = dialog.showAndWait();
+        var result = false;
+        if (optional.isPresent()) {
+            result = optional.get() == ButtonType.OK;
+        }
+        return result;
     }
 }
