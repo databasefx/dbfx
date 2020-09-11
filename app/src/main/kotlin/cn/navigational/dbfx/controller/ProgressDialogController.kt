@@ -9,6 +9,7 @@ import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.Dialog
 import javafx.scene.control.DialogPane
+import javafx.scene.control.ProgressBar
 import javafx.scene.layout.BorderPane
 import javafx.stage.StageStyle
 
@@ -16,11 +17,13 @@ class ProgressDialogController : Controller<Void, BorderPane>(PROGRESS_DIALOG_PA
     @FXML
     private lateinit var mini: Button
 
+    @FXML
+    private lateinit var bar: ProgressBar
+
     private lateinit var dialog: Dialog<Void>
 
     override fun onCreated(root: BorderPane) {
         this.mini.graphic = SvgImageTranscoder.svgToImageView(MINI_ICON)
-
         this.dialog = Dialog()
         this.dialog.dialogPane = DialogPane()
         this.dialog.dialogPane.content = parent

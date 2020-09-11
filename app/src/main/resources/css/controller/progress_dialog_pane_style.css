@@ -12,6 +12,7 @@
 }
 .progress-bar{
     -fx-pref-width: 30em;
+    -fx-background-insets: 0;
 }
 
 .center-box{

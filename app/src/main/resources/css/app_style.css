@@ -245,6 +245,7 @@
 }
 
 .progress-bar .bar{
-    -fx-pref-height: 0.7em;
+    -fx-background-insets:0;
+    -fx-pref-height: 0.3em;
     -fx-background-color:#A0A0A0 ;
 }
