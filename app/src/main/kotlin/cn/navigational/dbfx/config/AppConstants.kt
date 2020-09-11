@@ -38,3 +38,4 @@ const val DATE_TIME_FIELD = "assets/icons/table/field/date_time.svg"
 
 //dialog icon
 const val INFO_ICON = "assets/icons/dialog/info.svg"
+const val MINI_ICON = "assets/icons/dialog/minimize.svg"

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            styleClass="progress-dialog-pane">
+    <stylesheets>
+        <URL value="@/css/controller/progress_dialog_pane_style.css"/>
+    </stylesheets>
+    <top>
+        <StackPane styleClass="top-box">
+            <Label text="Background Tasks" StackPane.alignment="CENTER"/>
+            <Button StackPane.alignment="CENTER_RIGHT" fx:id="mini" styleClass="mini"/>
+        </StackPane>
+    </top>
+    <center>
+        <VBox styleClass="center-box">
+            <HBox>
+                <Label fx:id="des" />
+            </HBox>
+            <HBox>
+                <ProgressBar fx:id="bar" HBox.hgrow="ALWAYS"/>
+            </HBox>
+            <HBox>
+                <Label fx:id="detail" text="正在关闭连接"/>
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>

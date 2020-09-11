@@ -5,6 +5,7 @@ import cn.navigational.dbfx.SQLClientManager
 import cn.navigational.dbfx.View
 import cn.navigational.dbfx.config.HOME_PAGE
 import cn.navigational.dbfx.controller.MainTabPaneController
+import cn.navigational.dbfx.controller.ProgressDialogController
 import cn.navigational.dbfx.controls.tree.CustomTreeView
 import cn.navigational.dbfx.model.DbInfo
 import cn.navigational.dbfx.controls.tree.NTreeCell
@@ -70,6 +71,6 @@ class HomeView : View<Void>(HOME_PAGE) {
             event.consume()
         }
         //Execute close resource operation
-
+        ProgressDialogController()
     }
 }

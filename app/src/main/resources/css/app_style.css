@@ -237,10 +237,14 @@
 }
 
 .progress-dialog .progress-bar {
-    -fx-pref-width: 10em;
-    -fx-background-color: red;
+    -fx-pref-width: 20em;
 }
 
 .progress-bar .track {
-    -fx-background-color: #6B6B6B;
+    -fx-background-color: #555555;
+}
+
+.progress-bar .bar{
+    -fx-pref-height: 0.7em;
+    -fx-background-color:#A0A0A0 ;
 }
