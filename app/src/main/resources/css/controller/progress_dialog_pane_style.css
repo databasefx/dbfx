@@ -1,23 +1,19 @@
-.progress-dialog-pane {
-    -fx-padding: 0;
-    -fx-border-color: #616161;
-    -fx-border-width: 0.1em;
-}
-
 .top-box {
     -fx-background-color: #4A4E5A;
 }
+
 .top-box * {
     -fx-background-color: transparent;
 }
-.progress-bar{
+
+.progress-bar {
     -fx-pref-width: 30em;
     -fx-background-insets: 0;
 }
 
-.center-box{
-    -fx-padding: 0.2em;
+.center-box {
     -fx-spacing: 0.5em;
+    -fx-padding: 0.2em 0.5em;
 }
 
 .mini {

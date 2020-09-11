@@ -1,5 +1,6 @@
 package cn.navigational.dbfx
 
+import cn.navigational.dbfx.handler.MainTabPaneHandler
 import cn.navigational.dbfx.model.DbInfo
 import cn.navigational.dbfx.model.SQLClient
 import cn.navigational.dbfx.kit.SqlClientFactory
@@ -32,7 +33,7 @@ class SQLClientManager {
      */
     private val clients: MutableMap<String, SQLClient> = ConcurrentHashMap()
 
-    private fun createClient(info: DbInfo): SQLClient {
+    fun createClient(info: DbInfo): SQLClient {
 
         val cl = info.client
         val options = SqlClientFactory.createConnectionOptions(cl)
@@ -57,7 +58,6 @@ class SQLClientManager {
      */
     fun addClient(client: SQLClient) {
         val uuid = client.uuid
-        val clients = clientManager.clients
         if (clients.containsKey(uuid)) {
             throw RuntimeException("Repeat add client [uuid:$uuid]")
         }
@@ -80,41 +80,38 @@ class SQLClientManager {
         println("Success remove $uuid client.")
     }
 
+    /**
+     *
+     * Close all client
+     *
+     */
+    suspend fun closeAllClient() {
+        clients.keys.forEach { key ->
+            val client = clients[key]!!
+            client.client.close().await()
+            println("Success close $key client.")
+        }
+        clients.clear()
+    }
+
+    fun getDbInfo(): ObservableList<DbInfo> {
+        return dbList
+    }
+
+    fun addDbInfo(info: DbInfo) {
+        this.dbList.add(info)
+    }
+
+    suspend fun closeSQLClient(client: SqlClient) {
+        client.close().await()
+    }
+
 
     companion object {
-        private val clientManager: SQLClientManager = SQLClientManager()
-
         /**
          * Default Sql client pool options
          */
         private val defaultPoolOptions = PoolOptions().setMaxSize(10).setMaxWaitQueueSize(10)
-
-        suspend fun closeSQLClient(client: SqlClient) {
-            client.close().await()
-        }
-
-        fun addDbInfo(dbInfo: DbInfo) {
-            clientManager.dbList.add(dbInfo)
-        }
-
-        fun removeDbInfo(dbInfo: DbInfo) {
-            clientManager.dbList.remove(dbInfo)
-        }
-
-        fun getDbInfo(): ObservableList<DbInfo> {
-            return clientManager.dbList
-        }
-
-        fun createClient(info: DbInfo): SQLClient {
-            return clientManager.createClient(info)
-        }
-
-        fun addClient(client: SQLClient) {
-            clientManager.addClient(client)
-        }
-
-        suspend fun removeClient(uuid: String) {
-            clientManager.removeClient(uuid)
-        }
+        val manager: SQLClientManager by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) { SQLClientManager() }
     }
 }

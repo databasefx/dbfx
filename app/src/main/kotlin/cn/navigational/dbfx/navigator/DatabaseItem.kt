@@ -2,11 +2,12 @@ package cn.navigational.dbfx.navigator
 
 import cn.navigational.dbfx.BaseTreeItem
 import cn.navigational.dbfx.SQLClientManager
+import cn.navigational.dbfx.handler.NavigatorMenuHandler
 import cn.navigational.dbfx.model.DbInfo
 import cn.navigational.dbfx.model.SQLClient
 import javafx.beans.property.BooleanProperty
 import javafx.beans.property.SimpleBooleanProperty
-import cn.navigational.dbfx.navigator.NavigatorMenuHandler.Companion.MenuType.*
+import cn.navigational.dbfx.handler.NavigatorMenuHandler.Companion.MenuType.*
 import javafx.application.Platform
 import javafx.beans.property.ObjectProperty
 import javafx.beans.property.SimpleObjectProperty
@@ -49,7 +50,7 @@ abstract class DatabaseItem(private val dbInfo: DbInfo, icon: String) : BaseTree
 
     protected suspend fun initClient() {
         endConnect()
-        client.value = SQLClientManager.createClient(dbInfo)
+        client.value = SQLClientManager.manager.createClient(dbInfo)
     }
 
     fun getSQLClient(): SQLClient {
@@ -72,7 +73,7 @@ abstract class DatabaseItem(private val dbInfo: DbInfo, icon: String) : BaseTree
     private suspend fun endConnect() {
         val that = this
         if (client.value !== null) {
-            SQLClientManager.removeClient(client.value.uuid)
+            SQLClientManager.manager.removeClient(client.value.uuid)
             client.value = null
         }
         that.children.clear()

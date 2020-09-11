@@ -19,7 +19,7 @@ class MysqlItem(info: DbInfo) : DatabaseItem(info, MYSQL_ICON) {
         this.initClient()
         val query = SQLQuery.getClQuery(Clients.MYSQL)
         getSQLClient().version = query.showDbVersion(getSQLClient().client)
-        SQLClientManager.addClient(getSQLClient())
+        SQLClientManager.manager.addClient(getSQLClient())
         this.flush()
         connectStatus.value = true
     }

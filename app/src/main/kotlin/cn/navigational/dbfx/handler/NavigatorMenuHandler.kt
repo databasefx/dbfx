@@ -1,4 +1,4 @@
-package cn.navigational.dbfx.navigator
+package cn.navigational.dbfx.handler
 
 import cn.navigational.dbfx.config.*
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder

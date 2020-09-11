@@ -244,8 +244,17 @@
     -fx-background-color: #555555;
 }
 
-.progress-bar .bar{
-    -fx-background-insets:0;
+.progress-bar .bar {
+    -fx-background-insets: 0;
     -fx-pref-height: 0.3em;
-    -fx-background-color:#A0A0A0 ;
+    -fx-background-color: #A0A0A0;
+}
+
+.progress-dialog-pane {
+    -fx-border-color: #616161;
+    -fx-border-width: 0.1em;
+}
+
+.progress-dialog-pane .root {
+    -fx-padding: 0;
 }

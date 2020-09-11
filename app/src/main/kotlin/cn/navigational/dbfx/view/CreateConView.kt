@@ -129,7 +129,7 @@ class CreateConView : View<Void>(CREATE_CON_PAGE) {
                 return@launch
             }
             AlertUtils.showSimpleDialog("${cl.client}($version)")
-            SQLClientManager.closeSQLClient(client)
+            SQLClientManager.manager.closeSQLClient(client)
         }
     }
 
@@ -159,7 +159,7 @@ class CreateConView : View<Void>(CREATE_CON_PAGE) {
             if (info.local) {
                 saveDbInfo(info)
             }
-            SQLClientManager.addDbInfo(info)
+            SQLClientManager.manager.addDbInfo(info)
             Platform.runLater {
                 that.close()
             }

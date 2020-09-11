@@ -1,6 +1,7 @@
 package cn.navigational.dbfx.navigator
 
 import cn.navigational.dbfx.BaseTreeItem
+import cn.navigational.dbfx.handler.NavigatorMenuHandler
 import javafx.application.Platform
 
 abstract class SchemeItem(icon: String, private val scheme: String) : BaseTreeItem<String>(icon) {

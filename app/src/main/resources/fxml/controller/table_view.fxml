@@ -62,6 +62,6 @@
         </VBox>
     </top>
     <center>
-        <CustomTableView fx:id="tableView"/>
+        <CustomTableView fx:id="tableView" StackPane.alignment="CENTER"/>
     </center>
 </BorderPane>

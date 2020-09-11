@@ -1,14 +1,11 @@
-package cn.navigational.dbfx.controller
+package cn.navigational.dbfx.handler
 
 import cn.navigational.dbfx.controls.AbstractBaseTab
 import javafx.application.Platform
-import javafx.scene.control.Tab
 import javafx.scene.control.TabPane
-import java.lang.RuntimeException
-import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
-class MainTabPaneController private constructor() {
+class MainTabPaneHandler private constructor() {
     private val tabPane: TabPane = TabPane()
     private val map: MutableMap<String, AbstractBaseTab> = ConcurrentHashMap()
 
@@ -40,16 +37,25 @@ class MainTabPaneController private constructor() {
 
     /**
      *
+     * Close all tab
+     *
+     */
+    suspend fun closeAllTab() {
+        map.keys.forEach {
+            val tab = map[it]!!
+            tab.close()
+            println("Tab[id=$it] close success!")
+        }
+        map.clear()
+    }
+
+    /**
+     *
      * Single instance create MainTabPaneController
      *
      */
     companion object {
-        private val controller: MainTabPaneController by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) { MainTabPaneController() }
-
-        @JvmName("getController1")
-        fun getController(): MainTabPaneController {
-            return controller
-        }
+        val handler: MainTabPaneHandler by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) { MainTabPaneHandler() }
     }
 
 }

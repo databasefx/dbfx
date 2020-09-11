@@ -4,11 +4,11 @@ import cn.navigational.dbfx.BaseTreeItem
 import cn.navigational.dbfx.SQLClientManager
 import cn.navigational.dbfx.View
 import cn.navigational.dbfx.config.HOME_PAGE
-import cn.navigational.dbfx.controller.MainTabPaneController
-import cn.navigational.dbfx.controller.ProgressDialogController
+import cn.navigational.dbfx.handler.MainTabPaneHandler
 import cn.navigational.dbfx.controls.tree.CustomTreeView
 import cn.navigational.dbfx.model.DbInfo
 import cn.navigational.dbfx.controls.tree.NTreeCell
+import cn.navigational.dbfx.handler.closeAppOccurResource
 import cn.navigational.dbfx.navigator.impl.MysqlItem
 import cn.navigational.dbfx.navigator.impl.PgItem
 import cn.navigational.dbfx.kit.enums.Clients
@@ -27,18 +27,18 @@ class HomeView : View<Void>(HOME_PAGE) {
     @FXML
     private lateinit var splitPane: SplitPane
 
-    private lateinit var tabController: MainTabPaneController
+    private lateinit var tabHandler: MainTabPaneHandler
 
 
     override fun onCreated(scene: Scene?) {
         this.title = "dbfx"
         val that = this
-        this.tabController = MainTabPaneController.getController()
-        this.splitPane.items.add(tabController.getTabPane())
+        this.tabHandler = MainTabPaneHandler.handler
+        this.splitPane.items.add(tabHandler.getTabPane())
         navigator.contextMenu = null
         navigator.setCellFactory { NTreeCell() }
-        SQLClientManager.getDbInfo().forEach(this::createClientTree)
-        SQLClientManager.getDbInfo().addListener(ListChangeListener {
+        SQLClientManager.manager.getDbInfo().forEach(this::createClientTree)
+        SQLClientManager.manager.getDbInfo().addListener(ListChangeListener {
             while (it.next()) {
                 if (it.wasAdded()) {
                     it.addedSubList.forEach(that::createClientTree)
@@ -70,7 +70,6 @@ class HomeView : View<Void>(HOME_PAGE) {
         if (!result) {
             event.consume()
         }
-        //Execute close resource operation
-        ProgressDialogController()
+        closeAppOccurResource()
     }
 }

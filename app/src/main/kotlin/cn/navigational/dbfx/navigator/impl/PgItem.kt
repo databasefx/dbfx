@@ -18,7 +18,7 @@ class PgItem(info: DbInfo) : DatabaseItem(info, PG_ICON) {
         this.initClient()
         val query = SQLQuery.getClQuery(Clients.POSTGRESQL)
         getSQLClient().version = query.showDbVersion(getSQLClient().client)
-        SQLClientManager.addClient(getSQLClient())
+        SQLClientManager.manager.addClient(getSQLClient())
         this.flush()
         connectStatus.value = true
     }

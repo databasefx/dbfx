@@ -2,9 +2,9 @@ package cn.navigational.dbfx.navigator.table
 
 import cn.navigational.dbfx.BaseTreeItem
 import cn.navigational.dbfx.config.TABLE_ICON
-import cn.navigational.dbfx.controller.MainTabPaneController
+import cn.navigational.dbfx.handler.MainTabPaneHandler
 import cn.navigational.dbfx.controls.tab.TableTab
-import cn.navigational.dbfx.navigator.NavigatorMenuHandler
+import cn.navigational.dbfx.handler.NavigatorMenuHandler
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.enums.Clients
 
@@ -26,8 +26,7 @@ class TableTreeItem(private val table: String, private val category: String, pri
     }
 
     private suspend fun openTab() {
-        val controller = MainTabPaneController.getController()
         var tab = TableTab(table, category, currentClient)
-        tab = controller.addTabToPane(tab, fullPath) as TableTab
+        tab =  MainTabPaneHandler.handler.addTabToPane(tab, fullPath) as TableTab
     }
 }

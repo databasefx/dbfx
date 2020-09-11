@@ -6,7 +6,7 @@
 <?import java.net.URL?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            styleClass="progress-dialog-pane">
+            styleClass="root">
     <stylesheets>
         <URL value="@/css/controller/progress_dialog_pane_style.css"/>
     </stylesheets>
@@ -19,13 +19,13 @@
     <center>
         <VBox styleClass="center-box">
             <HBox>
-                <Label fx:id="des" />
+                <Label fx:id="tip" />
             </HBox>
             <HBox>
                 <ProgressBar fx:id="bar" HBox.hgrow="ALWAYS"/>
             </HBox>
             <HBox>
-                <Label fx:id="detail" text="正在关闭连接"/>
+                <Label fx:id="des" text="正在关闭连接"/>
             </HBox>
         </VBox>
     </center>

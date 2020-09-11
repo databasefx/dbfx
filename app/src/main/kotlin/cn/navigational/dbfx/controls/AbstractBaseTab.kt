@@ -1,11 +1,12 @@
 package cn.navigational.dbfx.controls
 
+import javafx.beans.property.BooleanProperty
+import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.beans.property.StringProperty
 import javafx.scene.control.Tab
 
 abstract class AbstractBaseTab() : Tab() {
-
     /**
      * When tab instance after init data call that method
      */
@@ -15,6 +16,27 @@ abstract class AbstractBaseTab() : Tab() {
      * When current tab request close call that method
      */
     abstract suspend fun close()
+
+
+    /**
+     *
+     * Current Tab load status, if current tab doing load data that property value is true,
+     * or else that property value is false.</p>
+     *
+     */
+    private val loadStatus: BooleanProperty = SimpleBooleanProperty(false, "loadingStatus")
+
+    fun getLoadStatus(): Boolean {
+        return loadStatus.get()
+    }
+
+    fun getLoadStatusProperty(): BooleanProperty {
+        return loadStatus
+    }
+
+    fun setLoadStatus(status: Boolean) {
+        this.loadStatus.set(status)
+    }
 
     /**
      *
