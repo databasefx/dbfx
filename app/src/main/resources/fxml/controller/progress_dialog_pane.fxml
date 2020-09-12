@@ -10,12 +10,6 @@
     <stylesheets>
         <URL value="@/css/controller/progress_dialog_pane_style.css"/>
     </stylesheets>
-    <top>
-        <StackPane styleClass="top-box">
-            <Label text="Background Tasks" StackPane.alignment="CENTER"/>
-            <Button StackPane.alignment="CENTER_RIGHT" fx:id="mini" styleClass="mini"/>
-        </StackPane>
-    </top>
     <center>
         <VBox styleClass="center-box">
             <HBox>

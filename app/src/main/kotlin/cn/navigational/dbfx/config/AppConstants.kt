@@ -30,6 +30,8 @@ const val ADD_ROW_ICON = "assets/icons/table/add.svg"
 const val DEL_ROW_ICON = "assets/icons/table/del.svg"
 const val ASC_ICON = "assets/icons/table/asc.svg"
 const val DES_ICON = "assets/icons/table/des.svg"
+const val TABLE_SETTING_ICON = "assets/icons/table/setting.svg"
+
 
 //table field icon
 const val NUMBER_FIELD = "assets/icons/table/field/number.svg"
@@ -39,3 +41,4 @@ const val DATE_TIME_FIELD = "assets/icons/table/field/date_time.svg"
 //dialog icon
 const val INFO_ICON = "assets/icons/dialog/info.svg"
 const val MINI_ICON = "assets/icons/dialog/minimize.svg"
+const val DIALOG_CLOSE_ICON = "assets/icons/dialog/close.svg"

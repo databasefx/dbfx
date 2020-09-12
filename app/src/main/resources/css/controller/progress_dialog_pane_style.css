@@ -1,22 +1,9 @@
-.top-box {
-    -fx-background-color: #4A4E5A;
-}
-
-.top-box * {
-    -fx-background-color: transparent;
-}
-
 .progress-bar {
     -fx-pref-width: 30em;
     -fx-background-insets: 0;
 }
 
 .center-box {
-    -fx-spacing: 0.5em;
-    -fx-padding: 0.2em 0.5em;
-}
-
-.mini {
-    -fx-padding: 0;
-    -fx-border-width: 0;
+    -fx-spacing: 1em;
+    -fx-padding: 0.5em;
 }

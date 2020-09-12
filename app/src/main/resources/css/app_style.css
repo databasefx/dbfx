@@ -250,11 +250,25 @@
     -fx-background-color: #A0A0A0;
 }
 
-.progress-dialog-pane {
+.undecorated-dialog {
     -fx-border-color: #616161;
     -fx-border-width: 0.1em;
+    -fx-padding: 0;
 }
 
-.progress-dialog-pane .root {
+.undecorated-dialog * {
+    -fx-padding: 0;
+}
+
+.undecorated-dialog .undecorated-dialog-header {
+    -fx-background-color: #4A4E5A;
+}
+
+.undecorated-dialog .undecorated-dialog-header * {
+    -fx-border-width: 0;
+    -fx-background-color: transparent;
+}
+
+.undecorated-dialog .undecorated-dialog-pane-content {
     -fx-padding: 0;
 }

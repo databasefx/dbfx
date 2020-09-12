@@ -32,7 +32,8 @@
     -fx-border-color: #4C708C;
     -fx-alignment: center;
 }
-.flow-item .label{
+
+.flow-item .label {
     -fx-background-color: transparent;
 }
 

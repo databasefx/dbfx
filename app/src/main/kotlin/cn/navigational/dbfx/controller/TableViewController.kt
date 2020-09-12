@@ -12,15 +12,12 @@ import javafx.application.Platform
 import javafx.beans.property.*
 import javafx.collections.ObservableList
 import javafx.fxml.FXML
-import javafx.scene.control.Button
-import javafx.scene.control.ChoiceBox
-import javafx.scene.control.Label
-import javafx.scene.control.TableView
+import javafx.scene.control.*
 import javafx.scene.layout.BorderPane
+import javafx.scene.layout.StackPane
 
 
 class TableViewController() : Controller<Void, BorderPane>(TABLE_VIEW) {
-
     @FXML
     private lateinit var last: Button
 
@@ -44,6 +41,9 @@ class TableViewController() : Controller<Void, BorderPane>(TABLE_VIEW) {
 
     @FXML
     private lateinit var delRow: Button
+
+    @FXML
+    private lateinit var setting: Button
 
     @FXML
     private lateinit var tableView: CustomTableView
@@ -72,6 +72,7 @@ class TableViewController() : Controller<Void, BorderPane>(TABLE_VIEW) {
     private val dataTotal: LongProperty = SimpleLongProperty(null, "dataTotal", 0)
 
     override fun onCreated(root: BorderPane?) {
+        this.tableView.placeholder = Label("表中暂无数据")
         pageSelector.items.addAll("10", "100", "250", "500", "1000")
         pageSelector.selectionModel.select(0)
         last.graphic = SvgImageTranscoder.svgToImageView(LAST_ICON)
@@ -82,7 +83,8 @@ class TableViewController() : Controller<Void, BorderPane>(TABLE_VIEW) {
         sIcon.graphic = SvgImageTranscoder.svgToImageView(SEARCH_ICON)
         addRow.graphic = SvgImageTranscoder.svgToImageView(ADD_ROW_ICON)
         delRow.graphic = SvgImageTranscoder.svgToImageView(DEL_ROW_ICON)
-        tableView.placeholder = Label("表中暂无数据")
+        setting.graphic = SvgImageTranscoder.svgToImageView(TABLE_SETTING_ICON)
+
         pageSelector.selectionModel.selectedItemProperty().addListener { _, _, n ->
             if (NumberUtils.isInteger(n)) {
                 val pageSize = n.toInt()
@@ -107,6 +109,9 @@ class TableViewController() : Controller<Void, BorderPane>(TABLE_VIEW) {
             val size = pageSize.get()
             val index = (total + size - 1) / size
             setPageIndex(index.toInt())
+        }
+        setting.setOnAction {
+            val controller = TableSettingController()
         }
     }
 

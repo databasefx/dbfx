@@ -1,4 +1,4 @@
-package cn.navigational.dbfx.dialogs;
+package cn.navigational.dbfx.dialog;
 
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder;
 import javafx.scene.control.*;

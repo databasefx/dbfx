@@ -4,7 +4,6 @@
 <?import javafx.scene.layout.*?>
 
 <?import java.net.URL?>
-<?import cn.navigational.dbfx.controls.tree.CustomTreeView?>
 <?import cn.navigational.dbfx.controls.table.CustomTableView?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
@@ -52,6 +51,11 @@
                 <Button fx:id="delRow">
                     <tooltip>
                         <Tooltip text="删除一行"/>
+                    </tooltip>
+                </Button>
+                <Button fx:id="setting">
+                    <tooltip>
+                        <Tooltip text="设置"/>
                     </tooltip>
                 </Button>
             </ToolBar>

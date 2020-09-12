@@ -1,11 +1,9 @@
 package cn.navigational.dbfx.utils;
 
-import cn.navigational.dbfx.dialogs.SimpleConfirmDialog;
+import cn.navigational.dbfx.dialog.SimpleConfirmDialog;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
 import org.controlsfx.dialog.ExceptionDialog;
 
 import static cn.navigational.dbfx.config.AppConstantsKt.APP_STYLE;
