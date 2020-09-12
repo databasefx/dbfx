@@ -253,10 +253,9 @@
 .undecorated-dialog {
     -fx-border-color: #616161;
     -fx-border-width: 0.1em;
-    -fx-padding: 0;
 }
 
-.undecorated-dialog * {
+.undecorated-dialog .content {
     -fx-padding: 0;
 }
 
@@ -267,8 +266,4 @@
 .undecorated-dialog .undecorated-dialog-header * {
     -fx-border-width: 0;
     -fx-background-color: transparent;
-}
-
-.undecorated-dialog .undecorated-dialog-pane-content {
-    -fx-padding: 0;
 }

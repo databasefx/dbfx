@@ -4,9 +4,11 @@ import cn.navigational.dbfx.Controller
 import cn.navigational.dbfx.config.*
 import cn.navigational.dbfx.controls.table.CustomTableColumn
 import cn.navigational.dbfx.controls.table.CustomTableView
+import cn.navigational.dbfx.dialog.TableSettingDialog
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
 import cn.navigational.dbfx.kit.model.TableColumnMeta
 import cn.navigational.dbfx.kit.utils.NumberUtils
+import cn.navigational.dbfx.model.TableSetting
 import cn.navigational.dbfx.utils.TableColumnUtils
 import javafx.application.Platform
 import javafx.beans.property.*
@@ -14,7 +16,6 @@ import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.scene.control.*
 import javafx.scene.layout.BorderPane
-import javafx.scene.layout.StackPane
 
 
 class TableViewController() : Controller<Void, BorderPane>(TABLE_VIEW) {
@@ -111,7 +112,8 @@ class TableViewController() : Controller<Void, BorderPane>(TABLE_VIEW) {
             setPageIndex(index.toInt())
         }
         setting.setOnAction {
-            val controller = TableSettingController()
+            val dialog = TableSettingDialog(TableSetting())
+            dialog.showAndWait()
         }
     }
 

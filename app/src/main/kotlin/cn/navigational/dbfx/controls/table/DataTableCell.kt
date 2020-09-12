@@ -1,6 +1,7 @@
 package cn.navigational.dbfx.controls.table
 
 import cn.navigational.dbfx.kit.config.NULL_TAG
+import cn.navigational.dbfx.kit.config.NULL_VALUE
 import javafx.beans.property.StringProperty
 import javafx.collections.ObservableList
 import javafx.scene.control.TableCell
@@ -8,11 +9,6 @@ import javafx.scene.control.TableCell
 
 class DataTableCell : TableCell<ObservableList<StringProperty>, String>() {
     companion object {
-        /**
-         * Null value
-         */
-        internal const val NULL_VALUE = "<null>"
-
         /**
          * Null value apply style
          */

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.CheckBox?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            styleClass="root">
+    <stylesheets>
+        <URL value="@/css/dialog/table_setting_dialog_style.css"/>
+    </stylesheets>
+    <center>
+        <!--        <VBox>-->
+        <GridPane styleClass="grid-pane">
+            <Label text="时间格式" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <ChoiceBox GridPane.rowIndex="0" GridPane.columnIndex="1" fx:id="dfFormatChoice"/>
+            <Label text="空值" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="nulValue"/>
+            <Label text="全局应用:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <CheckBox GridPane.rowIndex="2" GridPane.columnIndex="1" fx:id="global"/>
+        </GridPane>
+        <!--            <HBox styleClass="action-box">-->
+        <!--                <Button text="确定"/>-->
+        <!--            </HBox>-->
+        <!--        </VBox>-->
+
+    </center>
+
+</BorderPane>

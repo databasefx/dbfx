@@ -5,7 +5,7 @@ import javafx.application.Platform
 import javafx.fxml.FXML
 import javafx.scene.control.*
 
-class ProgressDialog : UnDecoratedDialog<ButtonType>("Background Tasks", true, PROGRESS_DIALOG_PANE) {
+class ProgressDialog : UnDecoratedDialog<ButtonType>("Background Tasks", false, PROGRESS_DIALOG_PANE) {
     @FXML
     private lateinit var tip: Label
 

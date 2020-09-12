@@ -33,8 +33,10 @@ public class UnDecoratedDialog<T> extends Dialog<T> {
      * Default dialog header class
      */
     private static final String DEFAULT_HEADER_CLASS = "undecorated-dialog-header";
-
-    private final StackPane dialogHeader = new StackPane();
+    /**
+     * Content container
+     */
+    private final VBox container = new VBox();
 
     public UnDecoratedDialog(String title) {
         this(title, true);
@@ -43,15 +45,18 @@ public class UnDecoratedDialog<T> extends Dialog<T> {
     public UnDecoratedDialog(String title, boolean closeable) {
         var label = new Label(title);
         var close = new Button();
+        var dialogHeader = new StackPane();
         this.initStyle(StageStyle.DECORATED);
         StackPane.setAlignment(label, Pos.CENTER);
         if (closeable) {
-            this.dialogHeader.getChildren().add(close);
+            dialogHeader.getChildren().add(close);
             StackPane.setAlignment(close, Pos.CENTER_RIGHT);
         }
-        this.dialogHeader.getChildren().add(label);
-        this.dialogHeader.getStyleClass().add(DEFAULT_HEADER_CLASS);
+        dialogHeader.getChildren().add(label);
+        dialogHeader.getStyleClass().add(DEFAULT_HEADER_CLASS);
+        this.container.getChildren().add(dialogHeader);
         this.setDialogPane(new DialogPane());
+        this.getDialogPane().setContent(this.container);
         this.getDialogPane().getStyleClass().add(DEFAULT_DIALOG_PANE_CLASS);
         this.getDialogPane().getStylesheets().add(AppConstantsKt.APP_STYLE);
         this.initStyle(StageStyle.UNDECORATED);
@@ -62,10 +67,8 @@ public class UnDecoratedDialog<T> extends Dialog<T> {
     public UnDecoratedDialog(String title, boolean closeable, String fxml) {
         this(title, closeable);
         var node = (Node) FXMLHelper.loadFxml(fxml, this);
-        var vBox = new VBox();
-        vBox.getChildren().addAll(dialogHeader, node);
-        this.getDialogPane().setContent(vBox);
         node.getStyleClass().add(DEFAULT_PANE_CONTENT_CLASS);
+        this.container.getChildren().add(node);
     }
 
     public UnDecoratedDialog(String title, String fxml) {

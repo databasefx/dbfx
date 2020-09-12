@@ -1,0 +1,18 @@
+.root {
+    -fx-pref-width: 50em;
+    -fx-padding: 1em 0.5em;
+}
+
+.choice-box, .text-field {
+    -fx-pref-width: 40em;
+}
+
+.grid-pane {
+    -fx-hgap: 1em;
+    -fx-vgap: 1em;
+    -fx-alignment: center;
+}
+
+.action-box {
+    -fx-alignment: center-right;
+}
