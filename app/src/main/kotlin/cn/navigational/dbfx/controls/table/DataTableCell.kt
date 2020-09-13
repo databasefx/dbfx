@@ -1,7 +1,6 @@
 package cn.navigational.dbfx.controls.table
 
 import cn.navigational.dbfx.kit.config.NULL_TAG
-import cn.navigational.dbfx.kit.config.NULL_VALUE
 import javafx.beans.property.StringProperty
 import javafx.collections.ObservableList
 import javafx.scene.control.TableCell
@@ -23,8 +22,9 @@ class DataTableCell : TableCell<ObservableList<StringProperty>, String>() {
             return
         }
         var value = item
+        val table = tableView as CustomTableView
         if (item == NULL_TAG) {
-            value = NULL_VALUE
+            value = table.getTableSetting().nulValue
             if (!styleClass.contains(NULL_STYLE)) {
                 styleClass.add(NULL_STYLE)
             }

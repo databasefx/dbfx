@@ -16,7 +16,7 @@ public class TableSetting {
     /**
      * Default value show value
      */
-    private String nulFormat = NULL_VALUE;
+    private String nulValue = NULL_VALUE;
     /**
      * Default date time format pattern
      */
@@ -30,12 +30,12 @@ public class TableSetting {
         this.dtFormat = dtFormat;
     }
 
-    public String getNulFormat() {
-        return nulFormat;
+    public String getNulValue() {
+        return nulValue;
     }
 
-    public void setNulFormat(String nulFormat) {
-        this.nulFormat = nulFormat;
+    public void setNulValue(String nulValue) {
+        this.nulValue = nulValue;
     }
 
     public boolean isGlobal() {

@@ -16,9 +16,11 @@ import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.scene.control.*
 import javafx.scene.layout.BorderPane
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
-class TableViewController() : Controller<Void, BorderPane>(TABLE_VIEW) {
+class TableViewController(private val loadDate: suspend (pageIndex: Int, pageSize: Int, setting: TableSetting) -> List<ObservableList<StringProperty>>) : Controller<Void, BorderPane>(TABLE_VIEW) {
     @FXML
     private lateinit var last: Button
 
@@ -58,19 +60,20 @@ class TableViewController() : Controller<Void, BorderPane>(TABLE_VIEW) {
     /**
      * Page size
      */
-    private val pageSize: IntegerProperty = SimpleIntegerProperty(null, "pageSize", 10)
+    private val pageSizeProperty: IntegerProperty = SimpleIntegerProperty(null, "pageSize", 10)
 
     /**
      * Page index
      */
-    private val pageIndex: IntegerProperty = SimpleIntegerProperty(null, "pageIndex", 1)
+    private val pageIndexProperty: IntegerProperty = SimpleIntegerProperty(null, "pageIndex", 1)
 
     /**
      *
      * Data total property
      *
      */
-    private val dataTotal: LongProperty = SimpleLongProperty(null, "dataTotal", 0)
+    private val dataTotalProperty: LongProperty = SimpleLongProperty(null, "dataTotal", 0)
+
 
     override fun onCreated(root: BorderPane?) {
         this.tableView.placeholder = Label("表中暂无数据")
@@ -89,38 +92,66 @@ class TableViewController() : Controller<Void, BorderPane>(TABLE_VIEW) {
         pageSelector.selectionModel.selectedItemProperty().addListener { _, _, n ->
             if (NumberUtils.isInteger(n)) {
                 val pageSize = n.toInt()
-                this.pageSize.value = pageSize
+                this.pageSizeProperty.value = pageSize
+                load()
             }
         }
         next.setOnAction {
-            this.pageIndex.value = ++this.pageIndex.value
+            this.pageIndexProperty.value = ++this.pageIndexProperty.value
+            load()
         }
         last.setOnAction {
-            val pageIndex = this.pageIndex.value
+            val pageIndex = this.pageIndexProperty.value
             if (pageIndex <= 1) {
                 return@setOnAction
             }
-            this.pageIndex.value = pageIndex - 1
+            this.pageIndexProperty.value = pageIndex - 1
+            load()
         }
         firstPage.setOnAction {
-            setPageIndex(1)
+            this.pageIndexProperty.set(1)
+            load()
         }
         lastPage.setOnAction {
-            val total = dataTotal.get()
-            val size = pageSize.get()
+            val total = dataTotalProperty.get()
+            val size = pageSizeProperty.get()
             val index = (total + size - 1) / size
-            setPageIndex(index.toInt())
+            this.pageIndexProperty.set(index.toInt())
+            load()
         }
         setting.setOnAction {
-            val dialog = TableSettingDialog(TableSetting())
-            dialog.showAndWait()
+            val dialog = TableSettingDialog(tableView.getTableSetting())
+            val optional = dialog.showAndWait()
+            if (optional.get() != tableView.getTableSetting()) {
+                this.tableView.setTableSetting(optional.get())
+                this.load()
+            }
+        }
+        flush.setOnAction {
+            load()
+        }
+    }
+
+    /**
+     * Load data use loadData function
+     */
+    fun load() {
+        val pageSize = pageSizeProperty.get()
+        val pageIndex = pageIndexProperty.get()
+        val that = this
+        GlobalScope.launch {
+            val items = that.loadDate(pageIndex, pageSize,tableView.getTableSetting())
+            Platform.runLater {
+                tableView.items.clear()
+                tableView.items.addAll(items)
+            }
         }
     }
 
     private fun updateIndicator() {
-        val total = dataTotal.get()
-        val index = getPageIndex()
-        val size = getPageSize()
+        val total = dataTotalProperty.get()
+        val size = this.pageSizeProperty.get()
+        val index = this.pageIndexProperty.get()
         val sOffset = (index - 1) * size
         val eOffset = sOffset + size
         val text = "$sOffset-$eOffset of $total"
@@ -162,72 +193,8 @@ class TableViewController() : Controller<Void, BorderPane>(TABLE_VIEW) {
         }
     }
 
-    /**
-     *
-     * Register a flush handler
-     *@param handler flush handler
-     */
-    fun flushHandler(handler: () -> Unit) {
-        flush.setOnAction {
-            handler()
-        }
-    }
-
-    /**
-     * Get table item list
-     */
-    fun getTableItems(): ObservableList<ObservableList<StringProperty>> {
-        return tableView.items
-    }
-
-    /**
-     *
-     * Get current TableView all columns out of index column
-     *
-     */
-    fun getColumns(): List<CustomTableColumn> {
-        return tableView.columns
-                .map { it as CustomTableColumn }
-                .filter { !it.isIndexColumn() }
-    }
-
-
-    fun getPageSize(): Int {
-        return pageSize.get()
-    }
-
-    fun pageSizeProperty(): IntegerProperty {
-        return pageSize
-    }
-
-    fun setPageSize(pageSize: Int) {
-        this.pageSize.set(pageSize)
-    }
-
-
-    fun getPageIndex(): Int {
-        return pageIndex.get()
-    }
-
-    fun pageIndexProperty(): IntegerProperty {
-        return pageIndex
-    }
-
-    fun setPageIndex(pageIndex: Int) {
-        this.pageIndex.set(pageIndex)
-    }
-
-
-    fun getDataTotal(): Long {
-        return dataTotal.get()
-    }
-
-    fun dataTotalProperty(): LongProperty {
-        return dataTotal
-    }
-
     fun setDataTotal(total: Long) {
-        this.dataTotal.set(total)
+        this.dataTotalProperty.set(total)
         this.updateIndicator()
     }
 }

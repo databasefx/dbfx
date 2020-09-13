@@ -61,7 +61,7 @@ class PgQuery : SQLQuery {
         TODO("Not yet implemented")
     }
 
-    override suspend fun pageQuery(category: String, table: String, pageIndex: Int, pageSize: Int, client: SqlClient): List<List<String>> {
+    override suspend fun pageQuery(category: String, table: String, pageIndex: Int, pageSize: Int, client: SqlClient): RowSet<Row> {
         TODO("Not yet implemented")
     }
 

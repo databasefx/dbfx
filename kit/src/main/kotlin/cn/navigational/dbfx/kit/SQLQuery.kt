@@ -58,7 +58,7 @@ interface SQLQuery {
     /**
      * Paging query table data
      */
-    suspend fun pageQuery(category: String, table: String, pageIndex: Int, pageSize: Int, client: SqlClient): List<List<String>>
+    suspend fun pageQuery(category: String, table: String, pageIndex: Int, pageSize: Int, client: SqlClient): RowSet<Row>
 
     /**
      * Get target table data total
