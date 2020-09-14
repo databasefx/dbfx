@@ -9,6 +9,7 @@ import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
 import cn.navigational.dbfx.kit.model.TableColumnMeta
 import cn.navigational.dbfx.kit.utils.NumberUtils
 import cn.navigational.dbfx.model.TableSetting
+import cn.navigational.dbfx.provider.TableDataProvider
 import cn.navigational.dbfx.utils.TableColumnUtils
 import javafx.application.Platform
 import javafx.beans.property.*
@@ -20,7 +21,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
-class TableViewController(private val loadDate: suspend (pageIndex: Int, pageSize: Int, setting: TableSetting) -> List<ObservableList<StringProperty>>) : Controller<Void, BorderPane>(TABLE_VIEW) {
+class TableViewController(private val provider: TableDataProvider) : Controller<Void, BorderPane>(TABLE_VIEW) {
     @FXML
     private lateinit var last: Button
 
@@ -140,10 +141,18 @@ class TableViewController(private val loadDate: suspend (pageIndex: Int, pageSiz
         val pageIndex = pageIndexProperty.get()
         val that = this
         GlobalScope.launch {
-            val items = that.loadDate(pageIndex, pageSize,tableView.getTableSetting())
-            Platform.runLater {
-                tableView.items.clear()
-                tableView.items.addAll(items)
+            val columns = provider.getColumnMeta()
+            val total = provider.getDataTotal()
+            val items = if (total > 0) {
+                provider.getItems(pageIndex, pageSize, tableView.getTableSetting())
+            } else {
+                arrayListOf()
+            }
+            that.updateColumn(columns)
+            that.dataTotalProperty.set(total)
+            that.tableView.items.clear()
+            if (items.isNotEmpty()) {
+                that.tableView.items.addAll(items)
             }
         }
     }
@@ -161,7 +170,7 @@ class TableViewController(private val loadDate: suspend (pageIndex: Int, pageSiz
         }
     }
 
-    fun addColumn(list: List<TableColumnMeta>) {
+    private fun updateColumn(list: List<TableColumnMeta>) {
         val columns = tableView.columns
         if (columns.isEmpty()) {
             val cc = TableColumnUtils.createTableDataColumn(list)
@@ -191,10 +200,5 @@ class TableViewController(private val loadDate: suspend (pageIndex: Int, pageSiz
                 tableView.columns.addAll(newColumns)
             }
         }
-    }
-
-    fun setDataTotal(total: Long) {
-        this.dataTotalProperty.set(total)
-        this.updateIndicator()
     }
 }

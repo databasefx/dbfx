@@ -94,28 +94,12 @@ class MysqlQuery : SQLQuery {
     }
 
     override suspend fun pageQuery(category: String, table: String, pageIndex: Int, pageSize: Int, client: SqlClient): RowSet<Row> {
-        val name = "`$category`.`$table`"
+        val name = MysqlHelper.transTableName(category, table)
         val sql = "SELECT * FROM $name LIMIT ?,?"
         val offset = MysqlPageHelper.getStartNum(pageIndex, pageSize)
         val tuple = Tuple.of(offset, pageSize)
 
         return SQLExecutor.executeSql(sql, Clients.MYSQL, client, tuple)
-
-//        val list = arrayListOf<List<String>>()
-//        rowSet.forEach {
-//            val size = it.size()
-//            val row = arrayListOf<String>()
-//            for (i in 0 until it.size()) {
-//                val value = it.getValue(i)
-//                if (value !== null) {
-//                    row.add(value.toString())
-//                } else {
-//                    row.add(NULL_TAG)
-//                }
-//            }
-//            list.add(row)
-//        }
-//        return list
     }
 
     override suspend fun queryTableTotal(category: String, table: String, client: SqlClient): Long {
