@@ -1,12 +1,24 @@
 package cn.navigational.dbfx.controls
 
+import cn.navigational.dbfx.handler.MainTabPaneHandler
 import javafx.beans.property.BooleanProperty
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.beans.property.StringProperty
 import javafx.scene.control.Tab
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 abstract class AbstractBaseTab() : Tab() {
+    init {
+        setOnCloseRequest {
+            val that = this
+            GlobalScope.launch {
+                that.close()
+            }
+        }
+    }
+
     /**
      * When tab instance after init data call that method
      */
@@ -15,8 +27,9 @@ abstract class AbstractBaseTab() : Tab() {
     /**
      * When current tab request close call that method
      */
-    abstract suspend fun close()
-
+    open suspend fun close() {
+        MainTabPaneHandler.handler.closeTab(getTabPath(), false)
+    }
 
     /**
      *

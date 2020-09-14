@@ -17,6 +17,24 @@ class MainTabPaneHandler private constructor() {
         return this.tabPane
     }
 
+    /**
+     * Close single tab
+     * @param path Tab path
+     * @param calTabClose Whether call Tab close function
+     */
+    suspend fun closeTab(path: String, calTabClose: Boolean) {
+        //If map not contain current path,not any!
+        if (!this.map.containsKey(path)) {
+            return
+        }
+        val tab = map[path]!!
+        if (calTabClose) {
+            tab.close()
+        }
+        this.map.remove(path)
+        println("Tab[path=$path] close success!")
+    }
+
     suspend fun addTabToPane(tab: AbstractBaseTab, tabPath: String): AbstractBaseTab {
         val target = if (map.containsKey(tabPath)) {
             map[tabPath]!!
@@ -31,6 +49,7 @@ class MainTabPaneHandler private constructor() {
             }
             this.tabPane.selectionModel.select(target)
         }
+        target.setTabPath(tabPath)
         target.init()
         return target
     }
@@ -42,11 +61,8 @@ class MainTabPaneHandler private constructor() {
      */
     suspend fun closeAllTab() {
         map.keys.forEach {
-            val tab = map[it]!!
-            tab.close()
-            println("Tab[id=$it] close success!")
+            this.closeTab(it, true)
         }
-        map.clear()
     }
 
     /**

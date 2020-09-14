@@ -31,7 +31,9 @@ class TableTab(
     override suspend fun init() {}
 
 
-    override suspend fun close() {}
+    override suspend fun close() {
+        super.close()
+    }
 
     override suspend fun getDataTotal(): Long {
         return SQLQuery.getClQuery(client.cl).queryTableTotal(category, table, client.client)
