@@ -1,10 +1,12 @@
 package cn.navigational.dbfx.controller
 
 import cn.navigational.dbfx.Controller
+import cn.navigational.dbfx.Launcher
 import cn.navigational.dbfx.config.*
 import cn.navigational.dbfx.controls.table.CustomTableColumn
 import cn.navigational.dbfx.controls.table.CustomTableView
 import cn.navigational.dbfx.dialog.TableSettingDialog
+import cn.navigational.dbfx.io.flushUiPreference
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
 import cn.navigational.dbfx.kit.model.TableColumnMeta
 import cn.navigational.dbfx.kit.utils.NumberUtils
@@ -122,8 +124,13 @@ class TableViewController(private val provider: TableDataProvider) : Controller<
         setting.setOnAction {
             val dialog = TableSettingDialog(tableView.getTableSetting())
             val optional = dialog.showAndWait()
-            if (optional.get() != tableView.getTableSetting()) {
-                this.tableView.setTableSetting(optional.get())
+            val setting = optional.get()
+            if (setting != tableView.getTableSetting()) {
+                if (setting.isGlobal) {
+                    Launcher.uiPreference.tableSetting = setting
+                    flushUiPreference()
+                }
+                this.tableView.setTableSetting(setting)
                 this.load()
             }
         }

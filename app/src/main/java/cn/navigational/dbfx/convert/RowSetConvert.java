@@ -1,4 +1,4 @@
-package cn.navigational.dbfx;
+package cn.navigational.dbfx.convert;
 
 import cn.navigational.dbfx.kit.config.ConstantsKt;
 import cn.navigational.dbfx.model.TableSetting;

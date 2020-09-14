@@ -1,6 +1,7 @@
 package cn.navigational.dbfx;
 
 import cn.navigational.dbfx.kit.utils.VertxUtils;
+import cn.navigational.dbfx.model.UiPreferences;
 import cn.navigational.dbfx.view.SplashView;
 import io.vertx.core.VertxOptions;
 import io.vertx.core.file.FileSystemOptions;
@@ -14,6 +15,10 @@ import javafx.stage.Stage;
  * @since 1.0
  */
 public class Launcher extends Application {
+    /**
+     * Global UI preference
+     */
+    public static UiPreferences uiPreference;
 
     @Override
     public void init() {

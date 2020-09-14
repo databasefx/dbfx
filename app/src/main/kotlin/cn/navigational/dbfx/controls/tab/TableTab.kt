@@ -1,6 +1,6 @@
 package cn.navigational.dbfx.controls.tab
 
-import cn.navigational.dbfx.RowSetConvert
+import cn.navigational.dbfx.convert.RowSetConvert
 import cn.navigational.dbfx.config.TABLE_ICON
 import cn.navigational.dbfx.controller.TableViewController
 import cn.navigational.dbfx.controls.AbstractBaseTab

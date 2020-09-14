@@ -1,6 +1,7 @@
 package cn.navigational.dbfx.io
 
 import cn.navigational.dbfx.DatabaseMetaManager
+import cn.navigational.dbfx.Launcher
 import cn.navigational.dbfx.SQLClientManager
 import cn.navigational.dbfx.kit.config.PASSWORD
 import cn.navigational.dbfx.model.DatabaseMeta
@@ -9,9 +10,13 @@ import cn.navigational.dbfx.security.AseAlgorithm
 import cn.navigational.dbfx.kit.utils.OssUtils
 import cn.navigational.dbfx.kit.utils.StringUtils
 import cn.navigational.dbfx.kit.utils.VertxUtils
+import cn.navigational.dbfx.model.UiPreferences
+import io.vertx.core.buffer.Buffer
 import io.vertx.core.json.JsonArray
 import io.vertx.core.json.JsonObject
 import io.vertx.kotlin.coroutines.await
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.io.File
 import java.util.*
 
@@ -20,12 +25,28 @@ const val S_DB_PATH = "config/s_db.json"
 
 val APP_HOME = OssUtils.getUserHome() + File.separator + ".dbfx"
 
-var dbInfoPath = "$APP_HOME/db_info.json"
+/**
+ * Database config file
+ */
+val dbInfoPath = "$APP_HOME/db_preference.json"
 
+/**
+ * Application ui config file
+ * <note>
+ *     When the external configuration file does not exist and cannot be loaded,
+ *     the default UI configuration information is used.
+ * </note>
+ */
+val uiConfigPath = "$APP_HOME/ui_preferences.json"
+
+/**
+ * Default ui config file path
+ */
+const val defaultUiConfigPath = "config/default_ui_preferences.json"
 
 /**
  *
- * Save DbInfo to local file
+ * Save DbInfo to local file.
  *
  * @param info  db info
  *
@@ -94,6 +115,39 @@ private suspend fun loadDbInfo() {
 }
 
 /**
+ * Load local cached ui config file
+ */
+private suspend fun loadUiConfig() {
+    val fs = VertxUtils.getFileSystem()
+    try {
+        val json = fs.readFile(uiConfigPath).await().toJsonObject()
+        Launcher.uiPreference = json.mapTo(UiPreferences::class.java)
+    } catch (e: Exception) {
+        println("Load UI config failed:[${e.message}],so use default UI config")
+        val json = fs.readFile(defaultUiConfigPath).await().toJsonObject()
+        Launcher.uiPreference = json.mapTo(UiPreferences::class.java)
+        //use default UI preference override block UI preference file
+        flushUiPreference()
+    }
+}
+
+/**
+ * Flush UI Preference to local cached
+ */
+fun flushUiPreference() {
+    val fs = VertxUtils.getFileSystem()
+    val json = JsonObject.mapFrom(Launcher.uiPreference)
+
+    val future = fs.writeFile(uiConfigPath, json.toBuffer())
+    future.onComplete {
+        if (it.succeeded()) {
+            return@onComplete
+        }
+        println("Flush UI preference failed cause:[${it.cause().message}")
+    }
+}
+
+/**
  *
  * Load local s_db.json file into memcached
  *
@@ -117,9 +171,6 @@ private suspend fun loadDbMetaData() {
 suspend fun init() {
     checkDir()
     loadDbInfo()
+    loadUiConfig()
     loadDbMetaData()
 }
-
-//fun main() {
-//    VertxUtils.getFileSystem().mkdirBlocking(APP_HOME)
-//}

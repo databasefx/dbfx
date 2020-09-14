@@ -1,6 +1,7 @@
 package cn.navigational.dbfx.controls.table
 
 
+import cn.navigational.dbfx.Launcher
 import cn.navigational.dbfx.model.TableSetting
 import javafx.beans.property.ObjectProperty
 import javafx.beans.property.SimpleObjectProperty
@@ -16,8 +17,7 @@ class CustomTableView : TableView<ObservableList<StringProperty>>() {
 
     init {
         //Default start select cell
-        this.selectionModel.isCellSelectionEnabled = true
-        this.tableSettingProperty = SimpleObjectProperty(null, "tableSetting",TableSetting())
+        this.tableSettingProperty = SimpleObjectProperty(null, "tableSetting", Launcher.uiPreference.tableSetting)
     }
 
     /**
