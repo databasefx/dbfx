@@ -9,7 +9,6 @@ import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.model.TableColumnMeta
 import cn.navigational.dbfx.model.TableSetting
-import cn.navigational.dbfx.provider.TableDataProvider
 import javafx.beans.property.StringProperty
 import javafx.collections.ObservableList
 
@@ -17,7 +16,7 @@ import javafx.collections.ObservableList
 class TableTab(
         private val table: String,
         private val category: String,
-        private val client: SQLClient) : AbstractBaseTab(), TableDataProvider {
+        private val client: SQLClient) : AbstractBaseTab(), TableViewController.TableDataProvider {
 
     private val controller: TableViewController = TableViewController(this)
 
