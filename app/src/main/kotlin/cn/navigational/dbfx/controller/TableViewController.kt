@@ -156,6 +156,7 @@ class TableViewController(private val provider: TableDataProvider) : Controller<
             }
             that.updateColumn(columns)
             that.dataTotalProperty.set(total)
+            that.updateIndicator()
             that.tableView.items.clear()
             if (items.isNotEmpty()) {
                 that.tableView.items.addAll(items)

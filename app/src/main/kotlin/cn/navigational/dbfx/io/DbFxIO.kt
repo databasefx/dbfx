@@ -11,12 +11,9 @@ import cn.navigational.dbfx.kit.utils.OssUtils
 import cn.navigational.dbfx.kit.utils.StringUtils
 import cn.navigational.dbfx.kit.utils.VertxUtils
 import cn.navigational.dbfx.model.UiPreferences
-import io.vertx.core.buffer.Buffer
 import io.vertx.core.json.JsonArray
 import io.vertx.core.json.JsonObject
 import io.vertx.kotlin.coroutines.await
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.io.File
 import java.util.*
 
@@ -42,7 +39,7 @@ val uiConfigPath = "$APP_HOME/ui_preferences.json"
 /**
  * Default ui config file path
  */
-const val defaultUiConfigPath = "config/default_ui_preferences.json"
+const val defaultUiConfigPath = "config/ui_preferences.json"
 
 /**
  *
