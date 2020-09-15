@@ -1,6 +1,7 @@
 package cn.navigational.dbfx.controller
 
 import cn.navigational.dbfx.Controller
+import cn.navigational.dbfx.DatabaseMetaManager
 import cn.navigational.dbfx.config.CON_INFO_PANE
 import cn.navigational.dbfx.model.DatabaseMeta
 import cn.navigational.dbfx.model.DbInfo
@@ -54,9 +55,23 @@ class ConInfoPaneController : Controller<Void, BorderPane>(CON_INFO_PANE) {
         database.text = meta.database
         port.text = meta.port.toString()
         username.text = meta.username
-        dDescribe.text = "Create a ${meta.name} Database Connection"
-        val im = ClassLoader.getSystemResourceAsStream(meta.icon)
-        icon.image = Image(im, 130.0, 110.0, false, true)
+        dDescribe.text = "Create a ${meta.name} Database Connection."
+        this.updateIcon(meta.icon)
+    }
+
+    fun initEdit(info: DbInfo) {
+        val meta = DatabaseMetaManager.manager.getDbMeta(info.client)
+        this.updateIcon(meta.icon)
+        this.dDescribe.text = "Edit a ${meta.name} Database Connection."
+        this.name.text = info.name
+        this.local.isSelected = info.local
+        this.password.text = info.password
+        this.host.text = info.host
+        this.port.text = info.port.toString()
+        this.database.text = info.database
+        this.comment.text = info.comment
+        this.username.text = info.username
+        info.client
     }
 
     fun getDbInfo(meta: DatabaseMeta): DbInfo {
@@ -76,5 +91,10 @@ class ConInfoPaneController : Controller<Void, BorderPane>(CON_INFO_PANE) {
         }
         info.database = database
         return info
+    }
+
+    private fun updateIcon(path: String) {
+        val im = ClassLoader.getSystemResourceAsStream(path)
+        icon.image = Image(im, 130.0, 110.0, false, true)
     }
 }

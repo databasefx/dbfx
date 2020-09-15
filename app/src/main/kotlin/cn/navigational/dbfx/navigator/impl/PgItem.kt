@@ -23,19 +23,11 @@ class PgItem(info: DbInfo) : DatabaseItem(info, PG_ICON) {
         connectStatus.value = true
     }
 
-    override suspend fun openTerminal() {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun flush() {
         if (!this.connectStatus.value) {
             children.addAll(schemeFolder, pgRoleFolder)
         }
         schemeFolder.initFolder()
         pgRoleFolder.initFolder()
-    }
-
-    override suspend fun edit() {
-        TODO("Not yet implemented")
     }
 }

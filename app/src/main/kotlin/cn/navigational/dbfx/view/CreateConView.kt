@@ -170,7 +170,7 @@ class CreateConView : View<Void>(CREATE_CON_PAGE) {
     private fun initFlow() {
         firstPane = FlowPane()
         firstPane.styleClass.add("first-pane")
-        val items = DatabaseMetaManager.getMetas().map { FlowItem(it) }
+        val items = DatabaseMetaManager.manager.getMetas().map { FlowItem(it) }
         firstPane.children.addAll(items)
     }
 

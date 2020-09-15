@@ -6,6 +6,7 @@ import io.vertx.core.Vertx;
 import io.vertx.core.eventbus.Message;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
+import javafx.event.EventTarget;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -140,6 +141,8 @@ public class View<T> extends Stage {
     protected void onIconify(final Boolean icon) {
 
     }
+
+
 
     /**
      * When the {@link this#onCreated(Scene)} or {@link this#onCreated(Scene, Object)} method is executed,

@@ -8,6 +8,7 @@ import cn.navigational.dbfx.model.SQLClient
 import javafx.beans.property.BooleanProperty
 import javafx.beans.property.SimpleBooleanProperty
 import cn.navigational.dbfx.handler.NavigatorMenuHandler.Companion.MenuType.*
+import cn.navigational.dbfx.view.EditConView
 import javafx.application.Platform
 import javafx.beans.property.ObjectProperty
 import javafx.beans.property.SimpleObjectProperty
@@ -32,11 +33,11 @@ abstract class DatabaseItem(private val dbInfo: DbInfo, icon: String) : BaseTree
         this.value = dbInfo.name
         val handler = NavigatorMenuHandler.init(supportMenu)
 
-        val sCon = handler.getMenuItem("连接", OPEN_CONNECT, this::startConnect)
-        val eCon = handler.getMenuItem("断开", DIS_CONNECT, this::endConnect, true)
-        val ter = handler.getMenuItem("SQL终端", SQL_TERMINAL, this::openTerminal, true)
-        val flush = handler.getMenuItem("刷新", FLUSH, this::flush, true)
-        handler.getMenuItem("编辑连接", EDIT_CONNECT, this::edit)
+        val sCon = handler.getMenuCoroutine("连接", OPEN_CONNECT, this::startConnect)
+        val eCon = handler.getMenuCoroutine("断开", DIS_CONNECT, this::endConnect, true)
+        val ter = handler.getMenuUnCoroutine("SQL终端", SQL_TERMINAL, this::openTerminal, true)
+        val flush = handler.getMenuCoroutine("刷新", FLUSH, this::flush, true)
+        handler.getMenuUnCoroutine("编辑连接", EDIT_CONNECT, this::edit)
 
         connectStatus.addListener { _, _, n ->
             Platform.runLater {
@@ -85,7 +86,9 @@ abstract class DatabaseItem(private val dbInfo: DbInfo, icon: String) : BaseTree
      * Open SQL terminal
      *
      */
-    abstract suspend fun openTerminal()
+    private fun openTerminal() {
+
+    }
 
     /**
      *
@@ -97,5 +100,7 @@ abstract class DatabaseItem(private val dbInfo: DbInfo, icon: String) : BaseTree
     /**
      * Edit current database
      */
-    abstract suspend fun edit()
+    private fun edit() {
+        EditConView(dbInfo)
+    }
 }

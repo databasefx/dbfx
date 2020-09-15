@@ -14,7 +14,7 @@ class TableTreeItem(private val table: String, private val category: String, pri
         this.value = table
         setIcon(TABLE_ICON)
         val handler = NavigatorMenuHandler.init(supportMenu)
-        handler.getMenuItem("打开", NavigatorMenuHandler.Companion.MenuType.OPEN, this::openTab)
+        handler.getMenuCoroutine("打开", NavigatorMenuHandler.Companion.MenuType.OPEN, this::openTab)
     }
 
     suspend fun initField() {

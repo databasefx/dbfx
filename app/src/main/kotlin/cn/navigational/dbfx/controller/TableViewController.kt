@@ -15,6 +15,7 @@ import cn.navigational.dbfx.utils.TableColumnUtils
 import javafx.application.Platform
 import javafx.beans.property.*
 import javafx.collections.ObservableList
+import javafx.event.Event
 import javafx.fxml.FXML
 import javafx.scene.control.*
 import javafx.scene.layout.BorderPane

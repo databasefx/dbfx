@@ -7,8 +7,8 @@ import javafx.application.Platform
 abstract class SchemeItem(icon: String, private val scheme: String) : BaseTreeItem<String>(icon) {
     init {
         val handler = NavigatorMenuHandler.init(supportMenu)
-        val open = handler.getMenuItem("打开", NavigatorMenuHandler.Companion.MenuType.OPEN, this::initData)
-        val flush = handler.getMenuItem("刷新", NavigatorMenuHandler.Companion.MenuType.FLUSH, this::initData, true)
+        val open = handler.getMenuCoroutine("打开", NavigatorMenuHandler.Companion.MenuType.OPEN, this::initData)
+        val flush = handler.getMenuCoroutine("刷新", NavigatorMenuHandler.Companion.MenuType.FLUSH, this::initData, true)
         loadStatusProperty().addListener { _, _, n ->
             Platform.runLater {
                 open.isDisable = n

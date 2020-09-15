@@ -157,7 +157,7 @@ private suspend fun loadDbMetaData() {
         val json = it as JsonObject
         items.add(json.mapTo(DatabaseMeta::class.java))
     }
-    DatabaseMetaManager.addDbMeta(items)
+    DatabaseMetaManager.manager.addDbMeta(items)
 }
 
 /**

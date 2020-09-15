@@ -26,9 +26,14 @@ class NavigatorMenuHandler(private val list: MutableList<MenuItem>) {
         return item
     }
 
-    fun getMenuItem(text: String, menu: MenuType, handler: suspend () -> Unit, disabled: Boolean = false): MenuItem {
+    private fun getMenuItem(text: String, menu: MenuType, disabled: Boolean): MenuItem {
         val item = getMenuItem(text, menu)
         item.isDisable = disabled
+        return item
+    }
+
+    fun getMenuCoroutine(text: String, menu: MenuType, handler: suspend () -> Unit, disabled: Boolean = false): MenuItem {
+        val item = this.getMenuItem(text, menu, disabled)
         item.setOnAction {
             GlobalScope.launch {
                 //Execute handler and catch exception
@@ -37,6 +42,19 @@ class NavigatorMenuHandler(private val list: MutableList<MenuItem>) {
                 } catch (e: Exception) {
                     AlertUtils.showExDialog("操作失败", e)
                 }
+            }
+        }
+        return item
+    }
+
+    fun getMenuUnCoroutine(text: String, menu: MenuType, handler: () -> Unit, disabled: Boolean = false): MenuItem {
+        val item = this.getMenuItem(text, menu, disabled)
+        //Execute handler and catch exception
+        item.setOnAction {
+            try {
+                handler()
+            } catch (e: Exception) {
+                AlertUtils.showExDialog("操作失败", e)
             }
         }
         return item

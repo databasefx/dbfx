@@ -15,8 +15,8 @@ class MySchemeItem(private val scheme: String) : SchemeItem(MYSQL_SCHEME_ICON, s
         if (this.children.isNotEmpty()) {
             this.children.clear()
         }
-        val list = SQLQuery.getClQuery(Clients.MYSQL)
-                .showTable(scheme, currentClient.client).map { TableTreeItem(it, scheme, Clients.MYSQL) }
+        val sqlQuery = SQLQuery.getClQuery(Clients.MYSQL)
+        val list = sqlQuery.showTable(scheme, currentClient.client).map { TableTreeItem(it, scheme, Clients.MYSQL) }
         this.children.addAll(list)
         list.forEach { it.initField() }
         if (!isLoadStatus) {

@@ -32,10 +32,4 @@ class MysqlItem(info: DbInfo) : DatabaseItem(info, MYSQL_ICON) {
         collationFolder.initFolder()
         userFolder.initFolder()
     }
-
-    override suspend fun openTerminal() {
-    }
-
-    override suspend fun edit() {
-    }
 }
