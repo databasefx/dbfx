@@ -7,6 +7,8 @@ import io.vertx.core.VertxOptions;
 import io.vertx.core.file.FileSystemOptions;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Javafx start class
@@ -15,6 +17,9 @@ import javafx.stage.Stage;
  * @since 1.0
  */
 public class Launcher extends Application {
+
+    private final static Logger LOG = LoggerFactory.getLogger(Launcher.class);
+
     /**
      * Global UI preference
      */
@@ -22,6 +27,7 @@ public class Launcher extends Application {
 
     @Override
     public void init() {
+        LOG.debug("Init vertx options.");
         var vertxOptions = new VertxOptions();
         var fsOptions = new FileSystemOptions();
         //Disable file cached
