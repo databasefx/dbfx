@@ -12,7 +12,7 @@ import cn.navigational.dbfx.kit.enums.Clients
 import cn.navigational.dbfx.utils.AlertUtils
 import cn.navigational.dbfx.kit.utils.StringUtils
 import cn.navigational.dbfx.kit.utils.VertxUtils
-import cn.navigational.dbfx.io.saveDbInfo
+import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
 import io.vertx.sqlclient.SqlConnectOptions
 import javafx.application.Platform
 import javafx.fxml.FXML
@@ -156,10 +156,7 @@ class CreateConView : View<Void>(CREATE_CON_PAGE) {
         val that = this
         GlobalScope.launch {
             info.uuid = StringUtils.uuid()
-            if (info.local) {
-                saveDbInfo(info)
-            }
-            SQLClientManager.manager.addDbInfo(info)
+            SQLClientManager.manager.updateDbInfo(info)
             Platform.runLater {
                 that.close()
             }
@@ -198,9 +195,7 @@ class CreateConView : View<Void>(CREATE_CON_PAGE) {
         init {
             val icon = db.icon
             if (icon != null && icon != "") {
-                val input = ClassLoader.getSystemResourceAsStream(icon)
-                val image = Image(input, 100.0, 80.0, false, true)
-                imageView.image = image
+                imageView.image = SvgImageTranscoder.svgToImage(icon)
             }
             label.text = client.name
             this.children.addAll(imageView, label)

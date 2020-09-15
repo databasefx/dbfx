@@ -13,7 +13,7 @@ import javafx.application.Platform
 import javafx.beans.property.ObjectProperty
 import javafx.beans.property.SimpleObjectProperty
 
-abstract class DatabaseItem(private val dbInfo: DbInfo, icon: String) : BaseTreeItem<String>(icon) {
+abstract class DatabaseItem(var dbInfo: DbInfo, icon: String) : BaseTreeItem<String>(icon) {
     /**
      *
      * Current database is connection?
@@ -35,9 +35,11 @@ abstract class DatabaseItem(private val dbInfo: DbInfo, icon: String) : BaseTree
 
         val sCon = handler.getMenuCoroutine("连接", OPEN_CONNECT, this::startConnect)
         val eCon = handler.getMenuCoroutine("断开", DIS_CONNECT, this::endConnect, true)
-        val ter = handler.getMenuUnCoroutine("SQL终端", SQL_TERMINAL, this::openTerminal, true)
         val flush = handler.getMenuCoroutine("刷新", FLUSH, this::flush, true)
+        val ter = handler.getMenuUnCoroutine("SQL终端", SQL_TERMINAL, this::openTerminal, true)
         handler.getMenuUnCoroutine("编辑连接", EDIT_CONNECT, this::edit)
+        //Remove current database
+        handler.getMenuUnCoroutine("移除连接", REMOVE_DB, { SQLClientManager.manager.removeDbInfo(this.dbInfo) })
 
         connectStatus.addListener { _, _, n ->
             Platform.runLater {
@@ -58,7 +60,7 @@ abstract class DatabaseItem(private val dbInfo: DbInfo, icon: String) : BaseTree
         if (client.value != null) {
             return client.value
         }
-        throw RuntimeException("Current sql client is null!")
+        throw RuntimeException("Current uuid:[${dbInfo.uuid}] not connection!")
     }
 
     /**
@@ -103,4 +105,24 @@ abstract class DatabaseItem(private val dbInfo: DbInfo, icon: String) : BaseTree
     private fun edit() {
         EditConView(dbInfo)
     }
+
+    /**
+     * Delete current database node
+     */
+    fun delete() {
+        //If current database is open status,fire close event.
+        for (menu in supportMenu) {
+            if (menu.text == "断开" && !menu.isDisable) {
+                menu.fire()
+                break
+            }
+        }
+        //Remove current TreeItem form parent node
+        parent.children.remove(this)
+    }
+
+    fun getConnectionStatus(): Boolean{
+        return this.connectStatus.get()
+    }
+
 }

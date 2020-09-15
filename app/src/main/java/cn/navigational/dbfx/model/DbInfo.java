@@ -52,6 +52,24 @@ public class DbInfo {
         return client;
     }
 
+    /**
+     * Update current database instance every field value
+     *
+     * @param info {@link DbInfo}
+     */
+    public void updateField(DbInfo info) {
+        this.name = info.name;
+        this.host = info.host;
+        this.port = info.port;
+        this.uuid = info.uuid;
+        this.local = info.local;
+        this.client = info.client;
+        this.username = info.username;
+        this.password = info.password;
+        this.database = info.database;
+        this.comment = info.comment;
+    }
+
     public void setClient(Clients client) {
         this.client = client;
     }

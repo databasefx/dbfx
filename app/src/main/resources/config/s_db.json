@@ -2,7 +2,7 @@
   {
     "name": "MySQL",
     "support": true,
-    "icon": "assets/icons/db/mysql.png",
+    "icon": "assets/icons/db/mysql.svg",
     "port": 3306,
     "database": "",
     "username": "root"
@@ -10,7 +10,7 @@
   {
     "name": "PostgreSQL",
     "support": true,
-    "icon": "assets/icons/db/postgres.png",
+    "icon": "assets/icons/db/postgres.svg",
     "port": 5432,
     "database": "postgres",
     "username": "postgres"
@@ -18,7 +18,7 @@
   {
     "name": "SqlServer",
     "support": false,
-    "icon": "assets/icons/db/sql_server.png",
+    "icon": "assets/icons/db/sql_server.svg",
     "port": 1432,
     "database": "",
     "username": ""
@@ -26,7 +26,7 @@
   {
     "name": "DB2",
     "support": false,
-    "icon": "assets/icons/db/db2.png",
+    "icon": "assets/icons/db/db2.svg",
     "port": 5000,
     "database": "",
     "username": ""

@@ -1,24 +1,50 @@
 package cn.navigational.dbfx.view
 
+import cn.navigational.dbfx.DatabaseMetaManager
+import cn.navigational.dbfx.SQLClientManager
 import cn.navigational.dbfx.View
 import cn.navigational.dbfx.config.APP_STYLE
+import cn.navigational.dbfx.config.EDIT_CON_PAGE
 import cn.navigational.dbfx.controller.ConInfoPaneController
+import cn.navigational.dbfx.controls.tree.CustomTreeView
+import cn.navigational.dbfx.model.DatabaseMeta
 import cn.navigational.dbfx.model.DbInfo
+import javafx.fxml.FXML
 import javafx.scene.Scene
+import javafx.scene.layout.BorderPane
 import javafx.stage.Modality
 
-class EditConView(private val dbInfo: DbInfo) : View<DbInfo>() {
-    private val controller = ConInfoPaneController()
+class EditConView(private val dbInfo: DbInfo) : View<DbInfo>(EDIT_CON_PAGE, dbInfo) {
 
-    init {
+    private lateinit var dbMeta: DatabaseMeta
+
+    private lateinit var controller: ConInfoPaneController
+
+    override fun onCreated(scene: Scene, dbInfo: DbInfo) {
+        //Init part filed
+        this.controller = ConInfoPaneController()
+        this.dbMeta = DatabaseMetaManager.manager.getDbMeta(dbInfo.client)
         controller.initEdit(dbInfo)
         this.title = "编辑连接"
-        this.width = 700.0
-        this.height = 600.0
-        this.scene = Scene(controller.parent)
         this.scene.stylesheets.add(APP_STYLE)
         this.initModality(Modality.WINDOW_MODAL)
-        this.isAlwaysOnTop = true
+        (scene.root as BorderPane).center = controller.parent
         this.show()
+    }
+
+    @FXML
+    fun cancel() {
+        this.close()
+    }
+
+    @FXML
+    fun saveEdit() {
+        val info = controller.getDbInfo(dbMeta)
+        info.uuid = this.dbInfo.uuid
+        //Update local cached
+        SQLClientManager.manager.updateDbInfo(info)
+        //Require use select whether restart connection.
+        CustomTreeView.customTreeView.updateConnection(info)
+        this.close()
     }
 }

@@ -59,7 +59,7 @@ public class BaseTreeItem<T> extends TreeItem<T> {
      * This state can be used when some a needs to display the load status.
      * </note>
      */
-    private final BooleanProperty loadStatus = new SimpleBooleanProperty();
+    private final BooleanProperty loadStatus = new SimpleBooleanProperty(false, "loadStatus");
 
     public boolean isLoadStatus() {
         return loadStatus.get();

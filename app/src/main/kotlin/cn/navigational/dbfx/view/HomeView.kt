@@ -1,62 +1,34 @@
 package cn.navigational.dbfx.view
 
-import cn.navigational.dbfx.BaseTreeItem
-import cn.navigational.dbfx.SQLClientManager
 import cn.navigational.dbfx.View
 import cn.navigational.dbfx.config.HOME_PAGE
 import cn.navigational.dbfx.handler.MainTabPaneHandler
 import cn.navigational.dbfx.controls.tree.CustomTreeView
-import cn.navigational.dbfx.model.DbInfo
-import cn.navigational.dbfx.controls.tree.NTreeCell
 import cn.navigational.dbfx.handler.closeAppOccurResource
-import cn.navigational.dbfx.navigator.impl.MysqlItem
-import cn.navigational.dbfx.navigator.impl.PgItem
-import cn.navigational.dbfx.kit.enums.Clients
 import cn.navigational.dbfx.utils.AlertUtils
-import javafx.collections.ListChangeListener
 import javafx.fxml.FXML
 import javafx.scene.Scene
 import javafx.scene.control.SplitPane
-import javafx.scene.control.TreeItem
 import javafx.stage.WindowEvent
 
 class HomeView : View<Void>(HOME_PAGE) {
-    @FXML
-    private lateinit var navigator: CustomTreeView
 
     @FXML
     private lateinit var splitPane: SplitPane
+
+    private lateinit var navigator: CustomTreeView
 
     private lateinit var tabHandler: MainTabPaneHandler
 
 
     override fun onCreated(scene: Scene?) {
-        this.title = "dbfx"
-        val that = this
+        this.navigator = CustomTreeView.customTreeView
+        this.splitPane.items.add(this.navigator)
+
         this.tabHandler = MainTabPaneHandler.handler
         this.splitPane.items.add(tabHandler.getTabPane())
         navigator.contextMenu = null
-        navigator.setCellFactory { NTreeCell() }
-        SQLClientManager.manager.getDbInfo().forEach(this::createClientTree)
-        SQLClientManager.manager.getDbInfo().addListener(ListChangeListener {
-            while (it.next()) {
-                if (it.wasAdded()) {
-                    it.addedSubList.forEach(that::createClientTree)
-                }
-            }
-        })
-    }
-
-    private fun createClientTree(it: DbInfo) {
-        val item: BaseTreeItem<String> = if (it.client == Clients.MYSQL) {
-            MysqlItem(it)
-        } else {
-            PgItem(it)
-        }
-        if (navigator.root == null) {
-            navigator.root = TreeItem()
-        }
-        navigator.root.children.add(item)
+        this.title = "dbfx"
     }
 
     @FXML

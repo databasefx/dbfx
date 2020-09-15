@@ -15,11 +15,12 @@ class NavigatorMenuHandler(private val list: MutableList<MenuItem>) {
         val item = MenuItem(text)
         this.list.add(item)
         val image = when (menu) {
+            MenuType.OPEN -> openImage
             MenuType.FLUSH -> flushImage
+            MenuType.REMOVE_DB -> removeImage
             MenuType.OPEN_CONNECT -> conImage
             MenuType.DIS_CONNECT -> disConImage
             MenuType.SQL_TERMINAL -> sqlTerImage
-            MenuType.OPEN -> openImage
             else -> editImage
         }
         item.graphic = ImageView(image)
@@ -68,6 +69,7 @@ class NavigatorMenuHandler(private val list: MutableList<MenuItem>) {
         private val conImage: Image = SvgImageTranscoder.svgToImage(CON_MINI_ICON)
         private val disConImage: Image = SvgImageTranscoder.svgToImage(DIS_CON_ICON)
         private val sqlTerImage: Image = SvgImageTranscoder.svgToImage(SQL_TER_ICON)
+        private val removeImage: Image = SvgImageTranscoder.svgToImage(REMOVE_ICON)
 
 
         enum class MenuType {
@@ -76,6 +78,7 @@ class NavigatorMenuHandler(private val list: MutableList<MenuItem>) {
             DIS_CONNECT,
             SQL_TERMINAL,
             EDIT_CONNECT,
+            REMOVE_DB,
             OPEN
         }
 

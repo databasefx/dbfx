@@ -14,6 +14,8 @@ import cn.navigational.dbfx.model.UiPreferences
 import io.vertx.core.json.JsonArray
 import io.vertx.core.json.JsonObject
 import io.vertx.kotlin.coroutines.await
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.io.File
 import java.util.*
 
@@ -43,23 +45,30 @@ const val defaultUiConfigPath = "config/ui_preferences.json"
 
 /**
  *
- * Save DbInfo to local file.
+ * Update DbInfo list to local file.
  *
- * @param info  db info
+ * @param list  Database info list
  *
  */
-suspend fun saveDbInfo(info: DbInfo) {
-    Objects.requireNonNull(info)
-    val json = JsonObject.mapFrom(info)
-    val password = json.getString(PASSWORD)
-    if (StringUtils.isNotEmpty(password)) {
-        val aseStr = AseAlgorithm.encrypt(password, DEFAULT_KEY)
-        json.put(PASSWORD, aseStr)
+fun updateDbInfoList(list: List<DbInfo>) {
+    GlobalScope.launch {
+        val array = JsonArray()
+        val fs = VertxUtils.getFileSystem()
+        for (info in list) {
+            //If current database info not need local cached skip.
+            if (!info.local) {
+                continue
+            }
+            val json = JsonObject.mapFrom(info)
+            val password = json.getString(PASSWORD)
+            if (StringUtils.isNotEmpty(password)) {
+                val aseStr = AseAlgorithm.encrypt(password, DEFAULT_KEY)
+                json.put(PASSWORD, aseStr)
+            }
+            array.add(json)
+        }
+        fs.writeFile(dbInfoPath, array.toBuffer())
     }
-    val fs = VertxUtils.getFileSystem()
-    val array = getDbFile()
-    array.add(json)
-    fs.writeFile(dbInfoPath, array.toBuffer())
 }
 
 /**
@@ -107,7 +116,7 @@ private suspend fun loadDbInfo() {
             val deStr = AseAlgorithm.decrypt(info.password, DEFAULT_KEY)
             info.password = deStr
         }
-        SQLClientManager.manager.addDbInfo(info)
+        SQLClientManager.manager.getDbInfo().add(info)
     }
 }
 

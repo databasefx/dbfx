@@ -1,8 +1,10 @@
 package cn.navigational.dbfx.config
 
+//App and menu icon
 const val APP_STYLE = "css/app_style.css"
 const val APP_ICON = "assets/icons/icon.svg"
 const val OPEN_ICON = "assets/icons/db/mini/open.svg"
+const val REMOVE_ICON = "assets/icons/db/mini/remove_db.svg"
 const val CON_MINI_ICON = "assets/icons/mini/open_con.svg"
 const val DIS_CON_ICON = "assets/icons/mini/dis_con.svg"
 const val SQL_TER_ICON = "assets/icons/mini/terminal.svg"

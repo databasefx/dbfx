@@ -6,6 +6,7 @@ import cn.navigational.dbfx.config.CON_INFO_PANE
 import cn.navigational.dbfx.model.DatabaseMeta
 import cn.navigational.dbfx.model.DbInfo
 import cn.navigational.dbfx.kit.enums.Clients
+import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
 import javafx.fxml.FXML
 import javafx.scene.control.*
 import javafx.scene.image.Image
@@ -56,12 +57,12 @@ class ConInfoPaneController : Controller<Void, BorderPane>(CON_INFO_PANE) {
         port.text = meta.port.toString()
         username.text = meta.username
         dDescribe.text = "Create a ${meta.name} Database Connection."
-        this.updateIcon(meta.icon)
+        this.icon.image = SvgImageTranscoder.svgToImage(meta.icon)
     }
 
     fun initEdit(info: DbInfo) {
         val meta = DatabaseMetaManager.manager.getDbMeta(info.client)
-        this.updateIcon(meta.icon)
+        this.icon.image = SvgImageTranscoder.svgToImage(meta.icon)
         this.dDescribe.text = "Edit a ${meta.name} Database Connection."
         this.name.text = info.name
         this.local.isSelected = info.local
@@ -91,10 +92,5 @@ class ConInfoPaneController : Controller<Void, BorderPane>(CON_INFO_PANE) {
         }
         info.database = database
         return info
-    }
-
-    private fun updateIcon(path: String) {
-        val im = ClassLoader.getSystemResourceAsStream(path)
-        icon.image = Image(im, 130.0, 110.0, false, true)
     }
 }

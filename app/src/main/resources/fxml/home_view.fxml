@@ -67,9 +67,7 @@
         </VBox>
     </top>
     <center>
-        <SplitPane dividerPositions="0.2" fx:id="splitPane">
-            <CustomTreeView fx:id="navigator" showRoot="false" styleClass="l-navigator"/>
-        </SplitPane>
+        <SplitPane dividerPositions="0.2" fx:id="splitPane"/>
     </center>
     <bottom>
         <HBox styleClass="b-navigator"/>

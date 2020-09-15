@@ -1,6 +1,6 @@
 package cn.navigational.dbfx
 
-import cn.navigational.dbfx.handler.MainTabPaneHandler
+import cn.navigational.dbfx.io.updateDbInfoList
 import cn.navigational.dbfx.model.DbInfo
 import cn.navigational.dbfx.model.SQLClient
 import cn.navigational.dbfx.kit.SqlClientFactory
@@ -72,7 +72,8 @@ class SQLClientManager {
      */
     suspend fun removeClient(uuid: String) {
         if (!clients.containsKey(uuid)) {
-            throw RuntimeException("Target $uuid not found!")
+            println("Target $uuid not found!")
+            return
         }
         val client = clients[uuid]!!
         client.client.close().await()
@@ -98,8 +99,53 @@ class SQLClientManager {
         return dbList
     }
 
-    fun addDbInfo(info: DbInfo) {
-        this.dbList.add(info)
+    /**
+     *
+     * From cached get a sql client instance if exist,or else get null
+     *@param uuid Sql client uuid
+     */
+    fun getClient(uuid: String): SQLClient? {
+        var client: SQLClient? = null
+        if (this.clients.containsKey(uuid)) {
+            client = this.clients[uuid]
+        }
+        return client
+    }
+
+    /**
+     *Remove database info from list
+     *
+     * @param info Target database info
+     */
+    fun removeDbInfo(info: DbInfo) {
+        if (!this.dbList.contains(info)) {
+            return
+        }
+        this.dbList.remove(info)
+        //Update cached database info
+        updateDbInfoList(this.dbList)
+    }
+
+    /**
+     *
+     * Update/Add database info
+     * @param dbInfo database info
+     */
+    fun updateDbInfo(dbInfo: DbInfo) {
+        var index = -1
+        val uuid = dbInfo.uuid
+        this.dbList.forEachIndexed { _index, info ->
+            if (info.uuid == uuid) {
+                index = _index
+            }
+        }
+        //If current list not exist target inf,add a new database info
+        if (index == -1) {
+            this.dbList.add(dbInfo)
+        } else {
+            this.dbList[index].updateField(dbInfo)
+        }
+        updateDbInfoList(this.dbList)
     }
 
     suspend fun closeSQLClient(client: SqlClient) {
