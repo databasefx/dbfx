@@ -4,6 +4,7 @@ import cn.navigational.dbfx.navigator.FolderItem
 import cn.navigational.dbfx.navigator.scheme.MySchemeItem
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.enums.Clients
+import cn.navigational.dbfx.kit.utils.StringUtils
 
 class MySchemeFolder : FolderItem() {
     init {
@@ -11,15 +12,19 @@ class MySchemeFolder : FolderItem() {
     }
 
     override suspend fun initFolder() {
-        val list = SQLQuery.getClQuery(Clients.MYSQL).showDatabase(currentClient.client)
-        val ss = arrayListOf<MySchemeItem>()
-        for (s in list) {
-            val my = MySchemeItem(s)
-            ss.add(my)
-        }
         if (this.children.isNotEmpty()) {
             this.children.clear()
         }
-        this.children.addAll(ss)
+        val list = SQLQuery.getClQuery(Clients.MYSQL).showDatabase(currentClient.client)
+        //if specify database->show specify database
+        val database = currentClient.dbInfo.database
+        if (StringUtils.isNotEmpty(database)) {
+            list.contains(database).also {
+                if (it)
+                    this.children.add(MySchemeItem(database))
+            }
+            return
+        }
+        this.children.addAll(list.map { MySchemeItem(it) })
     }
 }

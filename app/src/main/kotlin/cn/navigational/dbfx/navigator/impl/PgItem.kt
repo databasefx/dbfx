@@ -9,7 +9,7 @@ import cn.navigational.dbfx.navigator.folder.pg.PgDbFolder
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.enums.Clients
 
-class PgItem(info: DbInfo) : DatabaseItem(info, PG_ICON) {
+class PgItem(uuid: String) : DatabaseItem(uuid, PG_ICON) {
 
     private val schemeFolder = PgDbFolder()
     private val pgRoleFolder = PgRoleFolder()
@@ -17,8 +17,8 @@ class PgItem(info: DbInfo) : DatabaseItem(info, PG_ICON) {
     override suspend fun startConnect() {
         this.initClient()
         val query = SQLQuery.getClQuery(Clients.POSTGRESQL)
-        getSQLClient()!!.version = query.showDbVersion(getSQLClient()!!.client)
-        SQLClientManager.manager.addClient(getSQLClient()!!)
+        getSQLClient().version = query.showDbVersion(getSQLClient().client)
+        SQLClientManager.manager.addClient(getSQLClient())
         this.flush()
         connectStatus.value = true
     }

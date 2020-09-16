@@ -10,6 +10,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 
 import javafx.scene.image.ImageView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +29,14 @@ public class BaseTreeItem<T> extends TreeItem<T> {
      */
     private final List<MenuItem> menuItems = new ArrayList<>();
 
+    protected final Logger logger;
+
     public BaseTreeItem() {
+        this.logger = LoggerFactory.getLogger(this.getClass());
     }
 
     public BaseTreeItem(String icon) {
+        this();
         this.setIcon(icon);
     }
 
@@ -90,6 +96,7 @@ public class BaseTreeItem<T> extends TreeItem<T> {
             }
             parent = (BaseTreeItem<T>) temp;
         }
+        logger.error("Not found any DatabaseTreeItem node,current node {}", this);
         throw new RuntimeException("Not found any DatabaseTreeItem node!");
     }
 
@@ -117,6 +124,7 @@ public class BaseTreeItem<T> extends TreeItem<T> {
             parent = (BaseTreeItem<T>) temp;
         }
         if (StringUtils.isEmpty(tabPath.toString())) {
+            logger.error("Not found every path for [{}]", this);
             throw new RuntimeException("Not found every path for [" + this + "]");
         }
         return tabPath.toString();

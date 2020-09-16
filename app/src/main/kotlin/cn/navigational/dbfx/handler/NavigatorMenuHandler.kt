@@ -8,6 +8,8 @@ import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 class NavigatorMenuHandler(private val list: MutableList<MenuItem>) {
 
@@ -41,6 +43,7 @@ class NavigatorMenuHandler(private val list: MutableList<MenuItem>) {
                 try {
                     handler()
                 } catch (e: Exception) {
+                    logger.error("Use coroutine execute menu action happen error.", e)
                     AlertUtils.showExDialog("操作失败", e)
                 }
             }
@@ -55,6 +58,7 @@ class NavigatorMenuHandler(private val list: MutableList<MenuItem>) {
             try {
                 handler()
             } catch (e: Exception) {
+                logger.error("Use not coroutine execute menu action happen error.", e)
                 AlertUtils.showExDialog("操作失败", e)
             }
         }
@@ -70,6 +74,7 @@ class NavigatorMenuHandler(private val list: MutableList<MenuItem>) {
         private val disConImage: Image = SvgImageTranscoder.svgToImage(DIS_CON_ICON)
         private val sqlTerImage: Image = SvgImageTranscoder.svgToImage(SQL_TER_ICON)
         private val removeImage: Image = SvgImageTranscoder.svgToImage(REMOVE_ICON)
+        private val logger: Logger = LoggerFactory.getLogger(NavigatorMenuHandler::class.java)
 
 
         enum class MenuType {

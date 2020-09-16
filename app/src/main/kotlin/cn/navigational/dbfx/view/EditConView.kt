@@ -14,15 +14,16 @@ import javafx.scene.Scene
 import javafx.scene.layout.BorderPane
 import javafx.stage.Modality
 
-class EditConView(private val dbInfo: DbInfo) : View<DbInfo>(EDIT_CON_PAGE, dbInfo) {
+class EditConView(private val uuid: String) : View<String>(EDIT_CON_PAGE, uuid) {
 
     private lateinit var dbMeta: DatabaseMeta
 
     private lateinit var controller: ConInfoPaneController
 
-    override fun onCreated(scene: Scene, dbInfo: DbInfo) {
+    override fun onCreated(scene: Scene, uuid: String) {
         //Init part filed
         this.controller = ConInfoPaneController()
+        val dbInfo = SQLClientManager.manager.getDbInfo(uuid)
         this.dbMeta = DatabaseMetaManager.manager.getDbMeta(dbInfo.client)
         controller.initEdit(dbInfo)
         this.title = "编辑连接"
@@ -40,7 +41,7 @@ class EditConView(private val dbInfo: DbInfo) : View<DbInfo>(EDIT_CON_PAGE, dbIn
     @FXML
     fun saveEdit() {
         val info = controller.getDbInfo(dbMeta)
-        info.uuid = this.dbInfo.uuid
+        info.uuid = uuid
         //Update local cached
         SQLClientManager.manager.updateDbInfo(info)
         //Require use select whether restart connection.

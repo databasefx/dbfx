@@ -6,7 +6,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import java.net.URL?>
-<?import cn.navigational.dbfx.controls.tree.CustomTreeView?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             prefHeight="800.0" prefWidth="1000.0">
@@ -16,7 +15,10 @@
     <top>
         <VBox>
             <MenuBar>
-                <Menu text="文件(F)"/>
+                <Menu text="文件"/>
+                <Menu text="帮助">
+                    <MenuItem text="关于" onAction="#about"/>
+                </Menu>
             </MenuBar>
             <ToolBar>
                 <Button onAction="#createCon">

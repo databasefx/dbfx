@@ -10,6 +10,7 @@ import io.vertx.sqlclient.PoolOptions
 import io.vertx.sqlclient.SqlClient
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
+import org.slf4j.LoggerFactory
 import java.util.concurrent.ConcurrentHashMap
 
 /**
@@ -33,7 +34,13 @@ class SQLClientManager {
      */
     private val clients: MutableMap<String, SQLClient> = ConcurrentHashMap()
 
-    fun createClient(info: DbInfo): SQLClient {
+    /**
+     *
+     * Use a database info create corresponding sql client
+     *
+     * @param info Target database info
+     */
+    private fun createClient(info: DbInfo): SQLClient {
 
         val cl = info.client
         val options = SqlClientFactory.createConnectionOptions(cl)
@@ -52,6 +59,10 @@ class SQLClientManager {
         return client
     }
 
+    fun createClient(uuid: String): SQLClient {
+        return createClient(getDbInfo(uuid))
+    }
+
     /**
      * Add client into  clients
      * @param client Target client
@@ -59,10 +70,11 @@ class SQLClientManager {
     fun addClient(client: SQLClient) {
         val uuid = client.uuid
         if (clients.containsKey(uuid)) {
+            logger.error("Repeat add client uuid:{}", uuid)
             throw RuntimeException("Repeat add client [uuid:$uuid]")
         }
         clients[uuid] = client
-        println("Success add ${client.uuid} into clients")
+        logger.debug("Success add {} into clients", client.uuid)
     }
 
     /**
@@ -72,13 +84,13 @@ class SQLClientManager {
      */
     suspend fun removeClient(uuid: String) {
         if (!clients.containsKey(uuid)) {
-            println("Target $uuid not found!")
+            logger.debug("Target {} not found!", uuid)
             return
         }
         val client = clients[uuid]!!
         client.client.close().await()
         clients.remove(uuid)
-        println("Success remove $uuid client.")
+        logger.debug("Success remove {} client.", uuid)
     }
 
     /**
@@ -90,13 +102,28 @@ class SQLClientManager {
         clients.keys.forEach { key ->
             val client = clients[key]!!
             client.client.close().await()
-            println("Success close $key client.")
+            logger.debug("Success close {} client.", key)
         }
         clients.clear()
     }
 
     fun getDbInfo(): ObservableList<DbInfo> {
         return dbList
+    }
+
+    /**
+     *From database info list get a info according by uuid
+     *
+     * @param uuid Database info uuid
+     */
+    fun getDbInfo(uuid: String): DbInfo {
+        for (db in this.dbList) {
+            if (db.uuid == uuid) {
+                return db
+            }
+        }
+        logger.debug("Current [uuid={}] not found!", uuid)
+        throw RuntimeException("Current [uuid=$uuid] not found!")
     }
 
     /**
@@ -115,10 +142,17 @@ class SQLClientManager {
     /**
      *Remove database info from list
      *
-     * @param info Target database info
+     * @param uuid Target database info uuid
      */
-    fun removeDbInfo(info: DbInfo) {
-        if (!this.dbList.contains(info)) {
+    fun removeDbInfo(uuid: String) {
+        var info: DbInfo? = null
+        for (dbInfo in this.dbList) {
+            if (dbInfo.uuid == uuid) {
+                info = dbInfo
+                break
+            }
+        }
+        if (info == null) {
             return
         }
         this.dbList.remove(info)
@@ -158,6 +192,9 @@ class SQLClientManager {
          * Default Sql client pool options
          */
         private val defaultPoolOptions = PoolOptions().setMaxSize(10).setMaxWaitQueueSize(10)
+
+        private val logger = LoggerFactory.getLogger(SQLClientManager::class.java)
+
         val manager: SQLClientManager by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) { SQLClientManager() }
     }
 }

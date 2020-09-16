@@ -6,6 +6,10 @@ import io.vertx.core.VertxOptions;
 import io.vertx.core.eventbus.Message;
 import io.vertx.core.eventbus.MessageConsumer;
 import io.vertx.core.file.FileSystem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.logging.LogManager;
 
 /**
  * Vertx utils
@@ -14,13 +18,16 @@ import io.vertx.core.file.FileSystem;
  * @since 1.0
  */
 public class VertxUtils {
-
     private static Vertx vertx;
 
     private volatile static boolean init = false;
 
+    private static final Logger LOG = LoggerFactory.getLogger(VertxUtils.class);
+
+
     public static synchronized Vertx initVertx(VertxOptions options) {
         if (init) {
+            LOG.info("Repeat init Vertx instance.");
             throw new RuntimeException("Vertx only init once.");
         }
         if (options == null) {
@@ -70,9 +77,9 @@ public class VertxUtils {
         }
         vertx.close(ar -> {
             if (ar.failed()) {
-                System.out.println("Close vertex failed:[" + ar.cause().getMessage() + "]");
+                LOG.error("Close vertex failed", ar.cause());
             } else {
-                System.out.println("Success close vertex.");
+                LOG.debug("Success close vertex.");
             }
         });
     }

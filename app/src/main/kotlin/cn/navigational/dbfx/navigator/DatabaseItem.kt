@@ -13,7 +13,7 @@ import javafx.application.Platform
 import javafx.beans.property.ObjectProperty
 import javafx.beans.property.SimpleObjectProperty
 
-abstract class DatabaseItem(var dbInfo: DbInfo, icon: String) : BaseTreeItem<String>(icon) {
+abstract class DatabaseItem(val uuid: String, icon: String) : BaseTreeItem<String>(icon) {
     /**
      *
      * Current database is connection?
@@ -29,17 +29,15 @@ abstract class DatabaseItem(var dbInfo: DbInfo, icon: String) : BaseTreeItem<Str
     private val client: ObjectProperty<SQLClient> = SimpleObjectProperty(null, "sqlClient")
 
     init {
-
-        this.value = dbInfo.name
+        this.update()
         val handler = NavigatorMenuHandler.init(supportMenu)
-
         val sCon = handler.getMenuCoroutine("连接", OPEN_CONNECT, this::startConnect)
         val eCon = handler.getMenuCoroutine("断开", DIS_CONNECT, this::endConnect, true)
         val flush = handler.getMenuCoroutine("刷新", FLUSH, this::flush, true)
         val ter = handler.getMenuUnCoroutine("SQL终端", SQL_TERMINAL, this::openTerminal, true)
         handler.getMenuUnCoroutine("编辑连接", EDIT_CONNECT, this::edit)
         //Remove current database
-        handler.getMenuUnCoroutine("移除连接", REMOVE_DB, { SQLClientManager.manager.removeDbInfo(this.dbInfo) })
+        handler.getMenuUnCoroutine("移除连接", REMOVE_DB, { SQLClientManager.manager.removeDbInfo(uuid) })
 
         connectStatus.addListener { _, _, n ->
             Platform.runLater {
@@ -53,14 +51,15 @@ abstract class DatabaseItem(var dbInfo: DbInfo, icon: String) : BaseTreeItem<Str
 
     protected suspend fun initClient() {
         endConnect()
-        client.value = SQLClientManager.manager.createClient(dbInfo)
+        client.value = SQLClientManager.manager.createClient(uuid)
     }
 
     fun getSQLClient(): SQLClient {
         if (client.value != null) {
             return client.value
         }
-        throw RuntimeException("Current uuid:[${dbInfo.uuid}] not connection!")
+        logger.error("Current uuid:{} not connection!", uuid)
+        throw RuntimeException("Current uuid:[${uuid}] not connection!")
     }
 
     /**
@@ -74,12 +73,11 @@ abstract class DatabaseItem(var dbInfo: DbInfo, icon: String) : BaseTreeItem<Str
      *
      */
     private suspend fun endConnect() {
-        val that = this
         if (client.value !== null) {
             SQLClientManager.manager.removeClient(client.value.uuid)
             client.value = null
         }
-        that.children.clear()
+        this.children.clear()
         connectStatus.value = false
     }
 
@@ -103,7 +101,7 @@ abstract class DatabaseItem(var dbInfo: DbInfo, icon: String) : BaseTreeItem<Str
      * Edit current database
      */
     private fun edit() {
-        EditConView(dbInfo)
+        EditConView(uuid)
     }
 
     /**
@@ -121,8 +119,20 @@ abstract class DatabaseItem(var dbInfo: DbInfo, icon: String) : BaseTreeItem<Str
         parent.children.remove(this)
     }
 
-    fun getConnectionStatus(): Boolean{
+    fun getConnectionStatus(): Boolean {
         return this.connectStatus.get()
+    }
+
+    /**
+     * Update current database base info,for example value,icon...etc.
+     */
+    fun update() {
+        val info = getDbInfo()
+        this.value = info.name
+    }
+
+    private fun getDbInfo(): DbInfo {
+        return SQLClientManager.manager.getDbInfo(uuid)
     }
 
 }

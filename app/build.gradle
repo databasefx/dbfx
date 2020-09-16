@@ -21,7 +21,7 @@ jar {
         //添加依懒到打包文件
         configurations.runtime.collect { zipTree(it) }
     }
-    archiveName("dbfx.jar")
+    archiveFileName = "dbfx.jar"
     manifest {
         attributes 'Multi-Release': true
         attributes 'Main-Class': mainClassName
@@ -31,10 +31,6 @@ jar {
         attributes 'App-Website': 'http://navigational.cn'
     }
 }
-gluonClient {
-    target="android"
-}
-
 
 dependencies {
     compile project(":kit")

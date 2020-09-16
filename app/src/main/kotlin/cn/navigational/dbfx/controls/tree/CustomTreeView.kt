@@ -1,6 +1,5 @@
 package cn.navigational.dbfx.controls.tree
 
-import cn.navigational.dbfx.BaseTreeItem
 import cn.navigational.dbfx.SQLClientManager
 import cn.navigational.dbfx.kit.enums.Clients
 import cn.navigational.dbfx.model.DbInfo
@@ -41,10 +40,10 @@ class CustomTreeView private constructor() : TreeView<String>() {
      * @param it Database info
      */
     private fun createClientTree(it: DbInfo) {
-        val item: BaseTreeItem<String> = if (it.client == Clients.MYSQL) {
-            MysqlItem(it)
-        } else {
-            PgItem(it)
+        val uuid = it.uuid
+        val item = when (it.client) {
+            Clients.MYSQL -> MysqlItem(uuid)
+            else -> PgItem(uuid)
         }
         if (this.root == null) {
             this.root = TreeItem()
@@ -60,7 +59,7 @@ class CustomTreeView private constructor() : TreeView<String>() {
     private fun deleteClientTree(it: DbInfo) {
         for (child in root.children) {
             val item = child as DatabaseItem
-            if (it.uuid == item.dbInfo.uuid) {
+            if (it.uuid == item.uuid) {
                 item.delete()
                 break
             }
@@ -68,19 +67,13 @@ class CustomTreeView private constructor() : TreeView<String>() {
     }
 
     fun updateConnection(dbInfo: DbInfo) {
-        var item: DatabaseItem? = null
-        for (child in root.children) {
-            val temp = child as DatabaseItem
-            if (temp.dbInfo.uuid == dbInfo.uuid) {
-                item = temp
-                break
-            }
+        val list = root.children.filter { (it as DatabaseItem).uuid == dbInfo.uuid }
+        if (list.isEmpty()) {
+            return
         }
-        //If current database not connection not any
-        if (item == null || !item.getConnectionStatus()) {
-            if (item != null) {
-                item.dbInfo = dbInfo
-            }
+        val item = list[0] as DatabaseItem
+        item.update()
+        if (!item.getConnectionStatus()) {
             return
         }
         val result = AlertUtils.showSimpleConfirmDialog("当前连接已改变,是否重新连接?")

@@ -16,6 +16,8 @@ import io.vertx.core.json.JsonObject
 import io.vertx.kotlin.coroutines.await
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import java.io.File
 import java.util.*
 
@@ -42,6 +44,11 @@ val uiConfigPath = "$APP_HOME/ui_preferences.json"
  * Default ui config file path
  */
 const val defaultUiConfigPath = "config/ui_preferences.json"
+
+/**
+ * slf4j logger
+ */
+private val logger = LoggerFactory.getLogger("DbFxIO")
 
 /**
  *
@@ -129,7 +136,7 @@ private suspend fun loadUiConfig() {
         val json = fs.readFile(uiConfigPath).await().toJsonObject()
         Launcher.uiPreference = json.mapTo(UiPreferences::class.java)
     } catch (e: Exception) {
-        println("Load UI config failed:[${e.message}],so use default UI config")
+        logger.info("Load UI config failed:[{}],so use default UI config", e.message)
         val json = fs.readFile(defaultUiConfigPath).await().toJsonObject()
         Launcher.uiPreference = json.mapTo(UiPreferences::class.java)
         //use default UI preference override block UI preference file
@@ -149,7 +156,7 @@ fun flushUiPreference() {
         if (it.succeeded()) {
             return@onComplete
         }
-        println("Flush UI preference failed cause:[${it.cause().message}")
+        logger.debug("Flush UI preference failed cause:[{}]", it.cause().message)
     }
 }
 
@@ -170,11 +177,22 @@ private suspend fun loadDbMetaData() {
 }
 
 /**
+ * Output application banner info
+ */
+private suspend fun outputBan() {
+    val fs = VertxUtils.getFileSystem()
+    val buffer = fs.readFile("banner.txt").await()
+    val bannerTxt = buffer.toString()
+    logger.info("\r\n{}", bannerTxt)
+}
+
+/**
  *
  *Init project io
  *
  */
 suspend fun init() {
+    outputBan()
     checkDir()
     loadDbInfo()
     loadUiConfig()

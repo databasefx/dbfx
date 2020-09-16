@@ -24,11 +24,13 @@ class HomeView : View<Void>(HOME_PAGE) {
     override fun onCreated(scene: Scene?) {
         this.navigator = CustomTreeView.customTreeView
         this.splitPane.items.add(this.navigator)
-
         this.tabHandler = MainTabPaneHandler.handler
         this.splitPane.items.add(tabHandler.getTabPane())
-        navigator.contextMenu = null
         this.title = "dbfx"
+    }
+
+    @FXML
+    fun about() {
     }
 
     @FXML

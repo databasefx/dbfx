@@ -27,7 +27,7 @@ public class Launcher extends Application {
 
     @Override
     public void init() {
-        LOG.debug("Init vertx options.");
+        LOG.debug("Start init dbfx options.");
         var vertxOptions = new VertxOptions();
         var fsOptions = new FileSystemOptions();
         //Disable file cached
@@ -45,6 +45,7 @@ public class Launcher extends Application {
 
     @Override
     public void stop() throws Exception {
+        LOG.debug("Stop current application.");
         super.stop();
         VertxUtils.close();
     }

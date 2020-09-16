@@ -10,7 +10,7 @@ import cn.navigational.dbfx.navigator.folder.mysql.MyUserFolder
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.enums.Clients
 
-class MysqlItem(info: DbInfo) : DatabaseItem(info, MYSQL_ICON) {
+class MysqlItem(uuid: String) : DatabaseItem(uuid, MYSQL_ICON) {
     private val userFolder = MyUserFolder()
     private val schemeFolder = MySchemeFolder()
     private val collationFolder = MyCollationFolder()

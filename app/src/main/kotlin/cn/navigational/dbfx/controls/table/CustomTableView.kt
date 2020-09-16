@@ -13,11 +13,11 @@ class CustomTableView : TableView<ObservableList<StringProperty>>() {
     /**
      * table setting property
      */
-    private val tableSettingProperty: ObjectProperty<TableSetting>
+    private val tableSettingProperty: ObjectProperty<TableSetting> = SimpleObjectProperty(null, "tableSetting", Launcher.uiPreference.tableSetting)
 
     init {
-        //Default start select cell
-        this.tableSettingProperty = SimpleObjectProperty(null, "tableSetting", Launcher.uiPreference.tableSetting)
+        isEditable = true
+        selectionModel.isCellSelectionEnabled = true
     }
 
     /**

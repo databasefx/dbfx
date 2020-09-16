@@ -1,6 +1,8 @@
 package cn.navigational.dbfx;
 
 import javafx.fxml.FXMLLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -11,6 +13,9 @@ import java.io.IOException;
  * @since 1.0
  */
 public class FXMLHelper {
+
+    private static final Logger LOG = LoggerFactory.getLogger(FXMLHelper.class);
+
     /**
      * Load fxml view
      *
@@ -23,6 +28,7 @@ public class FXMLHelper {
         try {
             root = fxLoader.load(ClassLoader.getSystemResourceAsStream(path));
         } catch (IOException e) {
+            LOG.debug("Load fxml view happen error.", e);
             throw new RuntimeException("Load fxml view failed path=[" + path + "].");
         }
         return root;

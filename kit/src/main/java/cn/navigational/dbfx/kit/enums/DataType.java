@@ -20,7 +20,7 @@ public enum DataType {
      */
     DATE,
     /**
-     * bin
+     * Unknown data type
      */
-    BIN
+    UNKNOWN
 }

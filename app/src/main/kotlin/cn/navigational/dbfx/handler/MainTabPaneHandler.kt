@@ -3,6 +3,7 @@ package cn.navigational.dbfx.handler
 import cn.navigational.dbfx.controls.AbstractBaseTab
 import javafx.application.Platform
 import javafx.scene.control.TabPane
+import org.slf4j.LoggerFactory
 import java.util.concurrent.ConcurrentHashMap
 
 class MainTabPaneHandler private constructor() {
@@ -32,7 +33,7 @@ class MainTabPaneHandler private constructor() {
             tab.close()
         }
         this.map.remove(path)
-        println("Tab[path=$path] close success!")
+        logger.debug("Tab[path={}] close success!", path)
     }
 
     suspend fun addTabToPane(tab: AbstractBaseTab, tabPath: String): AbstractBaseTab {
@@ -40,7 +41,7 @@ class MainTabPaneHandler private constructor() {
             map[tabPath]!!
         } else {
             map[tabPath] = tab
-            println("Success add $tabPath into TabPane")
+            logger.debug("Success add {} into TabPane", tabPath)
             tab
         }
         Platform.runLater {
@@ -71,6 +72,10 @@ class MainTabPaneHandler private constructor() {
      *
      */
     companion object {
+        private val logger = LoggerFactory.getLogger(MainTabPaneHandler::class.java)
+        /**
+         * Single instance
+         */
         val handler: MainTabPaneHandler by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) { MainTabPaneHandler() }
     }
 
