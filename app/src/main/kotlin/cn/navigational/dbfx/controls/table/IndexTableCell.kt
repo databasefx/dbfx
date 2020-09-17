@@ -14,10 +14,10 @@ class IndexTableCell : TableCell<ObservableList<StringProperty>, String>() {
 
     override fun updateItem(item: String?, empty: Boolean) {
         super.updateItem(item, empty)
-        if (empty) {
+        if (empty || tableRow == null) {
             text = null
             return
         }
-        text = item
+        text = (tableRow.index+1).toString()
     }
 }

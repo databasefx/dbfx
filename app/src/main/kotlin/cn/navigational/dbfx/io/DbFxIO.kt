@@ -185,7 +185,6 @@ private suspend fun loadDbMetaData() {
  * load java MANIFEST.MF file
  *
  * @return Key value pair formal attribute
- * @throws IOException IO exception may occur
  */
 fun loadManifest(): Map<String, String> {
     val protocol = ClassLoader.getSystemResource("").protocol
@@ -196,7 +195,7 @@ fun loadManifest(): Map<String, String> {
         val mf = VertxUtils.getFileSystem().readFileBlocking(buildPath).toString()
         val array = mf.split("\r\n")
         for (s in array) {
-            if (s.isEmpty()){
+            if (s.isEmpty()) {
                 continue
             }
             val k = s.split(":", limit = 2).toTypedArray()
