@@ -14,7 +14,18 @@ gradlew run
 NOTE : DatabaseFX requires Java 15 and above.
 
 ## Snapshots
+
+### Create  connection
 ![Loading Fail](./SNAPSHOTS/a.png)
+
+### Edit connection
+![Loading Fail](./SNAPSHOTS/b.png)
+
+### Data table
+![Loading Fail](./SNAPSHOTS/c.png)
+
+### About
+![Loading Fail](SNAPSHOTS/d.png)
 
 
 
