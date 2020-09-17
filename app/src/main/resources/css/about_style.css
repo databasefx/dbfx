@@ -1,0 +1,42 @@
+.root {
+    -fx-background-color: #2b2b2b;
+}
+
+.top-box *, .grid-pane, .grid-pane * {
+    -fx-background-color: transparent;
+}
+
+.top-box {
+    -fx-padding: 0.1em;
+    -fx-background-color: linear-gradient(to right, #0717AB 0%, #9C000B 50%, #1C0657 100%);
+}
+
+.top-box HBox {
+    -fx-alignment: center;
+}
+
+.version, .app-name {
+    -fx-font-weight: bold;
+}
+
+.app-name {
+    -fx-font-size: 40em;
+    -fx-text-fill: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 0, 0, 0, 1);
+}
+
+.grid-pane {
+    -fx-hgap: 1em;
+    -fx-vgap: 1em;
+    -fx-padding: 1em;
+    -fx-alignment: center;
+}
+
+.mark-text {
+    -fx-text-fill: #3448c2;
+    -fx-cursor: hand;
+}
+
+#close {
+    -fx-border-width: 0;
+}

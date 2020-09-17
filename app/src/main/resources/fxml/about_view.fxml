@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefWidth="700.0" styleClass="root" xmlns="http://javafx.com/javafx/11.0.2"
+            xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@/css/app_style.css"/>
+        <URL value="@/css/about_style.css"/>
+    </stylesheets>
+    <top>
+        <StackPane styleClass="top-box">
+            <VBox StackPane.alignment="CENTER">
+                <HBox>
+                    <ImageView fx:id="icon"/>
+                    <Label styleClass="app-name">DBFX</Label>
+                </HBox>
+                <HBox>
+                    <Label fx:id="version" styleClass="version"/>
+                </HBox>
+            </VBox>
+
+            <Button fx:id="close" StackPane.alignment="TOP_RIGHT">
+                <tooltip>
+                    <Tooltip text="关闭"/>
+                </tooltip>
+            </Button>
+        </StackPane>
+    </top>
+    <center>
+        <GridPane styleClass="grid-pane">
+            <Label fx:id="bTime"/>
+            <Label fx:id="runtime" GridPane.rowIndex="1"/>
+            <Label fx:id="vm" GridPane.rowIndex="2"/>
+            <HBox GridPane.rowIndex="3">
+                <Label text="官方网站: "/>
+                <Label text="http://navigational.cn/" styleClass="mark-text"/>
+            </HBox>
+            <HBox GridPane.rowIndex="4">
+                <Label text="官方仓库: "/>
+                <Label text="https://github.com/databasefx/dbfx" styleClass="mark-text"/>
+            </HBox>
+            <HBox GridPane.rowIndex="5">
+                <Label text="许可协议: "/>
+                <Label text="http://www.apache.org/licenses/LICENSE-2.0.html" styleClass="mark-text"/>
+            </HBox>
+            <HBox GridPane.rowIndex="6">
+                <Label text="Powered by "/>
+                <Label text="open-source software" styleClass="mark-text"/>
+            </HBox>
+            <Label fx:id="copyright" GridPane.rowIndex="7"/>
+        </GridPane>
+    </center>
+</BorderPane>

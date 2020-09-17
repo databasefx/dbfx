@@ -1,3 +1,6 @@
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+
 plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.9'
@@ -26,9 +29,11 @@ jar {
         attributes 'Multi-Release': true
         attributes 'Main-Class': mainClassName
         attributes 'App-Name': rootProject.name
-        attributes "Manifest-Version": project.version
+        attributes "App-Version": project.version
         attributes 'App-Author': '752544765@qq.com'
         attributes 'App-Website': 'http://navigational.cn'
+        attributes 'Build-Time': new SimpleDateFormat().format(new Date())
+        attributes 'Copyright': 'Copyright © 2019-2020 navigational.cn'
     }
 }
 

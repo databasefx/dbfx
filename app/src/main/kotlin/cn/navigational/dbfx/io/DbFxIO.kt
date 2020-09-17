@@ -3,23 +3,28 @@ package cn.navigational.dbfx.io
 import cn.navigational.dbfx.DatabaseMetaManager
 import cn.navigational.dbfx.Launcher
 import cn.navigational.dbfx.SQLClientManager
+import cn.navigational.dbfx.kit.config.FILE
 import cn.navigational.dbfx.kit.config.PASSWORD
-import cn.navigational.dbfx.model.DatabaseMeta
-import cn.navigational.dbfx.model.DbInfo
-import cn.navigational.dbfx.security.AseAlgorithm
 import cn.navigational.dbfx.kit.utils.OssUtils
 import cn.navigational.dbfx.kit.utils.StringUtils
 import cn.navigational.dbfx.kit.utils.VertxUtils
+import cn.navigational.dbfx.model.DatabaseMeta
+import cn.navigational.dbfx.model.DbInfo
 import cn.navigational.dbfx.model.UiPreferences
+import cn.navigational.dbfx.security.AseAlgorithm
 import io.vertx.core.json.JsonArray
 import io.vertx.core.json.JsonObject
 import io.vertx.kotlin.coroutines.await
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
+import java.io.IOException
+import java.net.JarURLConnection
+import java.nio.Buffer
 import java.util.*
+import java.util.jar.JarFile.MANIFEST_NAME
+
 
 const val DEFAULT_KEY = "2EBC@#=="
 const val S_DB_PATH = "config/s_db.json"
@@ -174,6 +179,38 @@ private suspend fun loadDbMetaData() {
         items.add(json.mapTo(DatabaseMeta::class.java))
     }
     DatabaseMetaManager.manager.addDbMeta(items)
+}
+
+/**
+ * load java MANIFEST.MF file
+ *
+ * @return Key value pair formal attribute
+ * @throws IOException IO exception may occur
+ */
+fun loadManifest(): Map<String, String> {
+    val protocol = ClassLoader.getSystemResource("").protocol
+    val map = HashMap<String, String>()
+    if (FILE == protocol) {
+        //Gradle temp path
+        val buildPath = "build/tmp/jar/MANIFEST.MF"
+        val mf = VertxUtils.getFileSystem().readFileBlocking(buildPath).toString()
+        val array = mf.split("\r\n")
+        for (s in array) {
+            if (s.isEmpty()){
+                continue
+            }
+            val k = s.split(":", limit = 2).toTypedArray()
+            map[k[0].trim()] = k[1].trim()
+        }
+    } else {
+        val url = ClassLoader.getSystemResource(MANIFEST_NAME)
+        val jarCon: JarURLConnection = url.openConnection() as JarURLConnection
+        val attrs = jarCon.mainAttributes
+        for ((key, value) in attrs) {
+            map[key.toString()] = value.toString()
+        }
+    }
+    return map
 }
 
 /**

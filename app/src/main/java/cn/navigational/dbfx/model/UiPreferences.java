@@ -6,7 +6,9 @@ package cn.navigational.dbfx.model;
  * @author yangkui
  */
 public class UiPreferences {
-
+    /**
+     * Application table data setting
+     */
     private TableSetting tableSetting;
 
     public TableSetting getTableSetting() {

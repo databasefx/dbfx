@@ -31,6 +31,7 @@ class HomeView : View<Void>(HOME_PAGE) {
 
     @FXML
     fun about() {
+        AboutView()
     }
 
     @FXML
