@@ -2,6 +2,7 @@ package cn.navigational.dbfx.navigator
 
 import cn.navigational.dbfx.BaseTreeItem
 import cn.navigational.dbfx.SQLClientManager
+import cn.navigational.dbfx.handler.MainTabPaneHandler
 import cn.navigational.dbfx.handler.NavigatorMenuHandler
 import cn.navigational.dbfx.model.DbInfo
 import cn.navigational.dbfx.model.SQLClient
@@ -73,8 +74,11 @@ abstract class DatabaseItem(val uuid: String, icon: String) : BaseTreeItem<Strin
      *
      */
     private suspend fun endConnect() {
-        if (client.value !== null) {
-            SQLClientManager.manager.removeClient(client.value.uuid)
+        val sqlClient = client.value
+        if (sqlClient !== null) {
+            SQLClientManager.manager.removeClient(sqlClient.uuid)
+            //Close already open tab
+            MainTabPaneHandler.handler.closeTabByPathPrefix(fullPath)
             client.value = null
         }
         this.children.clear()

@@ -15,7 +15,6 @@ import cn.navigational.dbfx.utils.TableColumnUtils
 import javafx.application.Platform
 import javafx.beans.property.*
 import javafx.collections.ObservableList
-import javafx.event.Event
 import javafx.fxml.FXML
 import javafx.scene.control.*
 import javafx.scene.layout.BorderPane
@@ -79,6 +78,7 @@ class TableViewController(private val provider: TableDataProvider) : Controller<
 
 
     override fun onCreated(root: BorderPane?) {
+        tableView.tableSetting = Launcher.uiPreference.tableSetting
         this.tableView.placeholder = Label("表中暂无数据")
         pageSelector.items.addAll("10", "100", "250", "500", "1000")
         pageSelector.selectionModel.select(0)
@@ -123,15 +123,15 @@ class TableViewController(private val provider: TableDataProvider) : Controller<
             load()
         }
         setting.setOnAction {
-            val dialog = TableSettingDialog(tableView.getTableSetting())
+            val dialog = TableSettingDialog(tableView.tableSetting)
             val optional = dialog.showAndWait()
             val setting = optional.get()
-            if (setting != tableView.getTableSetting()) {
+            if (setting != tableView.tableSetting) {
                 if (setting.isGlobal) {
                     Launcher.uiPreference.tableSetting = setting
                     flushUiPreference()
                 }
-                this.tableView.setTableSetting(setting)
+                this.tableView.tableSetting = setting
                 this.load()
             }
         }
@@ -180,7 +180,8 @@ class TableViewController(private val provider: TableDataProvider) : Controller<
 
     private fun updateColumn(list: List<TableColumnMeta>) {
         val columns = tableView.columns
-        if (columns.isEmpty()) {
+        //Only have index column == empty
+        if (columns.size == 1) {
             val cc = TableColumnUtils.createTableDataColumn(list)
             Platform.runLater {
                 this.tableView.columns.addAll(cc)
@@ -203,7 +204,7 @@ class TableViewController(private val provider: TableDataProvider) : Controller<
         }
         if (offset > 0) {
             val subList = list.subList(size - offset, list.size)
-            val newColumns = subList.map { TableColumnUtils.createTableDataColumn(it, false) }
+            val newColumns = subList.map { TableColumnUtils.createTableDataColumn(it) }
             Platform.runLater {
                 tableView.columns.addAll(newColumns)
             }

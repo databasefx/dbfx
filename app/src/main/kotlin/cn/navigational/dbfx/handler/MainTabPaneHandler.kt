@@ -21,19 +21,31 @@ class MainTabPaneHandler private constructor() {
     /**
      * Close single tab
      * @param path Tab path
-     * @param calTabClose Whether call Tab close function
      */
-    suspend fun closeTab(path: String, calTabClose: Boolean) {
+    fun closeTab(path: String) {
         //If map not contain current path,not any!
         if (!this.map.containsKey(path)) {
             return
         }
-        val tab = map[path]!!
-        if (calTabClose) {
-            tab.close()
-        }
-        this.map.remove(path)
+        val tab = this.map.remove(path)
         logger.debug("Tab[path={}] close success!", path)
+        Platform.runLater { this.tabPane.tabs.remove(tab) }
+    }
+
+    /**
+     *Close Tab by path prefix
+     *
+     * @param prefix Tab path prefix
+     */
+    fun closeTabByPathPrefix(prefix: String) {
+        val list = arrayListOf<String>()
+        for (entry in this.map) {
+            val key = entry.key
+            if (key.startsWith(prefix)) {
+                list.add(key)
+            }
+        }
+        list.forEach(this::closeTab)
     }
 
     suspend fun addTabToPane(tab: AbstractBaseTab, tabPath: String): AbstractBaseTab {
@@ -60,9 +72,9 @@ class MainTabPaneHandler private constructor() {
      * Close all tab
      *
      */
-    suspend fun closeAllTab() {
+    fun closeAllTab() {
         map.keys.forEach {
-            this.closeTab(it, true)
+            this.closeTab(it)
         }
     }
 
@@ -73,6 +85,7 @@ class MainTabPaneHandler private constructor() {
      */
     companion object {
         private val logger = LoggerFactory.getLogger(MainTabPaneHandler::class.java)
+
         /**
          * Single instance
          */

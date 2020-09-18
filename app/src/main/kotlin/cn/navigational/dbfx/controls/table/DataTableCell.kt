@@ -30,7 +30,7 @@ class DataTableCell : TableCell<ObservableList<StringProperty>, String>() {
         var value = item
         val table = tableView as CustomTableView
         if (item == NULL_TAG) {
-            value = table.getTableSetting().nulValue
+            value = table.tableSetting.nulValue
             if (!styleClass.contains(NULL_STYLE)) {
                 styleClass.add(NULL_STYLE)
             }

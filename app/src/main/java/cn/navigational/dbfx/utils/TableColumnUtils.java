@@ -2,9 +2,7 @@ package cn.navigational.dbfx.utils;
 
 import cn.navigational.dbfx.controls.table.CustomTableColumn;
 import cn.navigational.dbfx.kit.model.TableColumnMeta;
-import javafx.beans.property.SimpleStringProperty;
 
-import javax.swing.table.TableColumn;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +21,8 @@ public class TableColumnUtils {
      */
     public static List<CustomTableColumn> createTableDataColumn(List<TableColumnMeta> metas) {
         var columns = new ArrayList<CustomTableColumn>();
-        //Add index column
-        columns.add(createTableDataColumn(null, true));
         for (TableColumnMeta meta : metas) {
-            var column = createTableDataColumn(meta, false);
+            var column = createTableDataColumn(meta);
             columns.add(column);
         }
         return columns;
@@ -35,27 +31,16 @@ public class TableColumnUtils {
     /**
      * Create single {@link CustomTableColumn} instance object
      *
-     * @param meta    Table meta data
-     * @param isIndex That column is index column?
+     * @param meta Table meta data
      * @return {@link CustomTableColumn}
      */
-    public static CustomTableColumn createTableDataColumn(TableColumnMeta meta, boolean isIndex) {
-        final CustomTableColumn column;
-        if (isIndex) {
-            column = new CustomTableColumn(true);
-        } else {
-            column = new CustomTableColumn(meta);
-        }
+    public static CustomTableColumn createTableDataColumn(TableColumnMeta meta) {
+        var column = new CustomTableColumn(meta);
         column.setCellValueFactory(cellDataFeatures -> {
             var tableView = cellDataFeatures.getTableView();
             var tableColumn = cellDataFeatures.getTableColumn();
             var columnIndex = tableView.getColumns().indexOf(tableColumn);
-            var values = cellDataFeatures.getValue();
-            if (columnIndex >= values.size()) {
-                return new SimpleStringProperty("");
-            } else {
-                return cellDataFeatures.getValue().get(columnIndex);
-            }
+            return cellDataFeatures.getValue().get(columnIndex);
         });
         return column;
     }
