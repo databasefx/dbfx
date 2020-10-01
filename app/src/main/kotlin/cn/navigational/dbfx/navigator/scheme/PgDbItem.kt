@@ -8,22 +8,24 @@ import cn.navigational.dbfx.navigator.folder.pg.PgLanguageFolder
 import cn.navigational.dbfx.navigator.folder.pg.PgSchemeFolder
 
 class PgDbItem(private val dbName: String) : SchemeItem(PG_DB_ICON, dbName) {
-    private val indexFolder = PgAcMethodFolder()
-    private val langFolder = PgLanguageFolder()
-    private val schemeFolder = PgSchemeFolder()
-    private val extensionFolder = PgExtensionFolder()
 
     init {
         value = dbName
     }
 
     override suspend fun initData() {
-        if (this.children.isEmpty()) {
-            this.children.addAll(schemeFolder, indexFolder, extensionFolder, langFolder)
+        if (this.children.isNotEmpty()) {
+            this.children.clear()
         }
+        val indexFolder = PgAcMethodFolder()
+        val langFolder = PgLanguageFolder()
+        val schemeFolder = PgSchemeFolder(dbName)
+        val extensionFolder = PgExtensionFolder()
+        this.children.addAll(schemeFolder, indexFolder, extensionFolder, langFolder)
         langFolder.initFolder()
         indexFolder.initFolder()
         schemeFolder.initFolder()
         extensionFolder.initFolder()
+        loadStatusProperty().set(true)
     }
 }

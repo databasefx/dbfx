@@ -4,6 +4,7 @@ import cn.navigational.dbfx.kit.SQLExecutor
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.enums.Clients
 import cn.navigational.dbfx.kit.model.TableColumnMeta
+import io.vertx.kotlin.coroutines.await
 import io.vertx.sqlclient.Row
 import io.vertx.sqlclient.RowSet
 import io.vertx.sqlclient.SqlClient
@@ -67,5 +68,15 @@ class PgQuery : SQLQuery {
 
     override suspend fun queryTableTotal(category: String, table: String, client: SqlClient): Long {
         TODO("Not yet implemented")
+    }
+
+    suspend fun queryDbScheme(dbName: String, client: SqlClient): List<String> {
+        val sql = "SELECT schema_name FROM ${dbName}.information_schema.schemata"
+        val rowSet = client.query(sql).execute().await()
+        val list = arrayListOf<String>()
+        for (row in rowSet) {
+            list.add(row.getValue(0).toString())
+        }
+        return list
     }
 }
