@@ -3,11 +3,13 @@ package cn.navigational.dbfx.kit.postgres
 import cn.navigational.dbfx.kit.SQLExecutor
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.enums.Clients
+import cn.navigational.dbfx.kit.enums.DataType
 import cn.navigational.dbfx.kit.model.TableColumnMeta
 import io.vertx.kotlin.coroutines.await
 import io.vertx.sqlclient.Row
 import io.vertx.sqlclient.RowSet
 import io.vertx.sqlclient.SqlClient
+import io.vertx.sqlclient.Tuple
 
 class PgQuery : SQLQuery {
     /**
@@ -55,24 +57,57 @@ class PgQuery : SQLQuery {
     }
 
     override suspend fun showTable(category: String, client: SqlClient): List<String> {
-        TODO("Not yet implemented")
+        val dbName = category.split(".")[0]
+        val scheme = category.split(".")[1]
+        val sql = "SELECT table_name FROM ${dbName}.information_schema.tables WHERE table_schema=$1 AND table_type=$2"
+        val tuple = Tuple.of(scheme, "BASE TABLE")
+        val rowSet = SQLExecutor.executeSql(sql, Clients.POSTGRESQL, client, tuple)
+        val list = arrayListOf<String>()
+        for (row in rowSet) {
+            list.add(row.getValue(0).toString())
+        }
+        return list
     }
 
     override suspend fun showTableField(category: String, table: String, client: SqlClient): List<TableColumnMeta> {
-        TODO("Not yet implemented")
+        val dbName = category.split(".")[0]
+        val scheme = category.split(".")[1]
+        val sql = "SELECT * FROM ${dbName}.information_schema.columns WHERE table_schema=$1 AND table_name=$2"
+        val tuple = Tuple.of(scheme, table)
+        val rowSet = SQLExecutor.executeSql(sql, Clients.POSTGRESQL, client, tuple)
+        val list = arrayListOf<TableColumnMeta>()
+        for (row in rowSet) {
+            val columnMeta = TableColumnMeta()
+            columnMeta.colName = row.getString("column_name")
+            columnMeta.dataType = DataType.STRING
+            columnMeta.length = 0
+            columnMeta.position = row.getInteger("ordinal_position")
+            columnMeta.comment = row.getString("")
+            list.add(columnMeta)
+        }
+        return list
     }
 
     override suspend fun pageQuery(category: String, table: String, pageIndex: Int, pageSize: Int, client: SqlClient): RowSet<Row> {
-        TODO("Not yet implemented")
+        val offset = (pageIndex - 1) * pageSize
+        val sql = "SELECT * FROM ${category}.$table LIMIT $1 offset $2"
+        val tuple = Tuple.of(pageSize, offset)
+        return SQLExecutor.executeSql(sql, Clients.POSTGRESQL, client, tuple)
     }
 
     override suspend fun queryTableTotal(category: String, table: String, client: SqlClient): Long {
-        TODO("Not yet implemented")
+        val sql = "SELECT COUNT(*) FROM ${category}.$table"
+        val rowSet = SQLExecutor.executeSql(sql, Clients.POSTGRESQL, client)
+        var total = 0L
+        for (row in rowSet) {
+            total = row.getValue(0) as Long
+        }
+        return total
     }
 
     suspend fun queryDbScheme(dbName: String, client: SqlClient): List<String> {
         val sql = "SELECT schema_name FROM ${dbName}.information_schema.schemata"
-        val rowSet = client.query(sql).execute().await()
+        val rowSet = SQLExecutor.executeSql(sql, Clients.POSTGRESQL, client)
         val list = arrayListOf<String>()
         for (row in rowSet) {
             list.add(row.getValue(0).toString())

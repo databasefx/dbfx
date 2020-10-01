@@ -17,7 +17,9 @@ class PgSchemeFolder(private val database: String) : FolderItem() {
         }
         val query = SQLQuery.getClQuery(Clients.POSTGRESQL) as PgQuery
         val list = query.queryDbScheme(database, currentClient.client)
-        val items = list.map { PgSchemeItem(it) }.toList()
+        val items = list.map {
+            PgSchemeItem("${database}.$it")
+        }.toList()
         this.children.addAll(items)
     }
 
