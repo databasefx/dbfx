@@ -17,16 +17,21 @@ import javafx.scene.text.Text
 
 class CustomTableColumn : TableColumn<ObservableList<StringProperty>, String> {
     companion object {
-        private val numberImage = SvgImageTranscoder.svgToImage(NUMBER_FIELD)
-        private val strImage = SvgImageTranscoder.svgToImage(STRING_FIELD)
-        private val dateTimeImage = SvgImageTranscoder.svgToImage(DATE_TIME_FIELD)
+        private val fieldIcon = SvgImageTranscoder.svgToImage(TABLE_FIELD_ICON);
 
+        //        private val numberImage = SvgImageTranscoder.svgToImage(NUMBER_FIELD)
+//        private val strImage = SvgImageTranscoder.svgToImage(STRING_FIELD)
+//        private val dateTimeImage = SvgImageTranscoder.svgToImage(DATE_TIME_FIELD)
+//
+//        fun getFieldImage(dataType: DataType): Image {
+//            return when (dataType) {
+//                DataType.NUMBER -> numberImage
+//                DataType.DATE -> dateTimeImage
+//                else -> strImage
+//            }
+//        }
         fun getFieldImage(dataType: DataType): Image {
-            return when (dataType) {
-                DataType.NUMBER -> numberImage
-                DataType.DATE -> dateTimeImage
-                else -> strImage
-            }
+            return fieldIcon
         }
     }
 

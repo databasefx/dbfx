@@ -112,4 +112,8 @@ class MysqlQuery : SQLQuery {
         }
         return totalNumber
     }
+
+    override suspend fun showView(category: String, client: SqlClient): List<String> {
+        TODO("Not yet implemented")
+    }
 }

@@ -1,13 +1,20 @@
 package cn.navigational.dbfx.navigator.folder
 
+import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.enums.Clients
 import cn.navigational.dbfx.navigator.FolderItem
+import cn.navigational.dbfx.navigator.table.TableItem
 
-class ViewFolder(clients: Clients, category: String) : FolderItem() {
+class ViewFolder(private val clients: Clients, private val category: String) : FolderItem() {
     init {
         value = "视图"
     }
 
     override suspend fun initFolder() {
+        val query = SQLQuery.getClQuery(clients)
+        val list = query.showView(category, currentClient.client)
+        val views = list.map { TableItem(it, category, clients, TableItem.TableType.VIEW) }.toList()
+        this.children.addAll(views)
+        views.forEach { it.initField() }
     }
 }

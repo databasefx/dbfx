@@ -51,6 +51,11 @@ interface SQLQuery {
     suspend fun showTable(category: String, client: SqlClient): List<String>
 
     /**
+     * Query view list from fix category
+     */
+    suspend fun showView(category: String, client: SqlClient): List<String>
+
+    /**
      * Query a table all field
      */
     suspend fun showTableField(category: String, table: String, client: SqlClient): List<TableColumnMeta>

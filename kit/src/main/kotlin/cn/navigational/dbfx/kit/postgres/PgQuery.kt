@@ -57,16 +57,7 @@ class PgQuery : SQLQuery {
     }
 
     override suspend fun showTable(category: String, client: SqlClient): List<String> {
-        val dbName = category.split(".")[0]
-        val scheme = category.split(".")[1]
-        val sql = "SELECT table_name FROM ${dbName}.information_schema.tables WHERE table_schema=$1 AND table_type=$2"
-        val tuple = Tuple.of(scheme, "BASE TABLE")
-        val rowSet = SQLExecutor.executeSql(sql, Clients.POSTGRESQL, client, tuple)
-        val list = arrayListOf<String>()
-        for (row in rowSet) {
-            list.add(row.getValue(0).toString())
-        }
-        return list
+        return showTable("BASE TABLE", category, client)
     }
 
     override suspend fun showTableField(category: String, table: String, client: SqlClient): List<TableColumnMeta> {
@@ -82,7 +73,7 @@ class PgQuery : SQLQuery {
             columnMeta.dataType = DataType.STRING
             columnMeta.length = 0
             columnMeta.position = row.getInteger("ordinal_position")
-            columnMeta.comment = row.getString("")
+            columnMeta.comment = ""
             list.add(columnMeta)
         }
         return list
@@ -112,6 +103,24 @@ class PgQuery : SQLQuery {
         for (row in rowSet) {
             list.add(row.getValue(0).toString())
         }
+        return list
+    }
+
+    override suspend fun showView(category: String, client: SqlClient): List<String> {
+        return showTable("VIEW", category, client)
+    }
+
+    private suspend fun showTable(tableType: String, category: String, client: SqlClient): List<String> {
+        val dbName = category.split(".")[0]
+        val scheme = category.split(".")[1]
+        val sql = "SELECT table_name FROM ${dbName}.information_schema.tables WHERE table_schema=$1 AND table_type=$2"
+        val tuple = Tuple.of(scheme, tableType)
+        val rowSet = SQLExecutor.executeSql(sql, Clients.POSTGRESQL, client, tuple)
+        val list = arrayListOf<String>()
+        for (row in rowSet) {
+            list.add(row.getValue(0).toString())
+        }
+        list.sortBy { !it.startsWith("_") }
         return list
     }
 }

@@ -2,6 +2,7 @@ package cn.navigational.dbfx.navigator.table
 
 import cn.navigational.dbfx.BaseTreeItem
 import cn.navigational.dbfx.config.TABLE_ICON
+import cn.navigational.dbfx.config.TABLE_VIEW_ICON
 import cn.navigational.dbfx.handler.MainTabPaneHandler
 import cn.navigational.dbfx.controls.tab.TableTab
 import cn.navigational.dbfx.handler.NavigatorMenuHandler
@@ -9,10 +10,12 @@ import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.enums.Clients
 
 
-class TableTreeItem(private val table: String, private val category: String, private val cl: Clients) : BaseTreeItem<String>() {
+class TableItem(private val table: String,
+                private val category: String,
+                private val cl: Clients,
+                private val tableType: TableType = TableType.BASE_TABLE) : BaseTreeItem<String>(if (tableType == TableType.BASE_TABLE) TABLE_ICON else TABLE_VIEW_ICON) {
     init {
         this.value = table
-        setIcon(TABLE_ICON)
         val handler = NavigatorMenuHandler.init(supportMenu)
         handler.getMenuCoroutine("打开", NavigatorMenuHandler.Companion.MenuType.OPEN, this::openTab)
     }
@@ -26,7 +29,12 @@ class TableTreeItem(private val table: String, private val category: String, pri
     }
 
     private suspend fun openTab() {
-        var tab = TableTab(table, category, currentClient)
-        tab =  MainTabPaneHandler.handler.addTabToPane(tab, fullPath) as TableTab
+        var tab = TableTab(table, category, currentClient, tableType)
+        tab = MainTabPaneHandler.handler.addTabToPane(tab, fullPath) as TableTab
+    }
+
+    enum class TableType {
+        BASE_TABLE,
+        VIEW
     }
 }

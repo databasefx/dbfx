@@ -17,8 +17,9 @@ const val SCHEME_ICON = "assets/icons/db/mini/scheme.svg"
 const val PG_DB_ICON = "assets/icons/db/mini/pg_db.svg"
 const val MYSQL_COLLATION_ICON = "assets/icons/db/mini/my_collation.svg"
 const val MYSQL_USER_ICON = "assets/icons/db/mini/my_user.svg"
-const val TABLE_ICON = "assets/icons/db/table.svg"
-const val TABLE_FIELD_ICON = "assets/icons/db/mini/field.svg"
+const val TABLE_ICON = "assets/icons/table/table.svg"
+const val TABLE_VIEW_ICON = "assets/icons/table/table_view.svg"
+const val TABLE_FIELD_ICON = "assets/icons/table/table_field.svg"
 const val PG_ROLE_ICON = "assets/icons/db/mini/pg_role.svg"
 
 //table controller icon
@@ -34,11 +35,6 @@ const val ASC_ICON = "assets/icons/table/asc.svg"
 const val DES_ICON = "assets/icons/table/des.svg"
 const val TABLE_SETTING_ICON = "assets/icons/table/setting.svg"
 
-
-//table field icon
-const val NUMBER_FIELD = "assets/icons/table/field/number.svg"
-const val STRING_FIELD = "assets/icons/table/field/letter.svg"
-const val DATE_TIME_FIELD = "assets/icons/table/field/date_time.svg"
 
 //dialog icon
 const val INFO_ICON = "assets/icons/dialog/info.svg"
