@@ -6,7 +6,6 @@ import cn.navigational.dbfx.view.SplashView;
 import io.vertx.core.VertxOptions;
 import io.vertx.core.file.FileSystemOptions;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,10 +37,6 @@ public class Launcher extends Application {
 
     @Override
     public void init() {
-        if (!checkIfRunning()) {
-            Platform.exit();
-            return;
-        }
         LOG.debug("Start init vertx options.");
         var vertxOptions = new VertxOptions();
         var fsOptions = new FileSystemOptions();
@@ -70,12 +65,12 @@ public class Launcher extends Application {
      *
      * @return If current application not startup return {false} otherwise return {true}
      */
-    private boolean checkIfRunning() {
+    private static boolean checkIfRunning() {
         LOG.debug("Start check current application whether startup.");
-        var result = false;
+        var result = true;
         try {
             new ServerSocket(PORT, 0, InetAddress.getByAddress(new byte[]{127, 0, 0, 1}));
-            result = true;
+            result = false;
         } catch (Exception e) {
             LOG.error("Current application instance already exist.", e);
         }
@@ -83,6 +78,9 @@ public class Launcher extends Application {
     }
 
     public static void main(String[] args) {
+        if (checkIfRunning()) {
+            return;
+        }
         launch(args);
     }
 }
