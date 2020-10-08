@@ -40,7 +40,7 @@ public class TableColumnUtils {
             var tableView = cellDataFeatures.getTableView();
             var tableColumn = cellDataFeatures.getTableColumn();
             var columnIndex = tableView.getColumns().indexOf(tableColumn);
-            return cellDataFeatures.getValue().get(columnIndex);
+            return cellDataFeatures.getValue().get(columnIndex-1);
         });
         return column;
     }

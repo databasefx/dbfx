@@ -71,8 +71,10 @@ class PgQuery : SQLQuery {
             val columnMeta = TableColumnMeta()
             columnMeta.colName = row.getString("column_name")
             columnMeta.dataType = DataType.STRING
+            columnMeta.type = row.getString("data_type")
             columnMeta.length = 0
             columnMeta.position = row.getInteger("ordinal_position")
+            columnMeta.isNullable = row.getString("is_nullable") == "YES"
             columnMeta.comment = ""
             list.add(columnMeta)
         }

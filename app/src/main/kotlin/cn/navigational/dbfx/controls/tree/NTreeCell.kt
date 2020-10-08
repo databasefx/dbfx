@@ -17,7 +17,7 @@ class NTreeCell : TreeCell<String>() {
     }
 
     override fun updateItem(item: String?, empty: Boolean) {
-        if (empty || item == null || treeItem == null) {
+        if (empty || treeItem == null) {
             this.text = null
             this.graphic = null
         } else {

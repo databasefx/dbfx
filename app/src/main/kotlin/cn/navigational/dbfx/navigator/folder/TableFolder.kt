@@ -16,7 +16,7 @@ class TableFolder(val clients: Clients, private val category: String) : FolderIt
         }
         val query = SQLQuery.getClQuery(clients)
         val list = query.showTable(category, currentClient.client)
-        val tables = list.map { TableItem(it, category, Clients.POSTGRESQL) }.toList()
+        val tables = list.map { TableItem(it, category, clients) }.toList()
         this.children.addAll(tables)
         tables.forEach { it.initField() }
         loadStatusProperty().set(true)

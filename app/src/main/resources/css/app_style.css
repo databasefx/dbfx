@@ -134,8 +134,12 @@
     -fx-background-color: #9B9EA0;
 }
 
-.tree-cell .tree-disclosure-node {
+.tree-cell .tree-disclosure-node, .tree-cell .table-field-item, .tree-cell .table-field-item * {
     -fx-background-color: transparent;
+}
+
+.tree-cell .table-field-item .field-note {
+    -fx-text-fill: #6D5D4D;
 }
 
 /*主界面左侧TreeView样式*/

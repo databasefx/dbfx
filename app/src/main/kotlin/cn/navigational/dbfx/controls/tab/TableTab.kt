@@ -53,7 +53,6 @@ class TableTab(
     override suspend fun getItems(pageIndex: Int, pageSize: Int, setting: TableSetting): List<ObservableList<StringProperty>> {
         val sqlQuery = SQLQuery.getClQuery(client.cl)
         val list = sqlQuery.pageQuery(category, table, pageIndex, pageSize, client.client)
-        val offset = (pageIndex - 1) * pageSize + 1
-        return RowSetConvert.rowSetConvert(list, setting, offset)
+        return RowSetConvert.rowSetConvert(list, setting)
     }
 }

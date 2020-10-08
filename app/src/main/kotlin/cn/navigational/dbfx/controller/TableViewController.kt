@@ -151,7 +151,7 @@ class TableViewController(private val provider: TableDataProvider) : Controller<
             val columns = provider.getColumnMeta()
             val total = provider.getDataTotal()
             val items = if (total > 0) {
-                provider.getItems(pageIndex, pageSize, tableView.getTableSetting())
+                provider.getItems(pageIndex, pageSize, tableView.tableSetting)
             } else {
                 arrayListOf()
             }

@@ -1,7 +1,7 @@
 package cn.navigational.dbfx.navigator.folder.mysql
 
 import cn.navigational.dbfx.navigator.FolderItem
-import cn.navigational.dbfx.navigator.scheme.MySchemeItem
+import cn.navigational.dbfx.navigator.scheme.ComSchemeItem
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.enums.Clients
 import cn.navigational.dbfx.kit.utils.StringUtils
@@ -21,10 +21,10 @@ class MySchemeFolder : FolderItem() {
         if (StringUtils.isNotEmpty(database)) {
             list.contains(database).also {
                 if (it)
-                    this.children.add(MySchemeItem(database))
+                    this.children.add(ComSchemeItem(Clients.MYSQL, database))
             }
             return
         }
-        this.children.addAll(list.map { MySchemeItem(it) })
+        this.children.addAll(list.map { ComSchemeItem(Clients.MYSQL, it) })
     }
 }

@@ -37,6 +37,10 @@ public class TableColumnMeta {
      * Column position
      */
     private Integer position;
+    /**
+     * Column null?
+     */
+    private boolean nullable;
 
     public String getColName() {
         return colName;
@@ -88,6 +92,14 @@ public class TableColumnMeta {
 
     public Integer getPosition() {
         return position;
+    }
+
+    public boolean isNullable() {
+        return nullable;
+    }
+
+    public void setNullable(boolean nullable) {
+        this.nullable = nullable;
     }
 
     public void setPosition(Integer position) {

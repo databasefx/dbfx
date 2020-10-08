@@ -57,20 +57,13 @@ class MysqlQuery : SQLQuery {
 
     override suspend fun showTable(category: String, client: SqlClient): List<String> {
         val sql = "SELECT TABLE_NAME FROM `information_schema`.`TABLES` WHERE (`table_type` ='BASE TABLE' OR `TABLE_TYPE`='SYSTEM VIEW') AND table_schema =?"
-        val rowSet = SQLExecutor.executeSql(sql, Clients.MYSQL, client, Tuple.of(category))
-        val list = arrayListOf<String>()
-        for (row in rowSet) {
-            list.add(row.getString("TABLE_NAME"))
-        }
-        return list
+        return _showTable(sql, Tuple.of(category), client)
     }
 
     override suspend fun showTableField(category: String, table: String, client: SqlClient): List<TableColumnMeta> {
-//        val name = "`$category`.`$table`"
-        val sql = "SELECT COLUMN_NAME,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH," +
-                "NUMERIC_SCALE,COLUMN_KEY,COLUMN_COMMENT,ORDINAL_POSITION FROM information_schema.COLUMNS" +
-                " WHERE TABLE_SCHEMA=? AND  TABLE_NAME=?"
-//        val sql = "SHOW FULL COLUMNS FROM $name"
+        val sql = """
+            SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=? AND  TABLE_NAME=?
+        """.trimIndent()
         val tuple = Tuple.of(category, table)
         val rowSet = SQLExecutor.executeSql(sql, Clients.MYSQL, client, tuple)
         val list = arrayListOf<TableColumnMeta>()
@@ -79,14 +72,16 @@ class MysqlQuery : SQLQuery {
             val column = row.getString("COLUMN_NAME")
             val comment = row.getString("COLUMN_COMMENT")
             val length = row.getInteger("CHARACTER_MAXIMUM_LENGTH")
-            val dataType = row.getString("DATA_TYPE")
+            val type = row.getString("DATA_TYPE")
             val pos = row.getInteger("ORDINAL_POSITION")
+            val nullable = row.getString("IS_NULLABLE") == "YES"
             columnMeta.colName = column
             columnMeta.comment = comment
             columnMeta.length = length
-            columnMeta.type = dataType
+            columnMeta.type = type
             columnMeta.position = pos
-            columnMeta.dataType = getMyDataType(dataType)
+            columnMeta.isNullable = nullable
+            columnMeta.dataType = getMyDataType(type)
             list.add(columnMeta)
         }
         list.sortBy { it.position }
@@ -114,6 +109,16 @@ class MysqlQuery : SQLQuery {
     }
 
     override suspend fun showView(category: String, client: SqlClient): List<String> {
-        TODO("Not yet implemented")
+        val sql = "SELECT TABLE_NAME FROM `information_schema`.`TABLES` WHERE (`table_type` ='VIEW' OR `TABLE_TYPE`='SYSTEM VIEW') AND table_schema =?"
+        return _showTable(sql, Tuple.of(category), client)
+    }
+
+    private suspend fun _showTable(sql: String, tuple: Tuple, client: SqlClient): List<String> {
+        val rowSet = SQLExecutor.executeSql(sql, Clients.MYSQL, client, tuple)
+        val list = arrayListOf<String>()
+        for (row in rowSet) {
+            list.add(row.getString("TABLE_NAME"))
+        }
+        return list
     }
 }
