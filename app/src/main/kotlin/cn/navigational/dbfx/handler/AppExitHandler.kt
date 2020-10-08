@@ -5,7 +5,9 @@ import cn.navigational.dbfx.dialog.ProgressDialog
 import javafx.application.Platform
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.slf4j.LoggerFactory
 import java.lang.Exception
+import kotlin.math.log
 
 /**
  *
@@ -13,6 +15,8 @@ import java.lang.Exception
  * Close app occur Resource
  *
  */
+private val logger = LoggerFactory.getLogger("AppExitHandler")
+
 fun closeAppOccurResource() {
     val dialog = ProgressDialog()
     dialog.show()
@@ -24,8 +28,8 @@ fun closeAppOccurResource() {
             dialog.updateText(ProgressDialog.TextType.DES, "正在关闭所有连接...")
             SQLClientManager.manager.closeAllClient()
         } catch (e: Exception) {
-            println("App exit close resource failed cause:[${e.message}]")
-            e.printStackTrace()
+            logger.debug("App exit close resource failed cause:[${e.message}]")
+            logger.error("Close resource happen error.", e)
         }
         dialog.closeDialog()
         //Exit program

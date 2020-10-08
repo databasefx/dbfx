@@ -89,6 +89,10 @@
     -fx-background-color: #95998e;
 }
 
+.tab-pane .tab-header-area .control-buttons-tab .container .tab-down-button .arrow {
+    -fx-background-color: #AFB1B3;
+}
+
 .split-pane .split-pane-divider {
     -fx-pref-width: 0.1em;
     -fx-background-color: #323232;

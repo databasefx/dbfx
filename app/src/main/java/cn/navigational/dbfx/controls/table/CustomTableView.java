@@ -28,6 +28,8 @@ public class CustomTableView extends TableView<ObservableList<StringProperty>> {
         this.setTableSetting(setting);
         this.getSelectionModel().setCellSelectionEnabled(true);
         this.getColumns().add(new CustomTableColumn(true));
+        //disable column sort
+        this.setSortPolicy(e -> null);
     }
 
     public TableSetting getTableSetting() {
