@@ -44,6 +44,7 @@ class HomeView : View<Void>(HOME_PAGE) {
         val result = AlertUtils.showSimpleConfirmDialog("你确定要退出应用程序?")
         if (!result) {
             event.consume()
+            return
         }
         closeAppOccurResource()
     }
