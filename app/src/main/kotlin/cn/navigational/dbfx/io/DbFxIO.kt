@@ -19,9 +19,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.slf4j.LoggerFactory
 import java.io.File
-import java.io.IOException
 import java.net.JarURLConnection
-import java.nio.Buffer
+
 import java.util.*
 import java.util.jar.JarFile.MANIFEST_NAME
 
