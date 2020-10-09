@@ -54,7 +54,7 @@
                         <Tooltip text="断开连接"/>
                     </tooltip>
                 </Button>
-                <Button>
+                <Button onAction="#openSQLTerminal">
                     <graphic>
                         <ImageView>
                             <Image url="@/assets/icons/home/sql_edit_icon.png" smooth="true" requestedHeight="25"

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.SplitPane?>
+<?import org.fxmisc.richtext.CodeArea?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import java.net.URL?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
+<?import org.fxmisc.flowless.VirtualizedScrollPane?>
+<SplitPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           prefHeight="400.0" prefWidth="600.0" dividerPositions="0.8" orientation="VERTICAL">
+    <stylesheets>
+        <URL value="@/css/controller/sql_terminal_style.css"/>
+    </stylesheets>
+    <VBox>
+        <ToolBar>
+            <Button fx:id="execute">
+                <tooltip>
+                    <Tooltip text="执行"/>
+                </tooltip>
+            </Button>
+        </ToolBar>
+<!--        <VirtualizedScrollPane VBox.vgrow="ALWAYS">-->
+        <!--            <content>-->
+                <CodeArea lineHighlighterOn="true" fx:id="codeArea" wrapText="true" VBox.vgrow="ALWAYS"/>
+<!--            </content>-->
+<!--        </VirtualizedScrollPane>-->
+    </VBox>
+    <TabPane>
+        <Tab text="信息" closable="false" fx:id="info"/>
+        <Tab text="执行结果" closable="false" fx:id="exeResult"/>
+    </TabPane>
+</SplitPane>

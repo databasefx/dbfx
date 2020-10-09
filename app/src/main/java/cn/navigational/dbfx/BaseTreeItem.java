@@ -84,7 +84,7 @@ public class BaseTreeItem<T> extends TreeItem<T> {
      *
      * @return {@link SQLClient}
      */
-    protected SQLClient getCurrentClient() {
+    public SQLClient getCurrentClient() {
         var parent = (BaseTreeItem<T>) this;
         while (true) {
             if (parent instanceof DatabaseItem) {
@@ -105,7 +105,7 @@ public class BaseTreeItem<T> extends TreeItem<T> {
      *
      * @return Full path
      */
-    protected String getFullPath() {
+    public String getFullPath() {
         var tabPath = new StringBuilder();
         var parent = (BaseTreeItem<T>) this;
         while (true) {

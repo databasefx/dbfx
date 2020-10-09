@@ -1,7 +1,9 @@
 package cn.navigational.dbfx.view
 
+import cn.navigational.dbfx.BaseTreeItem
 import cn.navigational.dbfx.View
 import cn.navigational.dbfx.config.HOME_PAGE
+import cn.navigational.dbfx.controls.tab.SQLTerminalTab
 import cn.navigational.dbfx.handler.MainTabPaneHandler
 import cn.navigational.dbfx.controls.tree.CustomTreeView
 import cn.navigational.dbfx.handler.closeAppOccurResource
@@ -10,6 +12,8 @@ import javafx.fxml.FXML
 import javafx.scene.Scene
 import javafx.scene.control.SplitPane
 import javafx.stage.WindowEvent
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class HomeView : View<Void>(HOME_PAGE) {
 
@@ -37,6 +41,24 @@ class HomeView : View<Void>(HOME_PAGE) {
     @FXML
     fun createCon() {
         CreateConView()
+    }
+
+    @FXML
+    fun openSQLTerminal() {
+        val temp = navigator.selectionModel.selectedItem
+        if (temp == null) {
+            AlertUtils.showSimpleDialog("未选中任何数据库节点!")
+            return
+        }
+        val selectItem = temp as BaseTreeItem
+        try {
+            val path = selectItem.fullPath
+            val client = selectItem.currentClient
+            val terminal = SQLTerminalTab(client)
+            GlobalScope.launch { MainTabPaneHandler.handler.addTabToPane(terminal, path) }
+        } catch (e: Exception) {
+            AlertUtils.showSimpleDialog("请确保当前数据库节点已经打开连接!")
+        }
     }
 
 

@@ -3,6 +3,11 @@ package cn.navigational.dbfx.model;
 import cn.navigational.dbfx.kit.enums.Clients;
 import io.vertx.sqlclient.Pool;
 
+import java.net.FileNameMap;
+
+import static cn.navigational.dbfx.config.AppConstantsKt.MYSQL_ICON;
+import static cn.navigational.dbfx.config.AppConstantsKt.PG_ICON;
+
 /**
  * For running sql client package
  *
@@ -69,5 +74,15 @@ public class SQLClient {
 
     public void setCl(Clients cl) {
         this.cl = cl;
+    }
+
+    public static String getMiniIcon(Clients cl) {
+        final String mini;
+        if (cl == Clients.MYSQL) {
+            mini = MYSQL_ICON;
+        } else {
+            mini = PG_ICON;
+        }
+        return mini;
     }
 }

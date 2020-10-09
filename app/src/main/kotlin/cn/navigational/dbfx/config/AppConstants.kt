@@ -40,3 +40,10 @@ const val TABLE_SETTING_ICON = "assets/icons/table/setting.svg"
 const val INFO_ICON = "assets/icons/dialog/info.svg"
 const val MINI_ICON = "assets/icons/dialog/minimize.svg"
 const val DIALOG_CLOSE_ICON = "assets/icons/dialog/close.svg"
+
+//terminal icon
+const val T_INFO_ICON = "assets/icons/terminal/info.svg"
+const val T_START_ICON = "assets/icons/terminal/start.svg"
+const val T_EXE_RESULT_ICON = "assets/icons/terminal/exe_result.svg"
+
+

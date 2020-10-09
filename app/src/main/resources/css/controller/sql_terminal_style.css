@@ -1,0 +1,26 @@
+.tool-bar {
+    -fx-background-color: #3C3F41;
+}
+
+.button:hover {
+    -fx-background-color: #4C5052;
+}
+
+.code-area .text {
+    -fx-fill: #A8B5B4;
+}
+
+.keyword {
+    -fx-fill: #c77032;
+    -fx-font-weight: bold;
+}
+
+.styled-text-area .line-highlighter {
+    -fx-fill: #323232;
+}
+
+.lineno {
+    -fx-text-alignment: left;
+    -fx-min-width: 2em;
+    -fx-background-color: #313335;
+}

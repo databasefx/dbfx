@@ -1,6 +1,7 @@
 package cn.navigational.dbfx.controls
 
 import cn.navigational.dbfx.handler.MainTabPaneHandler
+import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
 import javafx.beans.property.BooleanProperty
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleStringProperty
@@ -9,14 +10,18 @@ import javafx.scene.control.Tab
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-abstract class AbstractBaseTab() : Tab() {
-    init {
+abstract class AbstractBaseTab : Tab {
+    constructor() : super() {
         setOnCloseRequest {
             val that = this
             GlobalScope.launch {
                 that.close()
             }
         }
+    }
+
+    constructor(icon: String) : this() {
+        this.graphic = SvgImageTranscoder.svgToImageView(icon)
     }
 
     /**
