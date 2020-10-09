@@ -9,8 +9,8 @@ plugins {
 mainClassName = 'cn.navigational.dbfx.Launcher'
 
 //jvm args
-applicationDefaultJvmArgs = ['-Djdk.gtk.version=2', '-Dsun.java2d.opengl=true', '-XX:+UseZGC', '-Xms512M', '-Xmx1024M']
-
+applicationDefaultJvmArgs = ['-Dsun.java2d.opengl=true', '-XX:+UseZGC', '-Xms512M', '-Xmx1024M']
+if (javafx.platform.classifier == 'linux') applicationDefaultJvmArgs.add("-Djdk.gtk.version=2")
 
 javafx {
     version = "15"
@@ -40,6 +40,7 @@ dependencies {
     compile project(":kit")
     compile group: 'commons-codec', name: 'commons-codec', version: '1.14'
     compile group: 'org.controlsfx', name: 'controlsfx', version: '11.0.2'
+    compile group: 'org.fxmisc.richtext', name: 'richtextfx', version: '0.10.5'
     compile group: 'org.apache.xmlgraphics', name: 'batik-transcoder', version: '1.13'
 }
 
