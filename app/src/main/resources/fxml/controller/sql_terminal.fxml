@@ -24,11 +24,11 @@
                 </tooltip>
             </Button>
         </ToolBar>
-<!--        <VirtualizedScrollPane VBox.vgrow="ALWAYS">-->
-        <!--            <content>-->
-                <CodeArea lineHighlighterOn="true" fx:id="codeArea" wrapText="true" VBox.vgrow="ALWAYS"/>
-<!--            </content>-->
-<!--        </VirtualizedScrollPane>-->
+        <VirtualizedScrollPane VBox.vgrow="ALWAYS">
+            <content>
+            <CodeArea lineHighlighterOn="true" fx:id="codeArea" VBox.vgrow="ALWAYS"/>
+            </content>
+        </VirtualizedScrollPane>
     </VBox>
     <TabPane>
         <Tab text="信息" closable="false" fx:id="info"/>
