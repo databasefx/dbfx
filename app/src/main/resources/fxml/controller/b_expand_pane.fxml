@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="400.0" prefWidth="600.0">
+    <stylesheets>
+        <URL value="@/css/controller/b_expand_pane_style.css"/>
+    </stylesheets>
+    <top>
+        <HBox alignment="CENTER_RIGHT" styleClass="top-box">
+            <HBox alignment="CENTER_LEFT">
+                <Label fx:id="paneTitle"/>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                <Button fx:id="setting">
+                    <tooltip>
+                        <Tooltip text="设置"/>
+                    </tooltip>
+                </Button>
+                <Button fx:id="mini">
+                    <tooltip>
+                        <Tooltip text="隐藏"/>
+                    </tooltip>
+                </Button>
+            </HBox>
+        </HBox>
+    </top>
+
+</BorderPane>

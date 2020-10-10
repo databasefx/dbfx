@@ -3,5 +3,4 @@ dependencies {
     compile group: 'io.vertx', name: 'vertx-mysql-client', version: vertx_version
     compile group: 'io.vertx', name: 'vertx-db2-client', version: vertx_version
     compile group: 'io.vertx', name: 'vertx-sql-client', version: vertx_version
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }

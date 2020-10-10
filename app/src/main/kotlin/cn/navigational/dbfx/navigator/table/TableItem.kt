@@ -29,8 +29,8 @@ class TableItem(private val table: String,
     }
 
     private suspend fun openTab() {
-        var tab = TableTab(table, category, currentClient, tableType)
-        tab = MainTabPaneHandler.handler.addTabToPane(tab, fullPath) as TableTab
+        val tab = TableTab(table, category, currentClient, tableType)
+        MainTabPaneHandler.handler.addTabToPane(tab, fullPath) as TableTab
     }
 
     enum class TableType {

@@ -212,6 +212,18 @@ fun loadManifest(): Map<String, String> {
 }
 
 /**
+ *
+ * Get fix file last modify time,if file not exist return -1
+ */
+fun getFileLastTime(path: String): Long {
+    val file = File(path)
+    if (!file.exists()) {
+        return -1
+    }
+    return file.lastModified()
+}
+
+/**
  * Output application banner info
  */
 private suspend fun outputBan() {

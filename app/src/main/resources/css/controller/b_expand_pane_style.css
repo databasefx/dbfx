@@ -1,0 +1,6 @@
+.top-box {
+    -fx-background-color: #3c3f41;
+    -fx-border-width: 0 0 0.1em 0;
+    -fx-border-color: #323232;
+    -fx-padding: 0 0.3em;
+}

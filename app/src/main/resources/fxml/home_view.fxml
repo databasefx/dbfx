@@ -69,9 +69,23 @@
         </VBox>
     </top>
     <center>
-        <SplitPane dividerPositions="0.2" fx:id="splitPane"/>
+        <SplitPane fx:id="mSPane" orientation="VERTICAL">
+            <SplitPane dividerPositions="0.2" fx:id="splitPane"/>
+        </SplitPane>
     </center>
     <bottom>
-        <HBox styleClass="b-navigator"/>
+        <HBox styleClass="b-navigator">
+            <ButtonBar HBox.hgrow="ALWAYS" nodeOrientation="RIGHT_TO_LEFT">
+                <buttons>
+                    <Button fx:id="terminal" text="终端" contentDisplay="RIGHT" onAction="#openTerminal"/>
+                </buttons>
+            </ButtonBar>
+            <ButtonBar HBox.hgrow="ALWAYS">
+                <buttons>
+                    <Button text="日志" fx:id="eventLog" alignment="TOP_CENTER" onAction="#openLog"/>
+                </buttons>
+            </ButtonBar>
+        </HBox>
+
     </bottom>
 </BorderPane>

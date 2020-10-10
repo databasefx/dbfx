@@ -2,6 +2,8 @@ package cn.navigational.dbfx.config
 
 //App and menu icon
 const val APP_STYLE = "css/app_style.css"
+const val W_MINI = "assets/icons/w_mini.svg"
+const val SETTING = "assets/icons/setting.svg"
 const val APP_ICON = "assets/icons/icon.svg"
 const val OPEN_ICON = "assets/icons/db/mini/open.svg"
 const val REMOVE_ICON = "assets/icons/db/mini/remove_db.svg"
@@ -45,5 +47,9 @@ const val DIALOG_CLOSE_ICON = "assets/icons/dialog/close.svg"
 const val T_INFO_ICON = "assets/icons/terminal/info.svg"
 const val T_START_ICON = "assets/icons/terminal/start.svg"
 const val T_EXE_RESULT_ICON = "assets/icons/terminal/exe_result.svg"
+
+//navigation icon
+const val N_EVENT_LOG = "assets/icons/nav/event-log.svg"
+const val N_TERMINAL = "assets/icons/nav/terminal.svg"
 
 

@@ -68,6 +68,7 @@ class SQLExecutor {
          *
          */
         suspend fun getConnection(cl: Clients, client: Pool): SqlConnection {
+            logger.debug("Start from ${cl.client} client obtain connection.")
             return client.connection.await()
         }
 
