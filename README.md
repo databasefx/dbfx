@@ -24,6 +24,9 @@ NOTE : DatabaseFX requires Java 15 and above.
 ### Data table
 ![Loading Fail](./SNAPSHOTS/c.png)
 
+### SQL Statement real time output
+![Loading Fail](./SNAPSHOTS/e.png)
+
 ### About
 ![Loading Fail](SNAPSHOTS/d.png)
 
