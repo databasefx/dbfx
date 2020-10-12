@@ -75,6 +75,11 @@ class HomeView : View<Void>(HOME_PAGE) {
     }
 
     @FXML
+    fun exit() {
+        onClose(null)
+    }
+
+    @FXML
     fun openSQLTerminal() {
         val temp = navigator.selectionModel.selectedItem
         if (temp == null) {
@@ -103,10 +108,10 @@ class HomeView : View<Void>(HOME_PAGE) {
     }
 
 
-    override fun onClose(event: WindowEvent) {
+    override fun onClose(event: WindowEvent?) {
         val result = AlertUtils.showSimpleConfirmDialog("你确定要退出应用程序?")
         if (!result) {
-            event.consume()
+            event?.consume()
             return
         }
         closeAppOccurResource()

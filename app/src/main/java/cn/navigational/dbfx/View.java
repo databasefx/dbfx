@@ -73,8 +73,7 @@ public class View<T> extends Stage {
         this.setOnCloseRequest(this::onClose);
         this.showingProperty().addListener(showListener);
         this.iconifiedProperty().addListener(iconifyListener);
-        VertxUtils.eventBusConsumer(this.getClass().getName())
-                .handler(msg -> Platform.runLater(() -> this.notifyCall(msg)));
+        VertxUtils.eventBusConsumer(this.getClass().getName()).handler(msg -> Platform.runLater(() -> this.notifyCall(msg)));
         if (t == null) {
             onCreated(scene);
         } else {

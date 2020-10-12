@@ -3,8 +3,7 @@ package cn.navigational.dbfx;
 import cn.navigational.dbfx.kit.utils.VertxUtils;
 import cn.navigational.dbfx.model.UiPreferences;
 import cn.navigational.dbfx.view.SplashView;
-import io.vertx.core.VertxOptions;
-import io.vertx.core.file.FileSystemOptions;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
@@ -62,32 +61,41 @@ public class Launcher {
         if (checkIfRunning()) {
             return;
         }
+        VertxUtils.initVertx();
         MainApp.launch(MainApp.class, args);
     }
 
-    public static class MainApp extends Application {
-        @Override
-        public void init() {
-            LOG.debug("Start init vertx options.");
-            var vertxOptions = new VertxOptions();
-            var fsOptions = new FileSystemOptions();
-            //Disable file cached
-            fsOptions.setFileCachingEnabled(false);
-            //Worker pool size
-            vertxOptions.setWorkerPoolSize(10);
-            vertxOptions.setFileSystemOptions(fsOptions);
-            VertxUtils.initVertx(vertxOptions);
+    private static void setApplicationUncaughtExceptionHandler() {
+        if (Thread.getDefaultUncaughtExceptionHandler() == null) {
+            // Register a Default Uncaught Exception Handler for the application
+            Thread.setDefaultUncaughtExceptionHandler(new MainApp.DbFxUncaughtExceptionHandler());
         }
+    }
+
+    public static class MainApp extends Application {
 
         @Override
         public void start(Stage primaryStage) {
-            new SplashView();
+            //Global catch javafx UI un-caught  thread exception
+            setApplicationUncaughtExceptionHandler();
+            SplashView.Companion.requireStart();
         }
 
         @Override
         public void stop() throws Exception {
             LOG.debug("Stop current application.");
             VertxUtils.close();
+        }
+
+        private static class DbFxUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
+
+            private static final Logger LOGGER = LoggerFactory.getLogger(DbFxUncaughtExceptionHandler.class);
+
+            @Override
+            public void uncaughtException(Thread t, Throwable e) {
+                // Print the details of the exception in dbfx log file
+                LOGGER.error("An exception was thrown:", e);
+            }
         }
     }
 }

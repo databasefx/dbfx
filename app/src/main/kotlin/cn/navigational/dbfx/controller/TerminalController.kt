@@ -2,6 +2,7 @@ package cn.navigational.dbfx.controller
 
 import cn.navigational.dbfx.config.B_N_TERMINAL_PANE
 import cn.navigational.dbfx.controller.BottomNavigationExpandPaneController.*
+import cn.navigational.dbfx.kit.i18n.I18N
 import javafx.scene.control.MenuItem
 import javafx.scene.layout.BorderPane
 
@@ -12,7 +13,7 @@ class TerminalController : ExpandPaneProvider<Void, BorderPane>(B_N_TERMINAL_PAN
     }
 
     override fun getTitle(): String {
-        return "终端"
+        return I18N.getString("tool.bar.terminal")
     }
 
     override fun close() {

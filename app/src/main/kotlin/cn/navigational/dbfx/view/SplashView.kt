@@ -22,4 +22,10 @@ class SplashView : View<Void>(SPLASH_PAGE) {
             }
         }
     }
+
+    companion object {
+        fun requireStart() {
+            SplashView()
+        }
+    }
 }

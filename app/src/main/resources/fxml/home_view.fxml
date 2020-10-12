@@ -15,9 +15,11 @@
     <top>
         <VBox>
             <MenuBar>
-                <Menu text="文件"/>
-                <Menu text="帮助">
-                    <MenuItem text="关于" onAction="#about"/>
+                <Menu text="%menu.title.file">
+                    <MenuItem text="%menu.title.file.exit" onAction="#exit"/>
+                </Menu>
+                <Menu text="%menu.title.file">
+                    <MenuItem text="%menu.title.help.about" onAction="#about"/>
                 </Menu>
             </MenuBar>
             <ToolBar>
@@ -29,7 +31,7 @@
                         </ImageView>
                     </graphic>
                     <tooltip>
-                        <Tooltip text="新建连接"/>
+                        <Tooltip text="%tool.bar.create.connection"/>
                     </tooltip>
                 </Button>
                 <Button>
@@ -40,7 +42,7 @@
                         </ImageView>
                     </graphic>
                     <tooltip>
-                        <Tooltip text="断开/重新连接"/>
+                        <Tooltip text="%tool.bar.reconnection"/>
                     </tooltip>
                 </Button>
                 <Button>
@@ -51,7 +53,7 @@
                         </ImageView>
                     </graphic>
                     <tooltip>
-                        <Tooltip text="断开连接"/>
+                        <Tooltip text="%tool.bar.discount.connection"/>
                     </tooltip>
                 </Button>
                 <Button onAction="#openSQLTerminal">
@@ -62,7 +64,7 @@
                         </ImageView>
                     </graphic>
                     <tooltip>
-                        <Tooltip text="SQL编辑器"/>
+                        <Tooltip text="%tool.bar.sql.editor"/>
                     </tooltip>
                 </Button>
             </ToolBar>
@@ -74,18 +76,9 @@
         </SplitPane>
     </center>
     <bottom>
-        <HBox styleClass="b-navigator">
-            <ButtonBar HBox.hgrow="ALWAYS" nodeOrientation="RIGHT_TO_LEFT">
-                <buttons>
-                    <Button fx:id="terminal" text="终端" contentDisplay="RIGHT" onAction="#openTerminal"/>
-                </buttons>
-            </ButtonBar>
-            <ButtonBar HBox.hgrow="ALWAYS">
-                <buttons>
-                    <Button text="日志" fx:id="eventLog" alignment="TOP_CENTER" onAction="#openLog"/>
-                </buttons>
-            </ButtonBar>
-        </HBox>
-
+        <ToolBar HBox.hgrow="ALWAYS" nodeOrientation="LEFT_TO_RIGHT" styleClass="b-navigator">
+            <Button fx:id="terminal" text="%tool.bar.terminal" onAction="#openTerminal"/>
+            <Button text="%tool.bar.log" fx:id="eventLog" alignment="TOP_CENTER" onAction="#openLog"/>
+        </ToolBar>
     </bottom>
 </BorderPane>

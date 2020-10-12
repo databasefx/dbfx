@@ -1,5 +1,6 @@
 package cn.navigational.dbfx;
 
+import cn.navigational.dbfx.kit.i18n.I18N;
 import javafx.fxml.FXMLLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ public class FXMLHelper {
      */
     public static <P> P loadFxml(final String path, Object controller) {
         var fxLoader = new FXMLLoader();
+        fxLoader.setResources(I18N.getBundle());
         fxLoader.setController(controller);
         final P root;
         try {
