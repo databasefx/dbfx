@@ -9,6 +9,7 @@ import cn.navigational.dbfx.model.SQLClient
 import javafx.beans.property.BooleanProperty
 import javafx.beans.property.SimpleBooleanProperty
 import cn.navigational.dbfx.handler.NavigatorMenuHandler.Companion.MenuType.*
+import cn.navigational.dbfx.kit.i18n.I18N
 import cn.navigational.dbfx.view.EditConView
 import javafx.application.Platform
 import javafx.beans.property.ObjectProperty
@@ -32,13 +33,13 @@ abstract class DatabaseItem(val uuid: String, icon: String) : BaseTreeItem<Strin
     init {
         this.update()
         val handler = NavigatorMenuHandler.init(supportMenu)
-        val sCon = handler.getMenuCoroutine("连接", OPEN_CONNECT, this::startConnect)
-        val eCon = handler.getMenuCoroutine("断开", DIS_CONNECT, this::endConnect, true)
-        val flush = handler.getMenuCoroutine("刷新", FLUSH, this::flush, true)
-        val ter = handler.getMenuUnCoroutine("SQL终端", SQL_TERMINAL, this::openTerminal, true)
-        handler.getMenuUnCoroutine("编辑连接", EDIT_CONNECT, this::edit)
+        val sCon = handler.getMenuCoroutine(I18N.getString("navigation.menu.open"), OPEN_CONNECT, this::startConnect)
+        val eCon = handler.getMenuCoroutine(I18N.getString("navigation.menu.discount"), DIS_CONNECT, this::endConnect, true)
+        val flush = handler.getMenuCoroutine(I18N.getString("navigation.menu.flush"), FLUSH, this::flush, true)
+        val ter = handler.getMenuUnCoroutine(I18N.getString("navigation.menu.sql.terminal"), SQL_TERMINAL, this::openTerminal, true)
+        handler.getMenuUnCoroutine(I18N.getString("navigation.menu.edit.connection"), EDIT_CONNECT, this::edit)
         //Remove current database
-        handler.getMenuUnCoroutine("移除连接", REMOVE_DB, { SQLClientManager.manager.removeDbInfo(uuid) })
+        handler.getMenuUnCoroutine(I18N.getString("navigation.menu.remove.connection"), REMOVE_DB, { SQLClientManager.manager.removeDbInfo(uuid) })
 
         connectStatus.addListener { _, _, n ->
             Platform.runLater {
@@ -114,7 +115,7 @@ abstract class DatabaseItem(val uuid: String, icon: String) : BaseTreeItem<Strin
     fun delete() {
         //If current database is open status,fire close event.
         for (menu in supportMenu) {
-            if (menu.text == "断开" && !menu.isDisable) {
+            if (menu.text == I18N.getString("navigation.menu.discount") && !menu.isDisable) {
                 menu.fire()
                 break
             }

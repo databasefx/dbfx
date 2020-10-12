@@ -19,7 +19,7 @@
             </HBox>
             <GridPane styleClass="grid-pane,top-grid">
                 <HBox GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.columnIndex="0">
-                    <Label text="名称:"/>
+                    <Label text="%connection.options.name"/>
                     <TextField HBox.hgrow="ALWAYS" fx:id="name"/>
                 </HBox>
                 <HBox GridPane.rowIndex="0" GridPane.columnIndex="1">
@@ -27,7 +27,7 @@
                     <TextField visible="false"/>
                 </HBox>
                 <HBox GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS">
-                    <Label text="备注:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <Label text="%connection.options.note" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
                     <TextField HBox.hgrow="ALWAYS" fx:id="comment"/>
                 </HBox>
                 <HBox GridPane.rowIndex="1" GridPane.columnIndex="1">
@@ -40,32 +40,32 @@
     </top>
     <center>
         <TabPane>
-            <Tab text="基础" closable="false">
+            <Tab text="%label.base" closable="false">
                 <GridPane styleClass="grid-pane">
                     <HBox GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS">
-                        <Label text="主机:"/>
+                        <Label text="%connection.options.host"/>
                         <TextField HBox.hgrow="ALWAYS" fx:id="host"/>
                     </HBox>
                     <HBox GridPane.rowIndex="0" GridPane.columnIndex="1">
-                        <Label text="端口:"/>
+                        <Label text="%connection.options.port"/>
                         <TextField HBox.hgrow="ALWAYS" fx:id="port"/>
                     </HBox>
                     <HBox GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS">
-                        <Label text="用户名:"/>
+                        <Label text="%connection.options.username"/>
                         <TextField HBox.hgrow="ALWAYS" fx:id="username"/>
                     </HBox>
                     <HBox GridPane.rowIndex="1" GridPane.columnIndex="1">
 
                     </HBox>
                     <HBox GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS">
-                        <Label text="密码:"/>
+                        <Label text="%connection.options.password"/>
                         <PasswordField HBox.hgrow="ALWAYS" fx:id="password"/>
                     </HBox>
                     <HBox GridPane.rowIndex="2" GridPane.columnIndex="1">
-                        <CheckBox text="保存到本地" fx:id="local"/>
+                        <CheckBox text="%connection.options.local.save" fx:id="local"/>
                     </HBox>
                     <HBox GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS">
-                        <Label text="数据库:"/>
+                        <Label text="%connection.options.database"/>
                         <TextField HBox.hgrow="ALWAYS" fx:id="database"/>
                     </HBox>
                 </GridPane>

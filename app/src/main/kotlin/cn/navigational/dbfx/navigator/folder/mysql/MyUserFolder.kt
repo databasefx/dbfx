@@ -4,10 +4,11 @@ import cn.navigational.dbfx.navigator.FolderItem
 import cn.navigational.dbfx.navigator.user.MyUserItem
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.enums.Clients
+import cn.navigational.dbfx.kit.i18n.I18N
 
 class MyUserFolder : FolderItem() {
     init {
-        value = "用户"
+        value = I18N.getString("label.user")
     }
 
     override suspend fun initFolder() {

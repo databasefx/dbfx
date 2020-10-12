@@ -12,6 +12,7 @@ import cn.navigational.dbfx.controls.tab.SQLTerminalTab
 import cn.navigational.dbfx.handler.MainTabPaneHandler
 import cn.navigational.dbfx.controls.tree.CustomTreeView
 import cn.navigational.dbfx.handler.closeAppOccurResource
+import cn.navigational.dbfx.kit.i18n.I18N
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
 import cn.navigational.dbfx.utils.AlertUtils
 import javafx.fxml.FXML
@@ -43,13 +44,13 @@ class HomeView : View<Void>(HOME_PAGE) {
 
 
     override fun onCreated(scene: Scene?) {
-        this.title = "dbfx"
+        this.title = I18N.getString("stage.home")
         this.navigator = CustomTreeView.customTreeView
         this.splitPane.items.add(this.navigator)
         this.tabHandler = MainTabPaneHandler.handler
         this.splitPane.items.add(tabHandler.getTabPane())
         this.eventLog.graphic = SvgImageTranscoder.svgToImageView(N_EVENT_LOG)
-        this.terminal.graphic = SvgImageTranscoder.svgToImageView(N_TERMINAL)
+//        this.terminal.graphic = SvgImageTranscoder.svgToImageView(N_TERMINAL)
         this.expandPaneController = BottomNavigationExpandPaneController()
         //Listener whether bottom expand pane should show
         this.expandPaneController.panePropertyProperty().addListener { _, _, obj ->
@@ -83,7 +84,7 @@ class HomeView : View<Void>(HOME_PAGE) {
     fun openSQLTerminal() {
         val temp = navigator.selectionModel.selectedItem
         if (temp == null) {
-            AlertUtils.showSimpleDialog("未选中任何数据库节点!")
+            AlertUtils.showSimpleDialog(I18N.getString("alert.please.client"))
             return
         }
         val selectItem = temp as BaseTreeItem
@@ -93,14 +94,14 @@ class HomeView : View<Void>(HOME_PAGE) {
             val terminal = SQLTerminalTab(client)
             GlobalScope.launch { MainTabPaneHandler.handler.addTabToPane(terminal, path) }
         } catch (e: Exception) {
-            AlertUtils.showSimpleDialog("请确保当前数据库节点已经打开连接!")
+            AlertUtils.showSimpleDialog(I18N.getString("alert.sure.open.connection"))
         }
     }
 
-    @FXML
-    fun openTerminal() {
-        this.expandPaneController.paneProperty = TerminalController()
-    }
+//    @FXML
+//    fun openTerminal() {
+//        this.expandPaneController.paneProperty = TerminalController()
+//    }
 
     @FXML
     fun openLog() {
@@ -109,7 +110,7 @@ class HomeView : View<Void>(HOME_PAGE) {
 
 
     override fun onClose(event: WindowEvent?) {
-        val result = AlertUtils.showSimpleConfirmDialog("你确定要退出应用程序?")
+        val result = AlertUtils.showSimpleConfirmDialog(I18N.getString("alert.application.exit.tips"))
         if (!result) {
             event?.consume()
             return

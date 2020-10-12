@@ -25,7 +25,7 @@
 
             <Button fx:id="close" StackPane.alignment="TOP_RIGHT">
                 <tooltip>
-                    <Tooltip text="关闭"/>
+                    <Tooltip text="%label.close"/>
                 </tooltip>
             </Button>
         </StackPane>
@@ -36,15 +36,15 @@
             <Label fx:id="runtime" GridPane.rowIndex="1"/>
             <Label fx:id="vm" GridPane.rowIndex="2"/>
             <HBox GridPane.rowIndex="3">
-                <Label text="官方网站: "/>
+                <Label text="%about.options.website"/>
                 <Label text="http://navigational.cn/" styleClass="mark-text"/>
             </HBox>
             <HBox GridPane.rowIndex="4">
-                <Label text="官方仓库: "/>
+                <Label text="%about.options.official.repository"/>
                 <Label text="https://github.com/databasefx/dbfx" styleClass="mark-text"/>
             </HBox>
             <HBox GridPane.rowIndex="5">
-                <Label text="许可协议: "/>
+                <Label text="%about.options.license.agreement"/>
                 <Label text="http://www.apache.org/licenses/LICENSE-2.0.html" styleClass="mark-text"/>
             </HBox>
             <HBox GridPane.rowIndex="6">

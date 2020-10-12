@@ -1,6 +1,7 @@
 package cn.navigational.dbfx.utils;
 
 import cn.navigational.dbfx.dialog.SimpleConfirmDialog;
+import cn.navigational.dbfx.kit.i18n.I18N;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -18,7 +19,7 @@ import static cn.navigational.dbfx.config.AppConstantsKt.APP_STYLE;
 public class AlertUtils {
 
     public static void showSimpleDialog(String msg) {
-        showSimpleDialog("消息", msg);
+        showSimpleDialog("%alert.info.title", msg);
     }
 
     /**
@@ -52,7 +53,7 @@ public class AlertUtils {
     public static void showExDialog(String title, Throwable e) {
         Platform.runLater(() -> {
             var ex = new ExceptionDialog(e);
-            ex.setTitle("Error");
+            ex.setTitle(I18N.getString("alert.error.title"));
             ex.setHeaderText(title);
             ex.getDialogPane().getStylesheets().add(APP_STYLE);
             ex.show();

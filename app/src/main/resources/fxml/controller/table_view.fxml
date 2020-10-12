@@ -16,52 +16,52 @@
             <ToolBar>
                 <Button fx:id="firstPage">
                     <tooltip>
-                        <Tooltip text="第一页"/>
+                        <Tooltip text="%label.first.page"/>
                     </tooltip>
                 </Button>
                 <Button fx:id="last">
                     <tooltip>
-                        <Tooltip text="上一页"/>
+                        <Tooltip text="%label.previous.page"/>
                     </tooltip>
                 </Button>
                 <ChoiceBox fx:id="pageSelector" styleClass="page-box"/>
                 <Label fx:id="numIndicator"/>
                 <Button fx:id="next">
                     <tooltip>
-                        <Tooltip text="下一页"/>
+                        <Tooltip text="%label.next.page"/>
                     </tooltip>
                 </Button>
                 <Button fx:id="lastPage">
                     <tooltip>
-                        <Tooltip text="最后一页"/>
+                        <Tooltip text="%label.last.page"/>
                     </tooltip>
                 </Button>
                 <Separator orientation="VERTICAL"/>
                 <Button fx:id="flush">
                     <tooltip>
-                        <Tooltip text="刷新"/>
+                        <Tooltip text="%label.flush"/>
                     </tooltip>
                 </Button>
                 <Separator orientation="VERTICAL"/>
                 <Button fx:id="addRow">
                     <tooltip>
-                        <Tooltip text="新增一行"/>
+                        <Tooltip text="%label.add.new.row"/>
                     </tooltip>
                 </Button>
                 <Button fx:id="delRow">
                     <tooltip>
-                        <Tooltip text="删除一行"/>
+                        <Tooltip text="%label.del.rows"/>
                     </tooltip>
                 </Button>
                 <Button fx:id="setting">
                     <tooltip>
-                        <Tooltip text="设置"/>
+                        <Tooltip text="%label.setting"/>
                     </tooltip>
                 </Button>
             </ToolBar>
             <HBox styleClass="search-box">
                 <Label fx:id="sIcon"/>
-                <TextField HBox.hgrow="ALWAYS" promptText="搜索"/>
+                <TextField HBox.hgrow="ALWAYS" promptText="%label.search"/>
             </HBox>
         </VBox>
     </top>

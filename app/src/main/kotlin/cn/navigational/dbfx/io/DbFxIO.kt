@@ -175,6 +175,10 @@ private suspend fun loadDbMetaData() {
     val items = arrayListOf<DatabaseMeta>()
     array.forEach {
         val json = it as JsonObject
+        //filter not support client
+        if (!json.getBoolean("support")) {
+            return@forEach
+        }
         items.add(json.mapTo(DatabaseMeta::class.java))
     }
     DatabaseMetaManager.manager.addDbMeta(items)

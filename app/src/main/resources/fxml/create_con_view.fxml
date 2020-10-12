@@ -19,10 +19,10 @@
     <bottom>
         <HBox styleClass="bottom-box">
             <HBox styleClass="l-box">
-                <Button text="测试连接(T)" disable="true" onAction="#testCon" fx:id="test"/>
+                <Button text="%label.test.connection" disable="true" onAction="#testCon" fx:id="test"/>
             </HBox>
             <HBox styleClass="r-box" HBox.hgrow="ALWAYS">
-                <Button text="上一步(B)" disable="true" fx:id="last">
+                <Button text="%label.last.step" disable="true" fx:id="last">
                     <graphic>
                         <ImageView>
                             <Image url="@/assets/icons/last.png" requestedWidth="20" requestedHeight="20"
@@ -30,7 +30,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button text="下一步(N)" contentDisplay="RIGHT" fx:id="next" disable="true">
+                <Button text="%label.next.step" contentDisplay="RIGHT" fx:id="next" disable="true">
                     <graphic>
                         <ImageView>
                             <Image url="@/assets/icons/next.png" requestedWidth="20" requestedHeight="20"
@@ -38,8 +38,8 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button text="取消" onAction="#cancel"/>
-                <Button text="完成(F)" disable="true" fx:id="finish" onAction="#finish"/>
+                <Button text="%label.cancel" onAction="#cancel"/>
+                <Button text="%label.finish" disable="true" fx:id="finish" onAction="#finish"/>
             </HBox>
         </HBox>
     </bottom>

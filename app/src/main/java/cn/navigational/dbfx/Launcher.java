@@ -78,7 +78,7 @@ public class Launcher {
         public void start(Stage primaryStage) {
             //Global catch javafx UI un-caught  thread exception
             setApplicationUncaughtExceptionHandler();
-            SplashView.Companion.requireStart();
+            new SplashView();
         }
 
         @Override

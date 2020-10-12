@@ -20,18 +20,18 @@
         <ToolBar>
             <Button fx:id="execute">
                 <tooltip>
-                    <Tooltip text="执行"/>
+                    <Tooltip text="%label.execute"/>
                 </tooltip>
             </Button>
         </ToolBar>
         <VirtualizedScrollPane VBox.vgrow="ALWAYS">
             <content>
-            <CodeArea lineHighlighterOn="true" fx:id="codeArea" VBox.vgrow="ALWAYS"/>
+                <CodeArea lineHighlighterOn="true" fx:id="codeArea" VBox.vgrow="ALWAYS"/>
             </content>
         </VirtualizedScrollPane>
     </VBox>
     <TabPane>
-        <Tab text="信息" closable="false" fx:id="info"/>
-        <Tab text="执行结果" closable="false" fx:id="exeResult"/>
+        <Tab text="%label.info" closable="false" fx:id="info"/>
+        <Tab text="%label.result" closable="false" fx:id="exeResult"/>
     </TabPane>
 </SplitPane>

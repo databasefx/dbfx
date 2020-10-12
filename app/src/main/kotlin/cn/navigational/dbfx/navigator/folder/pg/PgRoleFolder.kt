@@ -4,10 +4,11 @@ import cn.navigational.dbfx.navigator.FolderItem
 import cn.navigational.dbfx.navigator.user.PgRoleItem
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.enums.Clients
+import cn.navigational.dbfx.kit.i18n.I18N
 
 class PgRoleFolder : FolderItem() {
     init {
-        value = "角色"
+        value = I18N.getString("label.role")
     }
 
     override suspend fun initFolder() {

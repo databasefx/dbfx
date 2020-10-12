@@ -18,7 +18,7 @@
                 <Menu text="%menu.title.file">
                     <MenuItem text="%menu.title.file.exit" onAction="#exit"/>
                 </Menu>
-                <Menu text="%menu.title.file">
+                <Menu text="%menu.title.help">
                     <MenuItem text="%menu.title.help.about" onAction="#about"/>
                 </Menu>
             </MenuBar>
@@ -34,28 +34,28 @@
                         <Tooltip text="%tool.bar.create.connection"/>
                     </tooltip>
                 </Button>
-                <Button>
-                    <graphic>
-                        <ImageView>
-                            <Image url="@/assets/icons/home/recon-icon.png" smooth="true" requestedHeight="25"
-                                   requestedWidth="25"/>
-                        </ImageView>
-                    </graphic>
-                    <tooltip>
-                        <Tooltip text="%tool.bar.reconnection"/>
-                    </tooltip>
-                </Button>
-                <Button>
-                    <graphic>
-                        <ImageView>
-                            <Image url="@/assets/icons/home/break_off_icon.png" smooth="true" requestedHeight="25"
-                                   requestedWidth="25"/>
-                        </ImageView>
-                    </graphic>
-                    <tooltip>
-                        <Tooltip text="%tool.bar.discount.connection"/>
-                    </tooltip>
-                </Button>
+<!--                <Button>-->
+<!--                    <graphic>-->
+<!--                        <ImageView>-->
+<!--                            <Image url="@/assets/icons/home/recon-icon.png" smooth="true" requestedHeight="25"-->
+<!--                                   requestedWidth="25"/>-->
+<!--                        </ImageView>-->
+<!--                    </graphic>-->
+<!--                    <tooltip>-->
+<!--                        <Tooltip text="%tool.bar.reconnection"/>-->
+<!--                    </tooltip>-->
+<!--                </Button>-->
+<!--                <Button>-->
+<!--                    <graphic>-->
+<!--                        <ImageView>-->
+<!--                            <Image url="@/assets/icons/home/break_off_icon.png" smooth="true" requestedHeight="25"-->
+<!--                                   requestedWidth="25"/>-->
+<!--                        </ImageView>-->
+<!--                    </graphic>-->
+<!--                    <tooltip>-->
+<!--                        <Tooltip text="%tool.bar.discount.connection"/>-->
+<!--                    </tooltip>-->
+<!--                </Button>-->
                 <Button onAction="#openSQLTerminal">
                     <graphic>
                         <ImageView>
@@ -77,7 +77,7 @@
     </center>
     <bottom>
         <ToolBar HBox.hgrow="ALWAYS" nodeOrientation="LEFT_TO_RIGHT" styleClass="b-navigator">
-            <Button fx:id="terminal" text="%tool.bar.terminal" onAction="#openTerminal"/>
+<!--            <Button fx:id="terminal" text="%tool.bar.terminal" onAction="#openTerminal"/>-->
             <Button text="%tool.bar.log" fx:id="eventLog" alignment="TOP_CENTER" onAction="#openLog"/>
         </ToolBar>
     </bottom>

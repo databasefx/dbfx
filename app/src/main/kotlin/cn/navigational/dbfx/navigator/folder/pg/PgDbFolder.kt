@@ -4,11 +4,12 @@ import cn.navigational.dbfx.navigator.FolderItem
 import cn.navigational.dbfx.navigator.scheme.PgDbItem
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.enums.Clients
+import cn.navigational.dbfx.kit.i18n.I18N
 import cn.navigational.dbfx.kit.utils.StringUtils
 
 class PgDbFolder : FolderItem() {
     init {
-        value = "数据库"
+        value = I18N.getString("label.database")
     }
 
     override suspend fun initFolder() {

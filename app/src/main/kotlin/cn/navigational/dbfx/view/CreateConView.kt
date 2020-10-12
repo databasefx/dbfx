@@ -9,6 +9,7 @@ import cn.navigational.dbfx.model.DatabaseMeta
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.SqlClientFactory
 import cn.navigational.dbfx.kit.enums.Clients
+import cn.navigational.dbfx.kit.i18n.I18N
 import cn.navigational.dbfx.utils.AlertUtils
 import cn.navigational.dbfx.kit.utils.StringUtils
 import cn.navigational.dbfx.kit.utils.VertxUtils
@@ -87,7 +88,7 @@ class CreateConView : View<Void>(CREATE_CON_PAGE) {
         }
         this.isResizable = false
         this.initModality(Modality.APPLICATION_MODAL)
-        title = "创建新连接"
+        title = I18N.getString("stage.create.connection")
     }
 
     @FXML

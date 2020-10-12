@@ -4,10 +4,11 @@ import cn.navigational.dbfx.navigator.FolderItem
 import cn.navigational.dbfx.navigator.collation.MyCollationItem
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.enums.Clients
+import cn.navigational.dbfx.kit.i18n.I18N
 
 class MyCollationFolder : FolderItem() {
     init {
-        value = "排序规则"
+        value = I18N.getString("label.collations")
     }
 
     override suspend fun initFolder() {

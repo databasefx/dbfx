@@ -13,8 +13,8 @@
     </stylesheets>
     <bottom>
         <HBox styleClass="bottom-box">
-            <Button text="取消" onAction="#cancel"/>
-            <Button text="保存" fx:id="save" onAction="#saveEdit"/>
+            <Button text="%label.cancel" onAction="#cancel"/>
+            <Button text="%label.save" fx:id="save" onAction="#saveEdit"/>
         </HBox>
     </bottom>
 </BorderPane>

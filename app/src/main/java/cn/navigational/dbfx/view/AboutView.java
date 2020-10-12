@@ -1,8 +1,8 @@
 package cn.navigational.dbfx.view;
 
-import cn.navigational.dbfx.Launcher;
 import cn.navigational.dbfx.View;
 
+import cn.navigational.dbfx.kit.i18n.I18N;
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -56,7 +56,7 @@ public class AboutView extends View<Void> {
         this.initStyle(StageStyle.UNDECORATED);
         this.initModality(Modality.APPLICATION_MODAL);
         this.close.setOnAction(event -> this.close());
-        this.runtime.setText("Runtime version: " + RUNTIME.getVmVersion());
+        this.runtime.setText(I18N.getString("about.options.runtime.version", RUNTIME.getVmVersion()));
         this.vm.setText("VM: " + RUNTIME.getVmName() + " by " + RUNTIME.getVmVendor());
         this.icon.setImage(SvgImageTranscoder.svgToImage(APP_ICON));
         this.close.setGraphic(SvgImageTranscoder.svgToImageView(DIALOG_CLOSE_ICON));
@@ -72,6 +72,6 @@ public class AboutView extends View<Void> {
         var buildTime = manifest.get("Build-Time");
         this.version.setText("V " + version);
         this.copyright.setText(copyright);
-        this.bTime.setText("构建时间: " + buildTime);
+        this.bTime.setText(I18N.getString("about.options.build.time", buildTime));
     }
 }

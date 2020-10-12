@@ -7,6 +7,7 @@ import cn.navigational.dbfx.config.APP_STYLE
 import cn.navigational.dbfx.config.EDIT_CON_PAGE
 import cn.navigational.dbfx.controller.ConInfoPaneController
 import cn.navigational.dbfx.controls.tree.CustomTreeView
+import cn.navigational.dbfx.kit.i18n.I18N
 import cn.navigational.dbfx.model.DatabaseMeta
 import cn.navigational.dbfx.model.DbInfo
 import javafx.fxml.FXML
@@ -21,12 +22,12 @@ class EditConView(private val uuid: String) : View<String>(EDIT_CON_PAGE, uuid) 
     private lateinit var controller: ConInfoPaneController
 
     override fun onCreated(scene: Scene, uuid: String) {
+        this.title = I18N.getString("stage.edit.connection")
         //Init part filed
         this.controller = ConInfoPaneController()
         val dbInfo = SQLClientManager.manager.getDbInfo(uuid)
         this.dbMeta = DatabaseMetaManager.manager.getDbMeta(dbInfo.client)
         controller.initEdit(dbInfo)
-        this.title = "编辑连接"
         this.scene.stylesheets.add(APP_STYLE)
         this.initModality(Modality.WINDOW_MODAL)
         (scene.root as BorderPane).center = controller.parent

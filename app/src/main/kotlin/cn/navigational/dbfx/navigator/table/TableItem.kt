@@ -8,6 +8,7 @@ import cn.navigational.dbfx.controls.tab.TableTab
 import cn.navigational.dbfx.handler.NavigatorMenuHandler
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.enums.Clients
+import cn.navigational.dbfx.kit.i18n.I18N
 
 
 class TableItem(private val table: String,
@@ -17,7 +18,7 @@ class TableItem(private val table: String,
     init {
         this.value = table
         val handler = NavigatorMenuHandler.init(supportMenu)
-        handler.getMenuCoroutine("打开", NavigatorMenuHandler.Companion.MenuType.OPEN, this::openTab)
+        handler.getMenuCoroutine(I18N.getString("navigation.menu.open"), NavigatorMenuHandler.Companion.MenuType.OPEN, this::openTab)
     }
 
     suspend fun initField() {

@@ -2,12 +2,13 @@ package cn.navigational.dbfx.navigator.folder
 
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.enums.Clients
+import cn.navigational.dbfx.kit.i18n.I18N
 import cn.navigational.dbfx.navigator.FolderItem
 import cn.navigational.dbfx.navigator.table.TableItem
 
 class ViewFolder(private val clients: Clients, private val category: String) : FolderItem() {
     init {
-        value = "视图"
+        value = I18N.getString("label.view")
     }
 
     override suspend fun initFolder() {
