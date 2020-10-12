@@ -19,7 +19,7 @@ import java.net.ServerSocket;
  * @author yangkui
  * @since 1.0
  */
-public class Launcher {
+public class Launcher extends Application {
     /**
      * Application default occur port
      */
@@ -62,40 +62,37 @@ public class Launcher {
             return;
         }
         VertxUtils.initVertx();
-        MainApp.launch(MainApp.class, args);
+        launch(Launcher.class, args);
     }
 
     private static void setApplicationUncaughtExceptionHandler() {
         if (Thread.getDefaultUncaughtExceptionHandler() == null) {
             // Register a Default Uncaught Exception Handler for the application
-            Thread.setDefaultUncaughtExceptionHandler(new MainApp.DbFxUncaughtExceptionHandler());
+            Thread.setDefaultUncaughtExceptionHandler(new DbFxUncaughtExceptionHandler());
         }
     }
 
-    public static class MainApp extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        //Global catch javafx UI un-caught  thread exception
+        setApplicationUncaughtExceptionHandler();
+        new SplashView();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        LOG.debug("Stop current application.");
+        VertxUtils.close();
+    }
+
+    private static class DbFxUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
+
+        private static final Logger LOGGER = LoggerFactory.getLogger(DbFxUncaughtExceptionHandler.class);
 
         @Override
-        public void start(Stage primaryStage) {
-            //Global catch javafx UI un-caught  thread exception
-            setApplicationUncaughtExceptionHandler();
-            new SplashView();
-        }
-
-        @Override
-        public void stop() throws Exception {
-            LOG.debug("Stop current application.");
-            VertxUtils.close();
-        }
-
-        private static class DbFxUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
-
-            private static final Logger LOGGER = LoggerFactory.getLogger(DbFxUncaughtExceptionHandler.class);
-
-            @Override
-            public void uncaughtException(Thread t, Throwable e) {
-                // Print the details of the exception in dbfx log file
-                LOGGER.error("An exception was thrown:", e);
-            }
+        public void uncaughtException(Thread t, Throwable e) {
+            // Print the details of the exception in dbfx log file
+            LOGGER.error("An exception was thrown:", e);
         }
     }
 }

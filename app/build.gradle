@@ -3,7 +3,7 @@ import java.text.SimpleDateFormat
 plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.9'
-    id 'com.gluonhq.client-gradle-plugin' version '0.1.31'
+    id 'com.gluonhq.client-gradle-plugin' version '0.1.33'
 }
 
 mainClassName = 'cn.navigational.dbfx.Launcher'

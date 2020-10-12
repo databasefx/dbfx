@@ -28,8 +28,7 @@ fun countLogLineNumber(path: String): Int {
 }
 
 fun readFixLineLog(path: String, start: Int, end: Int): String {
-    val file = File(path) //文件路径
-
+    val file = File(path)
     val fileReader = FileReader(file)
     val reader = LineNumberReader(fileReader)
     var str: String?
