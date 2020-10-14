@@ -23,7 +23,7 @@ import javafx.stage.WindowEvent
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class HomeView : View<Void>(HOME_PAGE) {
+class HomeView private constructor() : View<Void>(HOME_PAGE) {
     @FXML
     private lateinit var terminal: Button
 
@@ -98,11 +98,6 @@ class HomeView : View<Void>(HOME_PAGE) {
         }
     }
 
-//    @FXML
-//    fun openTerminal() {
-//        this.expandPaneController.paneProperty = TerminalController()
-//    }
-
     @FXML
     fun openLog() {
         this.expandPaneController.paneProperty = LogController()
@@ -116,5 +111,9 @@ class HomeView : View<Void>(HOME_PAGE) {
             return
         }
         closeAppOccurResource()
+    }
+
+    companion object {
+        val home: HomeView by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) { HomeView() }
     }
 }
