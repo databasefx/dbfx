@@ -8,6 +8,8 @@ public class I18N {
 
     private static ResourceBundle bundle;
 
+    private static final String PACKAGE_NAME = "i18n";
+
     private static final ResourceBundle.Control UTF_ENCODING_CONTROL = new I18NControl();
 
     public static String getString(String key) {
@@ -21,9 +23,7 @@ public class I18N {
 
     public static synchronized ResourceBundle getBundle() {
         if (bundle == null) {
-            final String packageName = "i18n/";
-            //NOI18N
-            bundle = ResourceBundle.getBundle(packageName + ".dbfx", UTF_ENCODING_CONTROL);
+            bundle = ResourceBundle.getBundle(PACKAGE_NAME + ".dbfx", UTF_ENCODING_CONTROL);
         }
         return bundle;
     }
