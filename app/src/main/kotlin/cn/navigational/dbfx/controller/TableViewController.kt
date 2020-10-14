@@ -1,7 +1,6 @@
 package cn.navigational.dbfx.controller
 
 import cn.navigational.dbfx.Controller
-import cn.navigational.dbfx.Launcher
 import cn.navigational.dbfx.config.*
 import cn.navigational.dbfx.controls.table.CustomTableColumn
 import cn.navigational.dbfx.controls.table.CustomTableView
@@ -11,6 +10,7 @@ import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
 import cn.navigational.dbfx.kit.model.TableColumnMeta
 import cn.navigational.dbfx.kit.utils.NumberUtils
 import cn.navigational.dbfx.model.TableSetting
+import cn.navigational.dbfx.utils.AppSettings
 import cn.navigational.dbfx.utils.TableColumnUtils
 import javafx.application.Platform
 import javafx.beans.property.*
@@ -78,7 +78,7 @@ class TableViewController(private val provider: TableDataProvider) : Controller<
 
 
     override fun onCreated(root: BorderPane?) {
-        tableView.tableSetting = Launcher.uiPreference.tableSetting
+        tableView.tableSetting = AppSettings.getAppSettings().tableSetting
         this.tableView.placeholder = Label("表中暂无数据")
         pageSelector.items.addAll("10", "100", "250", "500", "1000")
         pageSelector.selectionModel.select(0)
@@ -128,7 +128,7 @@ class TableViewController(private val provider: TableDataProvider) : Controller<
             val setting = optional.get()
             if (setting != tableView.tableSetting) {
                 if (setting.isGlobal) {
-                    Launcher.uiPreference.tableSetting = setting
+                    AppSettings.getAppSettings().tableSetting = setting
                     flushUiPreference()
                 }
                 this.tableView.tableSetting = setting

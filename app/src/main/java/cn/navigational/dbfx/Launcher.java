@@ -1,16 +1,17 @@
 package cn.navigational.dbfx;
 
+import cn.navigational.dbfx.i18n.I18N;
 import cn.navigational.dbfx.kit.utils.VertxUtils;
-import cn.navigational.dbfx.model.UiPreferences;
-import cn.navigational.dbfx.view.SplashView;
 
+import cn.navigational.dbfx.view.SplashView;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
+import org.controlsfx.dialog.ExceptionDialog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.InetAddress;
-import java.net.ServerSocket;
+import java.util.List;
 
 
 /**
@@ -19,49 +20,11 @@ import java.net.ServerSocket;
  * @author yangkui
  * @since 1.0
  */
-public class Launcher extends Application {
-    /**
-     * Application default occur port
-     */
-    private static final int PORT = 9999;
-    /**
-     * Log
-     */
+public class Launcher extends Application implements AppPlatform.AppNotificationHandler {
+
     private final static Logger LOG = LoggerFactory.getLogger(Launcher.class);
 
-    /**
-     * Global UI preference
-     */
-    public static UiPreferences uiPreference;
-    /**
-     * Socket must be a static variable. If it is a local variable,
-     * when the method is executed, the socket will be recycled with the death of the method stack.</p>
-     */
-    private static ServerSocket socket;
-
-
-    /**
-     * Determine whether the current application has been started
-     *
-     * @return If current application not startup return {false} otherwise return {true}
-     */
-    private static boolean checkIfRunning() {
-        LOG.debug("Start check current application whether startup.");
-        var result = true;
-        try {
-            socket = new ServerSocket(PORT, 0, InetAddress.getByAddress(new byte[]{127, 0, 0, 1}));
-            result = false;
-        } catch (Exception e) {
-            LOG.info("Current application instance already exist.");
-        }
-        return result;
-    }
-
     public static void main(String[] args) {
-        if (checkIfRunning()) {
-            return;
-        }
-        VertxUtils.initVertx();
         launch(Launcher.class, args);
     }
 
@@ -74,9 +37,19 @@ public class Launcher extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        //Global catch javafx UI un-caught  thread exception
+        //Global catch javafx UI thread un-caught exception
         setApplicationUncaughtExceptionHandler();
-        new SplashView();
+        try {
+            if (!AppPlatform.requestStart(this, getParameters())) {
+                Platform.exit();
+            }
+        } catch (Exception e) {
+            var error = new ExceptionDialog(e);
+            error.setTitle(I18N.getString("alert.title.start"));
+            error.setHeaderText(I18N.getString("alert.start.failure.message"));
+            error.showAndWait();
+            Platform.exit();
+        }
     }
 
     @Override
@@ -94,5 +67,25 @@ public class Launcher extends Application {
             // Print the details of the exception in dbfx log file
             LOGGER.error("An exception was thrown:", e);
         }
+    }
+
+    @Override
+    public void handleLaunch(List<String> files) {
+        new SplashView();
+    }
+
+    @Override
+    public void handleOpenFilesAction(List<String> files) {
+
+    }
+
+    @Override
+    public void handleMessageBoxFailure(Exception x) {
+
+    }
+
+    @Override
+    public void handleQuitAction() {
+
     }
 }

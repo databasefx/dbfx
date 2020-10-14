@@ -1,16 +1,23 @@
 buildscript {
-    ext.kotlin_version = '1.4.0'
+    ext.kotlin_version = '1.4.10'
     ext.vertx_version = '4.0.0.Beta3'
     repositories {
-        maven { url "https://maven.aliyun.com/repository/google" }
-        maven { url "https://maven.aliyun.com/nexus/content/repositories/central" }
-        maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
+        maven {
+            url "https://maven.aliyun.com/repository/google"
+        }
+        maven {
+            url "https://maven.aliyun.com/nexus/content/repositories/central"
+        }
+        maven {
+            url "https://maven.aliyun.com/nexus/content/groups/public/"
+        }
         maven {
             url "https://nexus.gluonhq.com/nexus/content/repositories/releases"
         }
         maven {
             url "https://plugins.gradle.org/m2/"
         }
+        jcenter()
         mavenCentral()
     }
     dependencies {

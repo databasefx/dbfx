@@ -1,17 +1,15 @@
 package cn.navigational.dbfx.io
 
 import cn.navigational.dbfx.DatabaseMetaManager
-import cn.navigational.dbfx.Launcher
 import cn.navigational.dbfx.SQLClientManager
 import cn.navigational.dbfx.kit.config.FILE
 import cn.navigational.dbfx.kit.config.PASSWORD
-import cn.navigational.dbfx.kit.utils.OssUtils
 import cn.navigational.dbfx.kit.utils.StringUtils
 import cn.navigational.dbfx.kit.utils.VertxUtils
 import cn.navigational.dbfx.model.DatabaseMeta
 import cn.navigational.dbfx.model.DbInfo
-import cn.navigational.dbfx.model.UiPreferences
 import cn.navigational.dbfx.security.AseAlgorithm
+import cn.navigational.dbfx.utils.AppSettings
 import io.vertx.core.json.JsonArray
 import io.vertx.core.json.JsonObject
 import io.vertx.kotlin.coroutines.await
@@ -23,12 +21,13 @@ import java.net.JarURLConnection
 
 import java.util.*
 import java.util.jar.JarFile.MANIFEST_NAME
+import cn.navigational.dbfx.AppPlatform
 
 
 const val DEFAULT_KEY = "2EBC@#=="
 const val S_DB_PATH = "config/s_db.json"
 
-val APP_HOME = OssUtils.getUserHome() + File.separator + ".dbfx"
+val APP_HOME = AppPlatform.getApplicationDataFolder()
 
 /**
  * Database config file
@@ -138,12 +137,12 @@ private suspend fun loadUiConfig() {
     val fs = VertxUtils.getFileSystem()
     try {
         val json = fs.readFile(uiConfigPath).await().toJsonObject()
-        Launcher.uiPreference = json.mapTo(UiPreferences::class.java)
+        AppSettings.setAppSettings(json.mapTo(AppSettings::class.java))
     } catch (e: Exception) {
         logger.info("Load UI config failed:[{}],so use default UI config", e.message)
         val json = fs.readFile(defaultUiConfigPath).await().toJsonObject()
-        Launcher.uiPreference = json.mapTo(UiPreferences::class.java)
-        //use default UI preference override block UI preference file
+        AppSettings.setAppSettings(json.mapTo(AppSettings::class.java))
+//        use default UI preference override block UI preference file
         flushUiPreference()
     }
 }
@@ -153,7 +152,7 @@ private suspend fun loadUiConfig() {
  */
 fun flushUiPreference() {
     val fs = VertxUtils.getFileSystem()
-    val json = JsonObject.mapFrom(Launcher.uiPreference)
+    val json = JsonObject.mapFrom(AppSettings.getAppSettings())
 
     val future = fs.writeFile(uiConfigPath, json.toBuffer())
     future.onComplete {
