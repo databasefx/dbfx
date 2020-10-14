@@ -9,7 +9,7 @@ import cn.navigational.dbfx.model.SQLClient
 import javafx.beans.property.BooleanProperty
 import javafx.beans.property.SimpleBooleanProperty
 import cn.navigational.dbfx.handler.NavigatorMenuHandler.Companion.MenuType.*
-import cn.navigational.dbfx.kit.i18n.I18N
+import cn.navigational.dbfx.i18n.I18N
 import cn.navigational.dbfx.view.EditConView
 import javafx.application.Platform
 import javafx.beans.property.ObjectProperty

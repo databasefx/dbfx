@@ -2,7 +2,7 @@ package cn.navigational.dbfx.controller
 
 import cn.navigational.dbfx.config.B_N_TERMINAL_PANE
 import cn.navigational.dbfx.controller.BottomNavigationExpandPaneController.*
-import cn.navigational.dbfx.kit.i18n.I18N
+import cn.navigational.dbfx.i18n.I18N
 import javafx.scene.control.MenuItem
 import javafx.scene.layout.BorderPane
 

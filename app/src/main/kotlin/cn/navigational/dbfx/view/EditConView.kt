@@ -7,9 +7,8 @@ import cn.navigational.dbfx.config.APP_STYLE
 import cn.navigational.dbfx.config.EDIT_CON_PAGE
 import cn.navigational.dbfx.controller.ConInfoPaneController
 import cn.navigational.dbfx.controls.tree.CustomTreeView
-import cn.navigational.dbfx.kit.i18n.I18N
+import cn.navigational.dbfx.i18n.I18N
 import cn.navigational.dbfx.model.DatabaseMeta
-import cn.navigational.dbfx.model.DbInfo
 import javafx.fxml.FXML
 import javafx.scene.Scene
 import javafx.scene.layout.BorderPane

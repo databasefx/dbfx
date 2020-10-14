@@ -4,7 +4,7 @@ import cn.navigational.dbfx.navigator.FolderItem
 import cn.navigational.dbfx.navigator.scheme.PgDbItem
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.enums.Clients
-import cn.navigational.dbfx.kit.i18n.I18N
+import cn.navigational.dbfx.i18n.I18N
 import cn.navigational.dbfx.kit.utils.StringUtils
 
 class PgDbFolder : FolderItem() {

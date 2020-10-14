@@ -1,4 +1,4 @@
-package cn.navigational.dbfx.kit.i18n;
+package cn.navigational.dbfx.i18n;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

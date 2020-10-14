@@ -2,7 +2,7 @@ package cn.navigational.dbfx.view;
 
 import cn.navigational.dbfx.View;
 
-import cn.navigational.dbfx.kit.i18n.I18N;
+import cn.navigational.dbfx.i18n.I18N;
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;

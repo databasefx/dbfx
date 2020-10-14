@@ -1,4 +1,4 @@
-package cn.navigational.dbfx.kit.i18n;
+package cn.navigational.dbfx.i18n;
 
 
 import java.text.MessageFormat;
@@ -21,7 +21,7 @@ public class I18N {
 
     public static synchronized ResourceBundle getBundle() {
         if (bundle == null) {
-            final String packageName = I18N.class.getPackage().getName();
+            final String packageName = "i18n/";
             //NOI18N
             bundle = ResourceBundle.getBundle(packageName + ".dbfx", UTF_ENCODING_CONTROL);
         }

@@ -9,7 +9,7 @@ import cn.navigational.dbfx.model.DatabaseMeta
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.SqlClientFactory
 import cn.navigational.dbfx.kit.enums.Clients
-import cn.navigational.dbfx.kit.i18n.I18N
+import cn.navigational.dbfx.i18n.I18N
 import cn.navigational.dbfx.utils.AlertUtils
 import cn.navigational.dbfx.kit.utils.StringUtils
 import cn.navigational.dbfx.kit.utils.VertxUtils
@@ -22,7 +22,6 @@ import javafx.scene.Scene
 import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.control.Pagination
-import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.FlowPane

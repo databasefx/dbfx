@@ -4,15 +4,13 @@ import cn.navigational.dbfx.BaseTreeItem
 import cn.navigational.dbfx.View
 import cn.navigational.dbfx.config.HOME_PAGE
 import cn.navigational.dbfx.config.N_EVENT_LOG
-import cn.navigational.dbfx.config.N_TERMINAL
 import cn.navigational.dbfx.controller.BottomNavigationExpandPaneController
 import cn.navigational.dbfx.controller.LogController
-import cn.navigational.dbfx.controller.TerminalController
 import cn.navigational.dbfx.controls.tab.SQLTerminalTab
 import cn.navigational.dbfx.handler.MainTabPaneHandler
 import cn.navigational.dbfx.controls.tree.CustomTreeView
 import cn.navigational.dbfx.handler.closeAppOccurResource
-import cn.navigational.dbfx.kit.i18n.I18N
+import cn.navigational.dbfx.i18n.I18N
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
 import cn.navigational.dbfx.utils.AlertUtils
 import javafx.fxml.FXML

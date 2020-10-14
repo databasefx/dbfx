@@ -1,6 +1,6 @@
 package cn.navigational.dbfx;
 
-import cn.navigational.dbfx.kit.i18n.I18N;
+import cn.navigational.dbfx.i18n.I18N;
 import javafx.fxml.FXMLLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

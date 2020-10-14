@@ -4,7 +4,7 @@ import cn.navigational.dbfx.navigator.FolderItem
 import cn.navigational.dbfx.navigator.collation.MyCollationItem
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.enums.Clients
-import cn.navigational.dbfx.kit.i18n.I18N
+import cn.navigational.dbfx.i18n.I18N
 
 class MyCollationFolder : FolderItem() {
     init {

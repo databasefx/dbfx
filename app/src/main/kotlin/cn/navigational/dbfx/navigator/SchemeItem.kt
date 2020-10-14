@@ -2,7 +2,7 @@ package cn.navigational.dbfx.navigator
 
 import cn.navigational.dbfx.BaseTreeItem
 import cn.navigational.dbfx.handler.NavigatorMenuHandler
-import cn.navigational.dbfx.kit.i18n.I18N
+import cn.navigational.dbfx.i18n.I18N
 import javafx.application.Platform
 
 abstract class SchemeItem(icon: String, private val scheme: String) : BaseTreeItem<String>(icon) {

@@ -5,7 +5,7 @@ import cn.navigational.dbfx.io.APP_LOG_PATH
 import cn.navigational.dbfx.io.countLogLineNumber
 import cn.navigational.dbfx.io.getFileLastTime
 import cn.navigational.dbfx.io.readFixLineLog
-import cn.navigational.dbfx.kit.i18n.I18N
+import cn.navigational.dbfx.i18n.I18N
 import cn.navigational.dbfx.kit.utils.VertxUtils
 import javafx.application.Platform
 import javafx.fxml.FXML

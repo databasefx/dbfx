@@ -20,8 +20,11 @@ javafx {
 
 jar {
     from {
-        //添加依懒到打包文件
-        configurations.runtime.collect { zipTree(it) }
+        configurations.runtime.collect {
+            if (!it.name.startsWith("javafx")) {
+                zipTree(it)
+            }
+        }
     }
     archiveFileName = "dbfx.jar"
     manifest {

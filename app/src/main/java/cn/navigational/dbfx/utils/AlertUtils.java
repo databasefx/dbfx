@@ -1,7 +1,7 @@
 package cn.navigational.dbfx.utils;
 
 import cn.navigational.dbfx.dialog.SimpleConfirmDialog;
-import cn.navigational.dbfx.kit.i18n.I18N;
+import cn.navigational.dbfx.i18n.I18N;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
