@@ -4,6 +4,7 @@ import cn.navigational.dbfx.tool.svg.SvgImageTranscoder;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -61,5 +62,20 @@ public class ViewController<T extends Parent> extends AbstractFxmlController<T> 
 
     public Stage getStage() {
         return stage;
+    }
+
+    /**
+     * Setting the current stage size has set the current screen size as
+     * the base according to the given proportion.</p>
+     *
+     * @param wProp width proportion
+     * @param hProp height proportion
+     */
+    protected void setSizeWithScreen(double wProp, double hProp) {
+        var rect = Screen.getPrimary().getBounds();
+        var width = rect.getWidth() * wProp;
+        var height = rect.getHeight() * hProp;
+        this.stage.setWidth(width);
+        this.stage.setHeight(height);
     }
 }

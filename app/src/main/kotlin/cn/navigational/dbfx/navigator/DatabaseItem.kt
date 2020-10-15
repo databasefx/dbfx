@@ -106,7 +106,7 @@ abstract class DatabaseItem(val uuid: String, icon: String) : BaseTreeItem<Strin
      * Edit current database
      */
     private fun edit() {
-        EditConViewController(uuid)
+        EditConViewController(uuid).showStage()
     }
 
     /**

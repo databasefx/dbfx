@@ -87,6 +87,7 @@ class CreateConViewController : ViewController<BorderPane>(CREATE_CON_PAGE) {
         this.stage.isResizable = false
         this.stage.initModality(Modality.APPLICATION_MODAL)
         this.stage.title = I18N.getString("stage.create.connection")
+        this.setSizeWithScreen(0.5, 0.7)
     }
 
     @FXML

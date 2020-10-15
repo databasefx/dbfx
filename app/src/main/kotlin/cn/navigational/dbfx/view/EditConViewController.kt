@@ -27,7 +27,7 @@ class EditConViewController(private val uuid: String) : ViewController<BorderPan
         this.scene.stylesheets.add(APP_STYLE)
         this.stage.initModality(Modality.WINDOW_MODAL)
         (scene.root as BorderPane).center = controller.parent
-        this.stage.show()
+        this.setSizeWithScreen(0.5, 0.7)
     }
 
     @FXML

@@ -38,7 +38,6 @@ class HomeViewController private constructor() : ViewController<BorderPane>(HOME
     private val expandPaneController: BottomNavigationExpandPaneAbstractFxmlController = BottomNavigationExpandPaneAbstractFxmlController()
 
     init {
-        this.stage.title = I18N.getString("stage.home")
         this.splitPane.items.add(this.navigator)
         this.splitPane.items.add(tabHandler.getTabPane())
         this.eventLog.graphic = SvgImageTranscoder.svgToImageView(N_EVENT_LOG)
@@ -53,6 +52,8 @@ class HomeViewController private constructor() : ViewController<BorderPane>(HOME
                 this.mSPane.items.add(expandPaneController.parent)
             }
         }
+        this.setSizeWithScreen(0.8, 0.9)
+        this.stage.title = I18N.getString("stage.home")
     }
 
     @FXML
