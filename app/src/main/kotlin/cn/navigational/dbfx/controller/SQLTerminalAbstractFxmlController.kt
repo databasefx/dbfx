@@ -1,6 +1,6 @@
 package cn.navigational.dbfx.controller
 
-import cn.navigational.dbfx.Controller
+import cn.navigational.dbfx.AbstractFxmlController
 import cn.navigational.dbfx.config.SQL_TERMINAL_PAGE
 import cn.navigational.dbfx.config.T_EXE_RESULT_ICON
 import cn.navigational.dbfx.config.T_INFO_ICON
@@ -12,7 +12,7 @@ import org.fxmisc.richtext.CodeArea
 import org.fxmisc.richtext.LineNumberFactory
 
 
-class SQLTerminalController : Controller<Void, SplitPane>(SQL_TERMINAL_PAGE) {
+class SQLTerminalAbstractFxmlController : AbstractFxmlController<SplitPane>(SQL_TERMINAL_PAGE) {
     @FXML
     private lateinit var info: Tab
 
@@ -25,7 +25,7 @@ class SQLTerminalController : Controller<Void, SplitPane>(SQL_TERMINAL_PAGE) {
     @FXML
     private lateinit var codeArea: CodeArea
 
-    override fun onCreated(root: SplitPane) {
+    init {
         codeArea.paragraphGraphicFactory = LineNumberFactory.get(codeArea)
         info.graphic = SvgImageTranscoder.svgToImageView(T_INFO_ICON)
         execute.graphic = SvgImageTranscoder.svgToImageView(T_START_ICON)

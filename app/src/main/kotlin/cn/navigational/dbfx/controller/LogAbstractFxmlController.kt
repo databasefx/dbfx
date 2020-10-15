@@ -16,11 +16,11 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
 
-class LogController : BottomNavigationExpandPaneController.ExpandPaneProvider<Void, BorderPane>(B_N_LOG_PANE) {
+class LogAbstractFxmlController : BottomNavigationExpandPaneAbstractFxmlController.ExpandPaneProvider<BorderPane>(B_N_LOG_PANE) {
 
     private var total = 0
     private var rowIndex = 1
-    private val pageSize = 100
+    private val pageSize = 1000
     private val timerId: Long
 
     private var path = "${APP_LOG_PATH}dbfx.log"
@@ -54,7 +54,7 @@ class LogController : BottomNavigationExpandPaneController.ExpandPaneProvider<Vo
                     rowIndex = total
                     break
                 }
-                //读取指定行的数据
+                //read fix raw data
                 val content = readFixLineLog(path, rowIndex, rowIndex + pageSize)
                 rowIndex += pageSize
                 Platform.runLater {

@@ -1,6 +1,6 @@
 package cn.navigational.dbfx.controller
 
-import cn.navigational.dbfx.Controller
+import cn.navigational.dbfx.AbstractFxmlController
 import cn.navigational.dbfx.config.*
 import cn.navigational.dbfx.controls.table.CustomTableColumn
 import cn.navigational.dbfx.controls.table.CustomTableView
@@ -22,7 +22,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
-class TableViewController(private val provider: TableDataProvider) : Controller<Void, BorderPane>(TABLE_VIEW) {
+class TableViewAbstractFxmlController(private val provider: TableDataProvider) : AbstractFxmlController<BorderPane>(TABLE_VIEW) {
     @FXML
     private lateinit var last: Button
 
@@ -77,7 +77,7 @@ class TableViewController(private val provider: TableDataProvider) : Controller<
     private val dataTotalProperty: LongProperty = SimpleLongProperty(null, "dataTotal", 0)
 
 
-    override fun onCreated(root: BorderPane?) {
+    init {
         tableView.tableSetting = AppSettings.getAppSettings().tableSetting
         this.tableView.placeholder = Label("表中暂无数据")
         pageSelector.items.addAll("10", "100", "250", "500", "1000")

@@ -10,7 +10,7 @@ import javafx.beans.property.BooleanProperty
 import javafx.beans.property.SimpleBooleanProperty
 import cn.navigational.dbfx.handler.NavigatorMenuHandler.Companion.MenuType.*
 import cn.navigational.dbfx.i18n.I18N
-import cn.navigational.dbfx.view.EditConView
+import cn.navigational.dbfx.view.EditConViewController
 import javafx.application.Platform
 import javafx.beans.property.ObjectProperty
 import javafx.beans.property.SimpleObjectProperty
@@ -106,7 +106,7 @@ abstract class DatabaseItem(val uuid: String, icon: String) : BaseTreeItem<Strin
      * Edit current database
      */
     private fun edit() {
-        EditConView(uuid)
+        EditConViewController(uuid)
     }
 
     /**

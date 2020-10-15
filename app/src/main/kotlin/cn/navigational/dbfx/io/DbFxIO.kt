@@ -22,6 +22,7 @@ import java.net.JarURLConnection
 import java.util.*
 import java.util.jar.JarFile.MANIFEST_NAME
 import cn.navigational.dbfx.AppPlatform
+import cn.navigational.dbfx.model.Manifest
 
 
 const val DEFAULT_KEY = "2EBC@#=="
@@ -188,7 +189,7 @@ private suspend fun loadDbMetaData() {
  *
  * @return Key value pair formal attribute
  */
-fun loadManifest(): Map<String, String> {
+fun loadManifest() {
     val protocol = ClassLoader.getSystemResource("").protocol
     val map = HashMap<String, String>()
     if (FILE == protocol) {
@@ -197,7 +198,7 @@ fun loadManifest(): Map<String, String> {
         val mf = VertxUtils.getFileSystem().readFileBlocking(buildPath).toString()
         val array = mf.split("\r\n")
         for (s in array) {
-            if (s.isEmpty()) {
+            if (s.isEmpty) {
                 continue
             }
             val k = s.split(":", limit = 2).toTypedArray()
@@ -211,7 +212,15 @@ fun loadManifest(): Map<String, String> {
             map[key.toString()] = value.toString()
         }
     }
-    return map
+    val manifest = Manifest()
+    manifest.name = map["App-Name"]
+    manifest.author = map["App-Author"]
+    manifest.website = map["App-Website"]
+    manifest.version = map["App-Version"]
+    manifest.copyright = map["Copyright"]
+    manifest.buildTime = map["Build-Time"]
+
+    AppSettings.getAppSettings().manifest = manifest
 }
 
 /**
@@ -246,5 +255,6 @@ suspend fun init() {
     checkDir()
     loadDbInfo()
     loadUiConfig()
+    loadManifest()
     loadDbMetaData()
 }

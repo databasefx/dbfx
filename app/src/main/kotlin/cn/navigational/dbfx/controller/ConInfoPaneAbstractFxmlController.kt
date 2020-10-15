@@ -1,6 +1,6 @@
 package cn.navigational.dbfx.controller
 
-import cn.navigational.dbfx.Controller
+import cn.navigational.dbfx.AbstractFxmlController
 import cn.navigational.dbfx.DatabaseMetaManager
 import cn.navigational.dbfx.config.CON_INFO_PANE
 import cn.navigational.dbfx.model.DatabaseMeta
@@ -9,11 +9,10 @@ import cn.navigational.dbfx.kit.enums.Clients
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
 import javafx.fxml.FXML
 import javafx.scene.control.*
-import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.layout.BorderPane
 
-class ConInfoPaneController : Controller<Void, BorderPane>(CON_INFO_PANE) {
+class ConInfoPaneAbstractFxmlController : AbstractFxmlController<BorderPane>(CON_INFO_PANE) {
     @FXML
     private lateinit var name: TextField
 
@@ -43,11 +42,6 @@ class ConInfoPaneController : Controller<Void, BorderPane>(CON_INFO_PANE) {
 
     @FXML
     private lateinit var password: PasswordField
-
-
-    override fun onCreated(root: BorderPane?) {
-
-    }
 
     fun initMeta(meta: DatabaseMeta) {
         password.text = ""

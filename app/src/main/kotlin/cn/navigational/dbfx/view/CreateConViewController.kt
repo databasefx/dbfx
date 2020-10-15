@@ -2,9 +2,9 @@ package cn.navigational.dbfx.view
 
 import cn.navigational.dbfx.DatabaseMetaManager
 import cn.navigational.dbfx.SQLClientManager
-import cn.navigational.dbfx.View
+import cn.navigational.dbfx.ViewController
 import cn.navigational.dbfx.config.CREATE_CON_PAGE
-import cn.navigational.dbfx.controller.ConInfoPaneController
+import cn.navigational.dbfx.controller.ConInfoPaneAbstractFxmlController
 import cn.navigational.dbfx.model.DatabaseMeta
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.SqlClientFactory
@@ -18,7 +18,6 @@ import io.vertx.sqlclient.SqlConnectOptions
 import javafx.application.Platform
 import javafx.fxml.FXML
 import javafx.scene.Node
-import javafx.scene.Scene
 import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.control.Pagination
@@ -31,7 +30,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class CreateConView : View<Void>(CREATE_CON_PAGE) {
+class CreateConViewController : ViewController<BorderPane>(CREATE_CON_PAGE) {
     @FXML
     private lateinit var last: Button
 
@@ -47,9 +46,9 @@ class CreateConView : View<Void>(CREATE_CON_PAGE) {
     @FXML
     private lateinit var finish: Button
 
-    private lateinit var firstPane: FlowPane
+    private val firstPane: FlowPane = FlowPane()
 
-    private val conInfoPaneController = ConInfoPaneController()
+    private val conInfoPaneController = ConInfoPaneAbstractFxmlController()
 
     private val nextPane: BorderPane = conInfoPaneController.parent
 
@@ -58,7 +57,7 @@ class CreateConView : View<Void>(CREATE_CON_PAGE) {
      */
     private var selectIndex: Int = -1
 
-    override fun onCreated(scene: Scene?) {
+    init {
         initFlow()
         next.setOnAction {
             page.currentPageIndex = 1
@@ -85,9 +84,9 @@ class CreateConView : View<Void>(CREATE_CON_PAGE) {
 
             }
         }
-        this.isResizable = false
-        this.initModality(Modality.APPLICATION_MODAL)
-        title = I18N.getString("stage.create.connection")
+        this.stage.isResizable = false
+        this.stage.initModality(Modality.APPLICATION_MODAL)
+        this.stage.title = I18N.getString("stage.create.connection")
     }
 
     @FXML
@@ -100,7 +99,7 @@ class CreateConView : View<Void>(CREATE_CON_PAGE) {
 
     @FXML
     fun cancel() {
-        this.close()
+        this.stage.close()
     }
 
     @FXML
@@ -153,19 +152,17 @@ class CreateConView : View<Void>(CREATE_CON_PAGE) {
             AlertUtils.showSimpleDialog("用户名不能为空")
             return
         }
-        val that = this
         GlobalScope.launch {
             info.uuid = StringUtils.uuid()
             SQLClientManager.manager.updateDbInfo(info)
             Platform.runLater {
-                that.close()
+                stage.close()
             }
         }
 
     }
 
     private fun initFlow() {
-        firstPane = FlowPane()
         firstPane.styleClass.add("first-pane")
         val items = DatabaseMetaManager.manager.getMetas().map { FlowItem(it) }
         firstPane.children.addAll(items)

@@ -1,6 +1,6 @@
 package cn.navigational.dbfx.controller;
 
-import cn.navigational.dbfx.Controller;
+import cn.navigational.dbfx.AbstractFxmlController;
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -22,7 +22,7 @@ import static cn.navigational.dbfx.config.ControllerPathKt.B_N_EXPAND_PANE_PANE;
  * @author yangkui
  * @since 1.0
  */
-public class BottomNavigationExpandPaneController extends Controller<Void, BorderPane> {
+public class BottomNavigationExpandPaneAbstractFxmlController extends AbstractFxmlController<BorderPane> {
     @FXML
     private Button mini;
     @FXML
@@ -30,7 +30,7 @@ public class BottomNavigationExpandPaneController extends Controller<Void, Borde
     @FXML
     private Button setting;
 
-    public BottomNavigationExpandPaneController() {
+    public BottomNavigationExpandPaneAbstractFxmlController() {
         super(B_N_EXPAND_PANE_PANE);
         mini.setGraphic(SvgImageTranscoder.svgToImageView(W_MINI));
         setting.setGraphic(SvgImageTranscoder.svgToImageView(SETTING));
@@ -71,13 +71,9 @@ public class BottomNavigationExpandPaneController extends Controller<Void, Borde
         this.paneProperty.set(provider);
     }
 
-    public static abstract class ExpandPaneProvider<T, P> extends Controller<T, P> {
+    public static abstract class ExpandPaneProvider<P> extends AbstractFxmlController<P> {
         public ExpandPaneProvider(String path) {
             super(path);
-        }
-
-        public ExpandPaneProvider(String path, T t) {
-            super(path, t);
         }
 
         /**

@@ -1,11 +1,11 @@
 package cn.navigational.dbfx.view
 
 import cn.navigational.dbfx.BaseTreeItem
-import cn.navigational.dbfx.View
+import cn.navigational.dbfx.ViewController
 import cn.navigational.dbfx.config.HOME_PAGE
 import cn.navigational.dbfx.config.N_EVENT_LOG
-import cn.navigational.dbfx.controller.BottomNavigationExpandPaneController
-import cn.navigational.dbfx.controller.LogController
+import cn.navigational.dbfx.controller.BottomNavigationExpandPaneAbstractFxmlController
+import cn.navigational.dbfx.controller.LogAbstractFxmlController
 import cn.navigational.dbfx.controls.tab.SQLTerminalTab
 import cn.navigational.dbfx.handler.MainTabPaneHandler
 import cn.navigational.dbfx.controls.tree.CustomTreeView
@@ -14,17 +14,14 @@ import cn.navigational.dbfx.i18n.I18N
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
 import cn.navigational.dbfx.utils.AlertUtils
 import javafx.fxml.FXML
-import javafx.scene.Scene
 import javafx.scene.control.Button
 import javafx.scene.control.SplitPane
+import javafx.scene.layout.BorderPane
 import javafx.stage.WindowEvent
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class HomeView private constructor() : View<Void>(HOME_PAGE) {
-    @FXML
-    private lateinit var terminal: Button
-
+class HomeViewController private constructor() : ViewController<BorderPane>(HOME_PAGE) {
     @FXML
     private lateinit var eventLog: Button
 
@@ -34,22 +31,17 @@ class HomeView private constructor() : View<Void>(HOME_PAGE) {
     @FXML
     private lateinit var splitPane: SplitPane
 
-    private lateinit var navigator: CustomTreeView
+    private val navigator: CustomTreeView = CustomTreeView.customTreeView
 
-    private lateinit var tabHandler: MainTabPaneHandler
+    private val tabHandler: MainTabPaneHandler = MainTabPaneHandler.handler
 
-    private lateinit var expandPaneController: BottomNavigationExpandPaneController
+    private val expandPaneController: BottomNavigationExpandPaneAbstractFxmlController = BottomNavigationExpandPaneAbstractFxmlController()
 
-
-    override fun onCreated(scene: Scene?) {
-        this.title = I18N.getString("stage.home")
-        this.navigator = CustomTreeView.customTreeView
+    init {
+        this.stage.title = I18N.getString("stage.home")
         this.splitPane.items.add(this.navigator)
-        this.tabHandler = MainTabPaneHandler.handler
         this.splitPane.items.add(tabHandler.getTabPane())
         this.eventLog.graphic = SvgImageTranscoder.svgToImageView(N_EVENT_LOG)
-//        this.terminal.graphic = SvgImageTranscoder.svgToImageView(N_TERMINAL)
-        this.expandPaneController = BottomNavigationExpandPaneController()
         //Listener whether bottom expand pane should show
         this.expandPaneController.panePropertyProperty().addListener { _, _, obj ->
             if (obj == null) {
@@ -65,17 +57,17 @@ class HomeView private constructor() : View<Void>(HOME_PAGE) {
 
     @FXML
     fun about() {
-        AboutView()
+        AboutViewController().showStage()
     }
 
     @FXML
     fun createCon() {
-        CreateConView()
+        CreateConViewController().showStage()
     }
 
     @FXML
     fun exit() {
-        onClose(null)
+        onCloseRequest(null)
     }
 
     @FXML
@@ -98,11 +90,11 @@ class HomeView private constructor() : View<Void>(HOME_PAGE) {
 
     @FXML
     fun openLog() {
-        this.expandPaneController.paneProperty = LogController()
+        this.expandPaneController.paneProperty = LogAbstractFxmlController()
     }
 
 
-    override fun onClose(event: WindowEvent?) {
+    override fun onCloseRequest(event: WindowEvent?) {
         val result = AlertUtils.showSimpleConfirmDialog(I18N.getString("alert.application.exit.tips"))
         if (!result) {
             event?.consume()
@@ -112,6 +104,6 @@ class HomeView private constructor() : View<Void>(HOME_PAGE) {
     }
 
     companion object {
-        val home: HomeView by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) { HomeView() }
+        val home: HomeViewController by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) { HomeViewController() }
     }
 }

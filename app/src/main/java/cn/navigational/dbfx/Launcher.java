@@ -3,7 +3,7 @@ package cn.navigational.dbfx;
 import cn.navigational.dbfx.i18n.I18N;
 import cn.navigational.dbfx.kit.utils.VertxUtils;
 
-import cn.navigational.dbfx.view.SplashView;
+import cn.navigational.dbfx.view.SplashViewController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -71,7 +71,7 @@ public class Launcher extends Application implements AppPlatform.AppNotification
 
     @Override
     public void handleLaunch(List<String> files) {
-        new SplashView();
+        new SplashViewController();
     }
 
     @Override
