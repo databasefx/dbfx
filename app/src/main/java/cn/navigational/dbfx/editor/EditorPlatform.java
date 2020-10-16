@@ -6,8 +6,14 @@ import java.io.File;
 import java.util.Locale;
 
 public class EditorPlatform {
-    private static final String OS_NAME = System.getProperty("os.name").toLowerCase(Locale.ROOT);
-
+    /**
+     * Application name
+     */
+    public static final String APP_NAME = "dbfx";
+    /**
+     * Current os name
+     */
+    private static final String OS_NAME = OssUtils.getOsName().toLowerCase(Locale.ROOT);
     /**
      * True if current platform is running Linux.
      */
@@ -25,7 +31,7 @@ public class EditorPlatform {
     /**
      * Application log file direction
      */
-    public static final String APP_LOG_PATH = OssUtils.getUserHome() + File.separator + ".dbfx" + File.separator + "logs" + File.separator;
+    public static final String APP_LOG_PATH = OssUtils.getUserHome() + File.separator + APP_NAME + File.separator + "logs" + File.separator;
 
     /**
      * Returns true if the jvm is running with assertions enabled.

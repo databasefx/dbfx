@@ -15,4 +15,13 @@ public class OssUtils {
     public static String getUserHome() {
         return System.getProperty("user.home");
     }
+
+    /**
+     * Get current os name
+     *
+     * @return Os name
+     */
+    public static String getOsName() {
+        return System.getProperty("os.name");
+    }
 }

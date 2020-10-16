@@ -21,9 +21,9 @@
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
             <charset>utf-8</charset>
         </encoder>
-        <file>${user.home}/.dbfx/logs/dbfx.log</file>
+        <file>${user.home}/dbfx/logs/dbfx.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <fileNamePattern>${user.home}/.dbfx/logs/dbfx.log.%i</fileNamePattern>
+            <fileNamePattern>${user.home}/dbfx/logs/dbfx.log.%i</fileNamePattern>
         </rollingPolicy>
         <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
             <MaxFileSize>1MB</MaxFileSize>

@@ -23,17 +23,15 @@ public class AppPlatform {
     public static synchronized String getApplicationDataFolder() {
 
         if (applicationDataFolder == null) {
-            final String appName = "dbfx";
-
             if (IS_WINDOWS) {
                 applicationDataFolder
-                        = System.getenv("APPDATA") + "\\" + appName;
+                        = System.getenv("APPDATA") + "\\" + APP_NAME;
             } else if (IS_MAC) {
                 applicationDataFolder
-                        = System.getProperty("user.home") + "/Library/Application Support/" + appName;
+                        = System.getProperty("user.home") + "/Library/Application Support/" + APP_NAME;
             } else if (IS_LINUX) {
                 applicationDataFolder
-                        = System.getProperty("user.home") + "/." + appName;
+                        = System.getProperty("user.home") + "/" + APP_NAME;
             }
         }
 
