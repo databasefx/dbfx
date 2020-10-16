@@ -5,7 +5,7 @@ import cn.navigational.dbfx.SQLClientManager
 import cn.navigational.dbfx.ViewController
 import cn.navigational.dbfx.config.APP_STYLE
 import cn.navigational.dbfx.config.EDIT_CON_PAGE
-import cn.navigational.dbfx.controller.ConInfoPaneAbstractFxmlController
+import cn.navigational.dbfx.controller.ConInfoPaneController
 import cn.navigational.dbfx.controls.tree.CustomTreeView
 import cn.navigational.dbfx.i18n.I18N
 import cn.navigational.dbfx.model.DatabaseMeta
@@ -17,7 +17,7 @@ class EditConViewController(private val uuid: String) : ViewController<BorderPan
 
     private val dbMeta: DatabaseMeta
 
-    private val controller: ConInfoPaneAbstractFxmlController = ConInfoPaneAbstractFxmlController()
+    private val controller: ConInfoPaneController = ConInfoPaneController()
 
     init {
         val dbInfo = SQLClientManager.manager.getDbInfo(uuid)

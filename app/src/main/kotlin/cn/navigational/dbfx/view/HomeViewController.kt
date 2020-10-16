@@ -5,7 +5,7 @@ import cn.navigational.dbfx.ViewController
 import cn.navigational.dbfx.config.HOME_PAGE
 import cn.navigational.dbfx.config.N_EVENT_LOG
 import cn.navigational.dbfx.controller.BottomNavigationExpandPaneAbstractFxmlController
-import cn.navigational.dbfx.controller.LogAbstractFxmlController
+import cn.navigational.dbfx.controller.LogController
 import cn.navigational.dbfx.controls.tab.SQLTerminalTab
 import cn.navigational.dbfx.handler.MainTabPaneHandler
 import cn.navigational.dbfx.controls.tree.CustomTreeView
@@ -91,7 +91,7 @@ class HomeViewController private constructor() : ViewController<BorderPane>(HOME
 
     @FXML
     fun openLog() {
-        this.expandPaneController.paneProperty = LogAbstractFxmlController()
+        this.expandPaneController.paneProperty = LogController.logController
     }
 
 

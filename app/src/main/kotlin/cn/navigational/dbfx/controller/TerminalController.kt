@@ -6,7 +6,7 @@ import cn.navigational.dbfx.i18n.I18N
 import javafx.scene.control.MenuItem
 import javafx.scene.layout.BorderPane
 
-class TerminalAbstractFxmlController : ExpandPaneProvider<BorderPane>(B_N_TERMINAL_PANE) {
+class TerminalController : ExpandPaneProvider<BorderPane>(B_N_TERMINAL_PANE) {
 
     override fun getSetting(): MutableList<MenuItem> {
         return arrayListOf()

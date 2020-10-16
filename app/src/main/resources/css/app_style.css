@@ -103,8 +103,8 @@
 }
 
 .context-menu {
-    -fx-min-width: 30em;
     -fx-padding: 0;
+    -fx-min-width: 20em;
     -fx-border-width: 0 0.02em 0.02em 0.02em;
 }
 
@@ -123,6 +123,10 @@
 
 .context-menu .menu-item .label {
     -fx-text-fill: #FEFFFC;
+}
+
+.menu-button .arrow-button .arrow {
+    -fx-background-color: #AFB1B3;
 }
 
 .tree-view {

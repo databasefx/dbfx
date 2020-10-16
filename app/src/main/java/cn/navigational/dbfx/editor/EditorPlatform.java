@@ -1,5 +1,8 @@
 package cn.navigational.dbfx.editor;
 
+import cn.navigational.dbfx.kit.utils.OssUtils;
+
+import java.io.File;
 import java.util.Locale;
 
 public class EditorPlatform {
@@ -19,6 +22,10 @@ public class EditorPlatform {
      * True if current platform is running Windows.
      */
     public static final boolean IS_WINDOWS = OS_NAME.contains("windows");
+    /**
+     * Application log file direction
+     */
+    public static final String APP_LOG_PATH = OssUtils.getUserHome() + File.separator + ".dbfx" + File.separator + "logs" + File.separator;
 
     /**
      * Returns true if the jvm is running with assertions enabled.

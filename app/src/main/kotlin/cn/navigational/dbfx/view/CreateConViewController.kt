@@ -4,7 +4,7 @@ import cn.navigational.dbfx.DatabaseMetaManager
 import cn.navigational.dbfx.SQLClientManager
 import cn.navigational.dbfx.ViewController
 import cn.navigational.dbfx.config.CREATE_CON_PAGE
-import cn.navigational.dbfx.controller.ConInfoPaneAbstractFxmlController
+import cn.navigational.dbfx.controller.ConInfoPaneController
 import cn.navigational.dbfx.model.DatabaseMeta
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.SqlClientFactory
@@ -48,7 +48,7 @@ class CreateConViewController : ViewController<BorderPane>(CREATE_CON_PAGE) {
 
     private val firstPane: FlowPane = FlowPane()
 
-    private val conInfoPaneController = ConInfoPaneAbstractFxmlController()
+    private val conInfoPaneController = ConInfoPaneController()
 
     private val nextPane: BorderPane = conInfoPaneController.parent
 

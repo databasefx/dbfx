@@ -12,7 +12,7 @@ import org.fxmisc.richtext.CodeArea
 import org.fxmisc.richtext.LineNumberFactory
 
 
-class SQLTerminalAbstractFxmlController : AbstractFxmlController<SplitPane>(SQL_TERMINAL_PAGE) {
+class SQLTerminalController : AbstractFxmlController<SplitPane>(SQL_TERMINAL_PAGE) {
     @FXML
     private lateinit var info: Tab
 

@@ -12,7 +12,7 @@ import javafx.scene.control.*
 import javafx.scene.image.ImageView
 import javafx.scene.layout.BorderPane
 
-class ConInfoPaneAbstractFxmlController : AbstractFxmlController<BorderPane>(CON_INFO_PANE) {
+class ConInfoPaneController : AbstractFxmlController<BorderPane>(CON_INFO_PANE) {
     @FXML
     private lateinit var name: TextField
 

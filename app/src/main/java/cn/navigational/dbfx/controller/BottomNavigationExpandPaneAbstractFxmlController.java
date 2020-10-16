@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 
@@ -28,7 +29,7 @@ public class BottomNavigationExpandPaneAbstractFxmlController extends AbstractFx
     @FXML
     private Label paneTitle;
     @FXML
-    private Button setting;
+    private MenuButton setting;
 
     public BottomNavigationExpandPaneAbstractFxmlController() {
         super(B_N_EXPAND_PANE_PANE);
@@ -47,7 +48,9 @@ public class BottomNavigationExpandPaneAbstractFxmlController extends AbstractFx
             if (newValue == null) {
                 return;
             }
+            this.setting.getItems().clear();
             this.paneTitle.setText(newValue.getTitle());
+            this.setting.getItems().addAll(newValue.getSetting());
             getParent().setCenter((Node) newValue.getParent());
         }));
     }

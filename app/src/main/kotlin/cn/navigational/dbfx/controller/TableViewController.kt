@@ -22,7 +22,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
-class TableViewAbstractFxmlController(private val provider: TableDataProvider) : AbstractFxmlController<BorderPane>(TABLE_VIEW) {
+class TableViewController(private val provider: TableDataProvider) : AbstractFxmlController<BorderPane>(TABLE_VIEW) {
     @FXML
     private lateinit var last: Button
 

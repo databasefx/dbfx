@@ -16,11 +16,11 @@
                 <Label fx:id="paneTitle"/>
             </HBox>
             <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
-                <Button fx:id="setting">
+                <MenuButton fx:id="setting">
                     <tooltip>
                         <Tooltip text="%label.setting"/>
                     </tooltip>
-                </Button>
+                </MenuButton>
                 <Button fx:id="mini">
                     <tooltip>
                         <Tooltip text="%label.hidden"/>

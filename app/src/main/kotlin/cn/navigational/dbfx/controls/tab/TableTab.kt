@@ -3,7 +3,7 @@ package cn.navigational.dbfx.controls.tab
 import cn.navigational.dbfx.convert.RowSetConvert
 import cn.navigational.dbfx.config.TABLE_ICON
 import cn.navigational.dbfx.config.TABLE_VIEW_ICON
-import cn.navigational.dbfx.controller.TableViewAbstractFxmlController
+import cn.navigational.dbfx.controller.TableViewController
 import cn.navigational.dbfx.controls.AbstractBaseTab
 import cn.navigational.dbfx.model.SQLClient
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
@@ -18,9 +18,9 @@ import javafx.collections.ObservableList
 class TableTab(
         private val table: String,
         private val category: String,
-        private val client: SQLClient, tableType: TableItem.TableType) : AbstractBaseTab(), TableViewAbstractFxmlController.TableDataProvider {
+        private val client: SQLClient, tableType: TableItem.TableType) : AbstractBaseTab(), TableViewController.TableDataProvider {
 
-    private val controller: TableViewAbstractFxmlController = TableViewAbstractFxmlController(this)
+    private val controller: TableViewController = TableViewController(this)
 
     init {
         val host = client.dbInfo.host
