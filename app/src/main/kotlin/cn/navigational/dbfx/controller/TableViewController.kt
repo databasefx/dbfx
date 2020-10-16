@@ -10,6 +10,7 @@ import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
 import cn.navigational.dbfx.kit.model.TableColumnMeta
 import cn.navigational.dbfx.kit.utils.NumberUtils
 import cn.navigational.dbfx.model.TableSetting
+import cn.navigational.dbfx.utils.AlertUtils
 import cn.navigational.dbfx.utils.AppSettings
 import cn.navigational.dbfx.utils.TableColumnUtils
 import javafx.application.Platform
@@ -20,6 +21,7 @@ import javafx.scene.control.*
 import javafx.scene.layout.BorderPane
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 
 class TableViewController(private val provider: TableDataProvider) : AbstractFxmlController<BorderPane>(TABLE_VIEW) {
@@ -146,33 +148,33 @@ class TableViewController(private val provider: TableDataProvider) : AbstractFxm
     fun load() {
         val pageSize = pageSizeProperty.get()
         val pageIndex = pageIndexProperty.get()
-        val that = this
+        this.tableView.isLoadStatus = true
         GlobalScope.launch {
-            val columns = provider.getColumnMeta()
-            val total = provider.getDataTotal()
-            val items = if (total > 0) {
-                provider.getItems(pageIndex, pageSize, tableView.tableSetting)
-            } else {
-                arrayListOf()
+            try {
+                val columns = provider.getColumnMeta()
+                val total = provider.getDataTotal()
+                val items = if (total > 0) {
+                    provider.getItems(pageIndex, pageSize, tableView.tableSetting)
+                } else {
+                    arrayListOf()
+                }
+                updateColumn(columns)
+                updateIndicator(total)
+                tableView.items.addAll(items)
+            } catch (e: Exception) {
+                AlertUtils.showExDialog("加载数据失败", e);
             }
-            that.updateColumn(columns)
-            that.dataTotalProperty.set(total)
-            that.updateIndicator()
-            that.tableView.items.clear()
-            if (items.isNotEmpty()) {
-                that.tableView.items.addAll(items)
-            }
+            tableView.isLoadStatus = false
         }
     }
 
-    private fun updateIndicator() {
-        val total = dataTotalProperty.get()
+    private fun updateIndicator(total: Long) {
+        this.dataTotalProperty.set(total)
         val size = this.pageSizeProperty.get()
         val index = this.pageIndexProperty.get()
         val sOffset = (index - 1) * size
         val eOffset = sOffset + size
         val text = "$sOffset-$eOffset of $total"
-
         Platform.runLater {
             numIndicator.text = text
         }
@@ -209,6 +211,10 @@ class TableViewController(private val provider: TableDataProvider) : AbstractFxm
                 tableView.columns.addAll(newColumns)
             }
         }
+    }
+
+    override fun dispose() {
+        this.tableView.dispose()
     }
 
     /**

@@ -18,4 +18,11 @@ public class AbstractFxmlController<P> {
     public P getParent() {
         return root;
     }
+
+    /**
+     * This method is called to release resources when the current view dies
+     */
+    public void dispose() {
+
+    }
 }

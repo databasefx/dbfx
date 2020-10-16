@@ -281,3 +281,9 @@
     -fx-border-width: 0;
     -fx-background-color: transparent;
 }
+.custom_table_view .progress-indicator *{
+    -fx-background-color: #2B2B2B;
+}
+.custom_table_view .progress-indicator {
+    -fx-progress-color:white;
+}

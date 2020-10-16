@@ -38,6 +38,7 @@ class TableTab(
 
 
     override suspend fun close() {
+        this.controller.dispose()
         super.close()
     }
 

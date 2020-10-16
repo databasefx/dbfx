@@ -28,7 +28,7 @@ import cn.navigational.dbfx.model.Manifest
 const val DEFAULT_KEY = "2EBC@#=="
 const val S_DB_PATH = "config/s_db.json"
 
-val APP_HOME = AppPlatform.getApplicationDataFolder()
+val APP_HOME: String = AppPlatform.getApplicationDataFolder()
 
 /**
  * Database config file
