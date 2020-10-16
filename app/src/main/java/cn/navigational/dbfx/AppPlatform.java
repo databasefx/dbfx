@@ -31,7 +31,7 @@ public class AppPlatform {
                         = System.getProperty("user.home") + "/Library/Application Support/" + APP_NAME;
             } else if (IS_LINUX) {
                 applicationDataFolder
-                        = System.getProperty("user.home") + "/" + APP_NAME;
+                        = System.getProperty("user.home") + "/." + APP_NAME;
             }
         }
 
