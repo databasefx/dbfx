@@ -94,9 +94,11 @@
 }
 
 .split-pane .split-pane-divider {
-    -fx-pref-width: 0.1em;
+    -fx-pref-width: 0.2em;
     -fx-background-color: #323232;
+    -fx-background-insets:0 0.05em;
 }
+
 
 .context-menu, .context-menu .menu-item {
     -fx-border-color: #BEC4C0;
@@ -281,9 +283,11 @@
     -fx-border-width: 0;
     -fx-background-color: transparent;
 }
-.custom_table_view .progress-indicator *{
+
+.custom_table_view .progress-indicator * {
     -fx-background-color: #2B2B2B;
 }
+
 .custom_table_view .progress-indicator {
-    -fx-progress-color:white;
+    -fx-progress-color: white;
 }
