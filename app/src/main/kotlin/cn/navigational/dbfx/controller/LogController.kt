@@ -3,6 +3,7 @@ package cn.navigational.dbfx.controller
 import cn.navigational.dbfx.config.B_N_LOG_PANE
 import cn.navigational.dbfx.editor.EditorPlatform.APP_LOG_PATH
 import cn.navigational.dbfx.i18n.I18N
+import cn.navigational.dbfx.kit.utils.OssUtils
 import javafx.application.Platform
 import javafx.fxml.FXML
 import javafx.scene.control.MenuItem
@@ -11,6 +12,7 @@ import javafx.scene.layout.BorderPane
 import java.awt.Desktop
 import java.io.File
 import java.io.OutputStream
+import javax.swing.SwingUtilities
 
 class LogController private constructor() : BottomNavigationExpandPaneAbstractFxmlController.ExpandPaneProvider<BorderPane>(B_N_LOG_PANE) {
     //whether listener listener log output stream
@@ -28,7 +30,7 @@ class LogController private constructor() : BottomNavigationExpandPaneAbstractFx
             this.textArea.clear()
         }
         this.openLogDir.setOnAction {
-            Desktop.getDesktop().open(File(APP_LOG_PATH))
+            OssUtils.openDirOrFileUseFileSystem(APP_LOG_PATH)
         }
     }
 
