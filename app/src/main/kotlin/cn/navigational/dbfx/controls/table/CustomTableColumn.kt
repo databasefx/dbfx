@@ -13,11 +13,17 @@ import javafx.scene.control.Tooltip
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.text.Font
-import kotlin.math.max
 
 class CustomTableColumn : TableColumn<ObservableList<StringProperty>, String> {
     companion object {
+        /**
+         * Default column min width
+         */
         private const val MIN_COLUMN_WIDTH = 100.0
+
+        /**
+         * Default column max width
+         */
         private const val MAX_COLUMN_WIDTH = 200.0
         private val fieldIcon = SvgImageTranscoder.svgToImage(TABLE_FIELD_ICON);
         fun getFieldImage(dataType: DataType): Image {
