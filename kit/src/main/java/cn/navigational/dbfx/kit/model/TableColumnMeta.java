@@ -2,6 +2,8 @@ package cn.navigational.dbfx.kit.model;
 
 import cn.navigational.dbfx.kit.enums.DataType;
 
+import java.util.Objects;
+
 /**
  * Database Table column meta data
  *
@@ -55,7 +57,7 @@ public class TableColumnMeta {
     }
 
     public void setLength(Integer length) {
-        this.length = length;
+        this.length = Objects.requireNonNullElse(length, 0);
     }
 
     public String getType() {
