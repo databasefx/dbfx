@@ -7,29 +7,19 @@ import cn.navigational.dbfx.kit.model.TableColumnMeta
 import javafx.application.Platform
 import javafx.beans.property.*
 import javafx.collections.ObservableList
-import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.control.TableColumn
 import javafx.scene.control.Tooltip
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
-import javafx.scene.text.Text
+import javafx.scene.text.Font
+import kotlin.math.max
 
 class CustomTableColumn : TableColumn<ObservableList<StringProperty>, String> {
     companion object {
+        private const val MIN_COLUMN_WIDTH = 100.0
+        private const val MAX_COLUMN_WIDTH = 200.0
         private val fieldIcon = SvgImageTranscoder.svgToImage(TABLE_FIELD_ICON);
-
-        //        private val numberImage = SvgImageTranscoder.svgToImage(NUMBER_FIELD)
-//        private val strImage = SvgImageTranscoder.svgToImage(STRING_FIELD)
-//        private val dateTimeImage = SvgImageTranscoder.svgToImage(DATE_TIME_FIELD)
-//
-//        fun getFieldImage(dataType: DataType): Image {
-//            return when (dataType) {
-//                DataType.NUMBER -> numberImage
-//                DataType.DATE -> dateTimeImage
-//                else -> strImage
-//            }
-//        }
         fun getFieldImage(dataType: DataType): Image {
             return fieldIcon
         }
@@ -38,8 +28,7 @@ class CustomTableColumn : TableColumn<ObservableList<StringProperty>, String> {
     /**
      * Current column is index column?
      */
-    private val indexColumn: BooleanProperty = SimpleBooleanProperty(false, "indexColumn")
-
+    private val indexColumn: Boolean
 
     /**
      *When current column as data column use that constructor
@@ -67,7 +56,7 @@ class CustomTableColumn : TableColumn<ObservableList<StringProperty>, String> {
             this.styleClass.add("data-column")
             setCellFactory { DataTableCell() }
         }
-        this.setIndexColumn(indexColumn)
+        this.indexColumn = indexColumn
     }
 
     fun updateTableColumn(column: TableColumnMeta) {
@@ -77,25 +66,40 @@ class CustomTableColumn : TableColumn<ObservableList<StringProperty>, String> {
             tip += "(${column.length})"
         }
         this.tableColumnMeta.set(column)
-        val graphic = Label()
-        graphic.tooltip = Tooltip(tip)
-        graphic.graphic = ImageView(getFieldImage(column.dataType))
+        val label = Label()
+        label.tooltip = Tooltip(tip)
+        label.graphic = ImageView(getFieldImage(column.dataType))
+        val mWidth = calColumnWidth(column)
         Platform.runLater {
             this.text = colName
-            this.graphic = graphic
+            this.graphic = label
+            this.minWidth = mWidth
         }
     }
 
-    fun isIndexColumn(): Boolean {
-        return indexColumn.get()
-    }
-
-    fun indexColumnProperty(): BooleanProperty? {
-        return indexColumn
-    }
-
-    fun setIndexColumn(indexColumn: Boolean) {
-        this.indexColumn.set(indexColumn)
+    private fun calColumnWidth(column: TableColumnMeta): Double {
+        val fontSize = Font.getDefault().size
+        val title = column.colName
+        val iWidth = getFieldImage(column.dataType).width
+        val tWidth = title.length * fontSize
+        val txtWidth = column.length * fontSize
+        val temp = iWidth + tWidth
+        val mWidth = if (txtWidth > temp) {
+            txtWidth
+        } else {
+            temp
+        }
+        return when {
+            mWidth > MAX_COLUMN_WIDTH -> {
+                MAX_COLUMN_WIDTH
+            }
+            mWidth < MIN_COLUMN_WIDTH -> {
+                MIN_COLUMN_WIDTH
+            }
+            else -> {
+                mWidth
+            }
+        }
     }
 
     /**
@@ -104,7 +108,7 @@ class CustomTableColumn : TableColumn<ObservableList<StringProperty>, String> {
      *
      */
     fun getTableColumnMeta(): TableColumnMeta {
-        if (indexColumn.value) {
+        if (indexColumn) {
             throw RuntimeException("Current column is index column,so not have TableColumnMeta!")
         }
         return tableColumnMeta.get()
