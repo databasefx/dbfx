@@ -1,1 +1,1 @@
-*.kt linguist-language=java
+*.c,*.h linguist-language=c
