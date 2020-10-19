@@ -4,11 +4,18 @@ import cn.navigational.dbfx.kit.KeywordHelper;
 import cn.navigational.dbfx.kit.enums.Clients;
 import impl.org.controlsfx.skin.AutoCompletePopup;
 import javafx.beans.value.ChangeListener;
+import javafx.geometry.Bounds;
 import org.fxmisc.richtext.CodeArea;
+import org.reactfx.EventStream;
+import org.reactfx.EventStreams;
+import org.reactfx.value.Var;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static org.reactfx.EventStreams.nonNullValuesOf;
 
 /**
  * SQL auto complete popup
@@ -24,14 +31,31 @@ public class SQLAutoCompletePopup extends AutoCompletePopup<String> {
     private final AtomicInteger end = new AtomicInteger();
     private final AtomicInteger start = new AtomicInteger();
     private final ChangeListener<String> listener = ((observable, oldValue, newValue) -> this.findClosestWord(newValue));
+    private final Var<Boolean> showWhenItemOutsideViewport = Var.newSimpleVar(true);
+
+    public final EventStream<Boolean> outsideViewportValues() {
+        return showWhenItemOutsideViewport.values();
+    }
 
 
     public SQLAutoCompletePopup(Clients cl, CodeArea codeArea) {
+        this.prefHeight(200);
+        this.setAutoHide(false);
         this.codeArea = codeArea;
         this.keywords = KeywordHelper.getKeyWordSyn(cl);
         this.setOnSuggestion(e -> {
             codeArea.replaceText(start.get(), end.get(), e.getSuggestion());
             this.hide();
+        });
+        EventStream<Optional<Bounds>> caretBounds = nonNullValuesOf(codeArea.caretBoundsProperty());
+        EventStreams.combine(caretBounds, outsideViewportValues()).subscribe(tuple3 -> {
+            Optional<Bounds> opt = tuple3._1;
+            if (opt.isEmpty()) {
+                return;
+            }
+            Bounds b = opt.get();
+            this.setX(b.getMaxX());
+            this.setY(b.getMaxY());
         });
         codeArea.textProperty().addListener(this.listener);
     }
@@ -60,7 +84,6 @@ public class SQLAutoCompletePopup extends AutoCompletePopup<String> {
             if (!this.isShowing()) {
                 this.show(codeArea);
             }
-            //fix popup position
         } else {
             this.hide();
         }
