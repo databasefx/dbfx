@@ -5,7 +5,7 @@ import cn.navigational.dbfx.controls.AbstractBaseTab
 import cn.navigational.dbfx.model.SQLClient
 
 class SQLTerminalTab(client: SQLClient) : AbstractBaseTab(SQLClient.getMiniIcon(client.cl)) {
-    private val controller = SQLTerminalController()
+    private val controller = SQLTerminalController(client.cl)
 
     init {
         val info = client.dbInfo
@@ -15,5 +15,9 @@ class SQLTerminalTab(client: SQLClient) : AbstractBaseTab(SQLClient.getMiniIcon(
 
     override suspend fun init() {
 
+    }
+
+    override suspend fun close() {
+        this.controller.dispose()
     }
 }

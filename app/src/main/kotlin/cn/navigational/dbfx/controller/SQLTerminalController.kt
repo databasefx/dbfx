@@ -5,8 +5,9 @@ import cn.navigational.dbfx.config.SQL_TERMINAL_PAGE
 import cn.navigational.dbfx.config.T_EXE_RESULT_ICON
 import cn.navigational.dbfx.config.T_INFO_ICON
 import cn.navigational.dbfx.config.T_START_ICON
+import cn.navigational.dbfx.controls.editor.SQLAutoCompletePopup
+import cn.navigational.dbfx.kit.enums.Clients
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
-import impl.org.controlsfx.skin.AutoCompletePopup
 import javafx.fxml.FXML
 import javafx.geometry.Point2D
 import javafx.scene.control.*
@@ -14,10 +15,9 @@ import javafx.scene.input.InputMethodRequests
 import org.fxmisc.richtext.CodeArea
 import org.fxmisc.richtext.LineNumberFactory
 import java.lang.NullPointerException
-import java.lang.RuntimeException
 
 
-class SQLTerminalController : AbstractFxmlController<SplitPane>(SQL_TERMINAL_PAGE) {
+class SQLTerminalController(cl: Clients) : AbstractFxmlController<SplitPane>(SQL_TERMINAL_PAGE) {
     @FXML
     private lateinit var info: Tab
 
@@ -30,12 +30,11 @@ class SQLTerminalController : AbstractFxmlController<SplitPane>(SQL_TERMINAL_PAG
     @FXML
     private lateinit var codeArea: CodeArea
 
-    private val autoCompletePopup: AutoCompletePopup<String> = AutoCompletePopup()
+    private val autoCompletePopup: SQLAutoCompletePopup
 
-    private val keywords: Array<String> = arrayOf("SELECT", "FROM", "WHERE", "JOIN", "ON", "LEFT")
 
     init {
-        autoCompletePopup.isAutoFix = true
+        this.autoCompletePopup = SQLAutoCompletePopup(cl, codeArea);
         codeArea.paragraphGraphicFactory = LineNumberFactory.get(codeArea)
         info.graphic = SvgImageTranscoder.svgToImageView(T_INFO_ICON)
         execute.graphic = SvgImageTranscoder.svgToImageView(T_START_ICON)
@@ -46,45 +45,8 @@ class SQLTerminalController : AbstractFxmlController<SplitPane>(SQL_TERMINAL_PAG
                 codeArea.insertText(codeArea.caretPosition, it.committed)
             }
         }
-        codeArea.textProperty().addListener { _, _, newValue ->
-            this.findClosestWord(newValue)
-        }
-        codeArea.inputMethodRequests = CodeAreaInputRequest()
-    }
 
-    private fun findClosestWord(text: String) {
-        val pos = codeArea.caretPosition
-        val str = text.substring(0, pos)
-        var index = str.lastIndexOf(" ")
-        if (index == -1) {
-            index = str.lastIndexOf("\n")
-        }
-        if (index == -1) {
-            index = 0
-        }
-        this.autoCompletePopup.suggestions.clear()
-        val keyword = str.substring(index, pos).toUpperCase().trim()
-        if (keyword == "") {
-            autoCompletePopup.hide()
-            return
-        }
-        keywords.forEach {
-            if (it.startsWith(keyword)) {
-                this.autoCompletePopup.suggestions.add(it)
-            }
-        }
-        if (this.autoCompletePopup.suggestions.isNotEmpty()) {
-//            val rowIndex = codeArea.caretPosition
-//            val columnIndex = codeArea.caretColumn
-//            println("row index:$rowIndex,column index:$columnIndex")
-            //popup window
-            if (!autoCompletePopup.isShowing) {
-                autoCompletePopup.show(codeArea)
-            }
-            //fix popup position
-        } else {
-            autoCompletePopup.hide()
-        }
+        codeArea.inputMethodRequests = CodeAreaInputRequest()
     }
 
     private inner class CodeAreaInputRequest : InputMethodRequests {
@@ -110,5 +72,7 @@ class SQLTerminalController : AbstractFxmlController<SplitPane>(SQL_TERMINAL_PAG
 
     }
 
-
+    override fun dispose() {
+        this.autoCompletePopup.dispose()
+    }
 }

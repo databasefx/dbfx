@@ -1,0 +1,1 @@
+extern void **cmake_file(char **data, int max_txt_line, int max_row_line);
