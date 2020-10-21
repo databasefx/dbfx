@@ -10,9 +10,12 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.Tooltip?>
 <?import org.fxmisc.flowless.VirtualizedScrollPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import cn.navigational.dbfx.controls.table.CustomTableView?>
 <SplitPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
-           prefHeight="400.0" prefWidth="600.0" dividerPositions="0.8" orientation="VERTICAL">
+           prefHeight="400.0" prefWidth="600.0" dividerPositions="0.75" orientation="VERTICAL">
     <stylesheets>
         <URL value="@/css/controller/sql_terminal_style.css"/>
     </stylesheets>
@@ -26,12 +29,20 @@
         </ToolBar>
         <VirtualizedScrollPane VBox.vgrow="ALWAYS">
             <content>
-                <CodeArea lineHighlighterOn="true" fx:id="codeArea" VBox.vgrow="ALWAYS"/>
+                <CodeArea lineHighlighterOn="true" fx:id="codeArea"/>
             </content>
         </VirtualizedScrollPane>
     </VBox>
-    <TabPane>
-        <Tab text="%label.info" closable="false" fx:id="info"/>
-        <Tab text="%label.result" closable="false" fx:id="exeResult"/>
+    <TabPane fx:id="tabPane">
+        <Tab text="%label.info" closable="false" fx:id="info">
+            <VBox styleClass="exe-info">
+                <Label fx:id="statement"/>
+                <Label fx:id="exeStatus"/>
+                <Label fx:id="exeTime"/>
+            </VBox>
+        </Tab>
+        <Tab text="%label.result" closable="false" fx:id="exeResult">
+            <CustomTableView fx:id="tableView"/>
+        </Tab>
     </TabPane>
 </SplitPane>

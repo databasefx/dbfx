@@ -1,13 +1,16 @@
 .tool-bar {
+    -fx-border-width: 0 0 0.1em 0;
     -fx-background-color: #3C3F41;
 }
 
 .button:hover {
     -fx-background-color: #4C5052;
 }
-.code-area{
+
+.code-area {
     -fx-background-color: #2b2b2b;
 }
+
 .code-area .text {
     -fx-fill: #A8B5B4;
     -fx-font-size: 1.6em;
@@ -26,4 +29,13 @@
     -fx-background-color: #313335;
     -fx-font-size: 15px;
     -fx-font-weight: bolder;
+}
+
+.exe-info {
+    -fx-spacing: 0.2em;
+    -fx-padding: 0.3em;
+}
+
+.split-pane .split-pane-divider {
+    -fx-pref-width: 0.1em;
 }

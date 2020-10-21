@@ -5,10 +5,12 @@ import cn.navigational.dbfx.model.TableSetting;
 import cn.navigational.dbfx.utils.DateUtils;
 import io.vertx.sqlclient.Row;
 import io.vertx.sqlclient.RowSet;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -48,7 +50,6 @@ public class RowSetConvert {
     public static ObservableList<StringProperty> rowConvert(Row row, TableSetting setting) {
         var item = FXCollections.<StringProperty>observableArrayList();
         //index column
-//        item.add(new SimpleStringProperty(String.valueOf(offset)));
         for (int i = 0; i < row.size(); i++) {
             var value = row.getValue(i);
             if (value == null) {
@@ -61,5 +62,15 @@ public class RowSetConvert {
             item.add(new SimpleStringProperty(value.toString()));
         }
         return item;
+    }
+
+    public static void rowSetConvert(TableView<ObservableList<StringProperty>> tableView, RowSet<Row> rowSet, TableSetting setting) {
+        var items = rowSetConvert(rowSet, setting);
+        Platform.runLater(() -> {
+            if (!tableView.getItems().isEmpty()) {
+                tableView.getItems().clear();
+            }
+            tableView.getItems().addAll(items);
+        });
     }
 }

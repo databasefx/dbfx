@@ -15,7 +15,6 @@ static void activate(GtkApplication *app, gpointer user_data) {
     GtkWidget *fileMenu, *helpMenu;
     GtkWidget *fileMi, *helpMi;
     GtkWidget *quitMi;
-
     menubar = gtk_menu_bar_new();
     fileMenu = gtk_menu_new();
     helpMenu = gtk_menu_new();
@@ -31,7 +30,7 @@ static void activate(GtkApplication *app, gpointer user_data) {
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(helpMi), helpMenu);
     gtk_menu_shell_append(GTK_MENU_SHELL(fileMenu), quitMi);
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), fileMi);
-    gtk_menu_shell_append(GTK_MENU_SHELL(menubar),helpMi);
+    gtk_menu_shell_append(GTK_MENU_SHELL(menubar), helpMi);
     gtk_box_pack_start(GTK_BOX(hbox), menubar, FALSE, FALSE, 0);
     gtk_widget_show_all(window);
     gtk_main();

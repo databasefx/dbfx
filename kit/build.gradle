@@ -3,4 +3,6 @@ dependencies {
     compile group: 'io.vertx', name: 'vertx-mysql-client', version: vertx_version
     compile group: 'io.vertx', name: 'vertx-db2-client', version: vertx_version
     compile group: 'io.vertx', name: 'vertx-sql-client', version: vertx_version
+    compile group: 'com.github.jsqlparser', name: 'jsqlparser', version: '3.2'
+
 }

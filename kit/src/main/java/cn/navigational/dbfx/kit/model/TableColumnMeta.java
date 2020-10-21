@@ -2,7 +2,9 @@ package cn.navigational.dbfx.kit.model;
 
 import cn.navigational.dbfx.kit.enums.DataType;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Database Table column meta data
@@ -106,5 +108,21 @@ public class TableColumnMeta {
 
     public void setPosition(Integer position) {
         this.position = position;
+    }
+
+    /**
+     * This method is called when there are only table column names and no more column metadata to create a default table raw data Java object mapping
+     *
+     * @param columnNames Table column name
+     * @return {@link TableColumnMeta} Table column meta
+     */
+    public static List<TableColumnMeta> createDefaultTableColumnMeta(List<String> columnNames) {
+        return columnNames.stream().map(it -> {
+            var meta = new TableColumnMeta();
+            meta.setLength(0);
+            meta.setColName(it);
+            meta.setDataType(DataType.STRING);
+            return meta;
+        }).collect(Collectors.toList());
     }
 }

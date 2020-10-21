@@ -14,7 +14,7 @@
     </stylesheets>
     <top>
         <VBox>
-            <MenuBar>
+            <MenuBar useSystemMenuBar="true">
                 <Menu text="%menu.title.file">
                     <MenuItem text="%menu.title.file.exit" onAction="#exit"/>
                 </Menu>

@@ -1,10 +1,14 @@
 package cn.navigational.dbfx.utils;
 
 import cn.navigational.dbfx.controls.table.CustomTableColumn;
+import cn.navigational.dbfx.controls.table.CustomTableView;
+import cn.navigational.dbfx.kit.enums.DataType;
 import cn.navigational.dbfx.kit.model.TableColumnMeta;
+import javafx.application.Platform;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * TableColumn utils
@@ -40,8 +44,21 @@ public class TableColumnUtils {
             var tableView = cellDataFeatures.getTableView();
             var tableColumn = cellDataFeatures.getTableColumn();
             var columnIndex = tableView.getColumns().indexOf(tableColumn);
-            return cellDataFeatures.getValue().get(columnIndex-1);
+            return cellDataFeatures.getValue().get(columnIndex - 1);
         });
         return column;
+    }
+
+    public static void createTableColumns(CustomTableView tableView, List<String> columnNames) {
+        var metas = TableColumnMeta.createDefaultTableColumnMeta(columnNames);
+        Platform.runLater(() -> {
+            var columns = tableView.getColumns();
+            var length = columns.size();
+            if (length > 1) {
+                System.out.println("current table columns:" + length);
+                tableView.getColumns().remove(1, length);
+            }
+            columns.addAll(createTableDataColumn(metas));
+        });
     }
 }

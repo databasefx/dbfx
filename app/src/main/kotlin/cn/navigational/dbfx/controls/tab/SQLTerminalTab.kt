@@ -5,7 +5,7 @@ import cn.navigational.dbfx.controls.AbstractBaseTab
 import cn.navigational.dbfx.model.SQLClient
 
 class SQLTerminalTab(client: SQLClient) : AbstractBaseTab(SQLClient.getMiniIcon(client.cl)) {
-    private val controller = SQLTerminalController(client.cl)
+    private val controller = SQLTerminalController(client)
 
     init {
         val info = client.dbInfo
