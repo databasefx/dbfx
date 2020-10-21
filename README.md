@@ -27,6 +27,13 @@ NOTE : DatabaseFX requires Java 15 and above.
 ### SQL Statement real time output
 ![Loading Fail](./SNAPSHOTS/e.png)
 
+### SQL Statement Terminal
+#### Execute Result
+![Loading Fail](./SNAPSHOTS/f.png)
+
+#### Smart Tips
+![Loading Fail](./SNAPSHOTS/g.png)
+
 ### About
 ![Loading Fail](SNAPSHOTS/d.png)
 
