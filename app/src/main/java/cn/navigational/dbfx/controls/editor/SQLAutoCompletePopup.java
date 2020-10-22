@@ -56,8 +56,7 @@ public class SQLAutoCompletePopup extends AutoCompletePopup<String> {
 
 
     public SQLAutoCompletePopup(Clients cl, CodeArea codeArea) {
-        this.prefHeight(200);
-        this.setAutoHide(false);
+        this.setPrefWidth(400);
         this.codeArea = codeArea;
         this.keywords = KeywordHelper.getKeyWordSyn(cl);
         final List<String> lowKeyword = this.keywords.stream()

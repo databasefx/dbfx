@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.IOException;
 
@@ -59,5 +60,11 @@ public class OssUtils {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    public static void addStrToClipboard(String str) {
+        var toolkit = Toolkit.getDefaultToolkit();
+        var clipboard = toolkit.getSystemClipboard();
+        clipboard.setContents(new StringSelection(str), null);
     }
 }

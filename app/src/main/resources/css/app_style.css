@@ -135,7 +135,7 @@
     -fx-border-width: 0 0.1em;
 }
 
-.tree-view .tree-cell:selected, .list-cell:selected {
+.tree-view .tree-cell:selected {
     -fx-background-color: #2F65CA;
 }
 
