@@ -19,7 +19,7 @@ import static cn.navigational.dbfx.config.AppConstantsKt.APP_STYLE;
 public class AlertUtils {
 
     public static void showSimpleDialog(String msg) {
-        showSimpleDialog(I18N.getString("%alert.info.title"), msg);
+        showSimpleDialog(I18N.getString("alert.info.title"), msg);
     }
 
     /**
