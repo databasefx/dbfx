@@ -62,6 +62,11 @@ public class OssUtils {
         });
     }
 
+    /**
+     * Copy the target string to the system clipboard
+     *
+     * @param str Target string
+     */
     public static void addStrToClipboard(String str) {
         var toolkit = Toolkit.getDefaultToolkit();
         var clipboard = toolkit.getSystemClipboard();

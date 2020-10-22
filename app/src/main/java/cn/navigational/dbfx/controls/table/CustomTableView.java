@@ -133,6 +133,12 @@ public class CustomTableView extends TableView<ObservableList<StringProperty>> {
         }
     }
 
+    /**
+     * The corresponding string is generated according to the specified
+     * format and added to the system clipboard</p>
+     *
+     * @param type Target type
+     */
     private void copy(CopyType type) {
         var selectModel = this.getSelectionModel();
         var index = selectModel.getSelectedIndex();
@@ -162,7 +168,7 @@ public class CustomTableView extends TableView<ObservableList<StringProperty>> {
             var pos = cells.get(0);
             var row = pos.getRow();
             var column = pos.getColumn();
-            var str = getItems().get(row).get(column-1).get();
+            var str = getItems().get(row).get(column - 1).get();
             OssUtils.addStrToClipboard(str);
         }
     }
