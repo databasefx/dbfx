@@ -16,11 +16,6 @@
     -fx-font-size: 1.6em;
 }
 
-.keyword {
-    -fx-fill: #c77032;
-    -fx-font-weight: bold;
-}
-
 .styled-text-area .line-highlighter {
     -fx-fill: #323232;
 }
@@ -38,4 +33,9 @@
 
 .split-pane .split-pane-divider {
     -fx-pref-width: 0.1em;
+}
+
+.keyword {
+    -fx-fill: #c77032 !important;
+    -fx-font-weight: bold;
 }
