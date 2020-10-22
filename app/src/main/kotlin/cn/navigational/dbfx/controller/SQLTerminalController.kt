@@ -59,6 +59,7 @@ class SQLTerminalController(val cl: SQLClient) : AbstractFxmlController<SplitPan
 
 
     init {
+        this.tabPane.tabs.remove(exeResult)
         this.autoCompletePopup = SQLAutoCompletePopup(cl.cl, codeArea);
         codeArea.paragraphGraphicFactory = LineNumberFactory.get(codeArea)
         info.graphic = SvgImageTranscoder.svgToImageView(T_INFO_ICON)
@@ -82,7 +83,9 @@ class SQLTerminalController(val cl: SQLClient) : AbstractFxmlController<SplitPan
         codeArea.inputMethodRequests = CodeAreaInputRequest()
     }
 
-    private suspend fun execute(sql: String) {
+    private suspend fun execute(rowTxt: String) {
+        //replace all wrapper symbol
+        val sql = rowTxt.replace("\n", "")
         val start = System.currentTimeMillis()
         val status = try {
             val res = SQLExecutor.executeSql(sql, cl.cl, cl.client)
@@ -100,7 +103,6 @@ class SQLTerminalController(val cl: SQLClient) : AbstractFxmlController<SplitPan
             this.exeStatus.text = "> $status"
             this.exeTime.text = "> ${(end - start) / 1000.0}s"
         }
-        //
     }
 
     private fun queryHandler(res: RowSet<Row>): String {

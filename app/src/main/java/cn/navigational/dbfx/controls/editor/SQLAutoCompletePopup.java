@@ -62,7 +62,7 @@ public class SQLAutoCompletePopup extends AutoCompletePopup<String> {
         this.keywords = KeywordHelper.getKeyWordSyn(cl);
         final List<String> lowKeyword = this.keywords.stream()
                 .map(String::toLowerCase).collect(Collectors.toList());
-        final String keywordPattern = "\\b(" + String.join("|", keywords) +'|'+
+        final String keywordPattern = "\\b(" + String.join("|", keywords) + '|' +
                 String.join("|", lowKeyword) + ")\\b";
         this.PATTERN = Pattern.compile(
                 "(?<KEYWORD>" + keywordPattern + ")"
@@ -141,7 +141,7 @@ public class SQLAutoCompletePopup extends AutoCompletePopup<String> {
             this.end.set(pos);
             this.start.set(index);
             if (!this.isShowing()) {
-                this.show(codeArea);
+                this.show(codeArea,this.getX(),this.getY());
             }
         } else {
             this.hide();
@@ -172,7 +172,7 @@ public class SQLAutoCompletePopup extends AutoCompletePopup<String> {
     }
 
 
-    private class VisibleParagraphStyler<PS, SEG, S> implements Consumer<ListModification<? extends Paragraph<PS, SEG, S>>> {
+    private static class VisibleParagraphStyler<PS, SEG, S> implements Consumer<ListModification<? extends Paragraph<PS, SEG, S>>> {
         private final GenericStyledArea<PS, SEG, S> area;
         private final Function<String, StyleSpans<S>> computeStyles;
         private int prevParagraph, prevTextLength;

@@ -55,7 +55,6 @@ public class TableColumnUtils {
             var columns = tableView.getColumns();
             var length = columns.size();
             if (length > 1) {
-                System.out.println("current table columns:" + length);
                 tableView.getColumns().remove(1, length);
             }
             columns.addAll(createTableDataColumn(metas));

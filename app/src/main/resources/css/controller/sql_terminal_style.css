@@ -22,7 +22,7 @@
 
 .lineno {
     -fx-background-color: #313335;
-    -fx-font-size: 15px;
+    -fx-font-size: 1em;
     -fx-font-weight: bolder;
 }
 
@@ -37,5 +37,4 @@
 
 .keyword {
     -fx-fill: #c77032 !important;
-    -fx-font-weight: bold;
 }
