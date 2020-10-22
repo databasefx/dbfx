@@ -98,7 +98,7 @@ public class SQLAutoCompletePopup extends AutoCompletePopup<String> {
     public boolean containerKey(String key) {
         final List<String> list = new ArrayList<>();
         for (String keyword : keywords) {
-            if (keyword.startsWith(key)) {
+            if (!keyword.equals(key) && keyword.startsWith(key)) {
                 list.add(keyword);
             }
         }

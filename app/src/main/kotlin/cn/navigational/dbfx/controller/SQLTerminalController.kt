@@ -9,11 +9,12 @@ import cn.navigational.dbfx.controls.editor.SQLAutoCompletePopup
 import cn.navigational.dbfx.controls.table.CustomTableView
 import cn.navigational.dbfx.convert.RowSetConvert
 import cn.navigational.dbfx.kit.SQLExecutor
-import cn.navigational.dbfx.kit.SqlParseHelper
 import cn.navigational.dbfx.model.SQLClient
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
 import cn.navigational.dbfx.utils.AppSettings
 import cn.navigational.dbfx.utils.TableColumnUtils
+import io.vertx.sqlclient.Row
+import io.vertx.sqlclient.RowSet
 import javafx.application.Platform
 import javafx.fxml.FXML
 import javafx.geometry.Point2D
@@ -83,28 +84,44 @@ class SQLTerminalController(val cl: SQLClient) : AbstractFxmlController<SplitPan
 
     private suspend fun execute(sql: String) {
         val start = System.currentTimeMillis()
-        var status = "ok"
-        var query: Boolean
-        try {
-            query = SqlParseHelper.selectStatement(sql)
+        val status = try {
             val res = SQLExecutor.executeSql(sql, cl.cl, cl.client)
-            if (query) {
-                val app = AppSettings.getAppSettings();
-                TableColumnUtils.createTableColumns(tableView, res.columnsNames())
-                RowSetConvert.rowSetConvert(tableView, res, app.tableSetting)
+            val columns = res.columnsNames()
+            if (columns != null && columns.isNotEmpty()) {
+                queryHandler(res)
+            } else {
+                updateHandler(res)
             }
         } catch (e: Exception) {
-            status = "failed:${e.message}"
-            query = false
+            "FAILED:${e.message}"
         }
         val end = System.currentTimeMillis()
         Platform.runLater {
             this.exeStatus.text = "> $status"
             this.exeTime.text = "> ${(end - start) / 1000.0}s"
-            if (query) {
-                tabPane.selectionModel.select(exeResult)
-            }
         }
+        //
+    }
+
+    private fun queryHandler(res: RowSet<Row>): String {
+        val app = AppSettings.getAppSettings();
+        TableColumnUtils.createTableColumns(tableView, res.columnsNames())
+        RowSetConvert.rowSetConvert(tableView, res, app.tableSetting)
+        Platform.runLater {
+            if (!tabPane.tabs.contains(exeResult)) {
+                tabPane.tabs.add(exeResult)
+            }
+            tabPane.selectionModel.select(exeResult)
+        }
+        return "OK"
+    }
+
+    private fun updateHandler(res: RowSet<Row>): String {
+        val updated = res.rowCount()
+        Platform.runLater {
+            this.tabPane.tabs.remove(exeResult)
+        }
+        return "Affected rows:$updated"
     }
 
     private inner class CodeAreaInputRequest : InputMethodRequests {

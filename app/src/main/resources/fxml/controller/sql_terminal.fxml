@@ -11,7 +11,6 @@
 <?import javafx.scene.control.Tooltip?>
 <?import org.fxmisc.flowless.VirtualizedScrollPane?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableView?>
 <?import cn.navigational.dbfx.controls.table.CustomTableView?>
 <SplitPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
@@ -36,9 +35,9 @@
     <TabPane fx:id="tabPane">
         <Tab text="%label.info" closable="false" fx:id="info">
             <VBox styleClass="exe-info">
-                <Label fx:id="statement"/>
-                <Label fx:id="exeStatus"/>
-                <Label fx:id="exeTime"/>
+                <Label fx:id="statement" wrapText="true"/>
+                <Label fx:id="exeStatus" wrapText="true"/>
+                <Label fx:id="exeTime" wrapText="true"/>
             </VBox>
         </Tab>
         <Tab text="%label.result" closable="false" fx:id="exeResult">
