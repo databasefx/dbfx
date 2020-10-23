@@ -41,19 +41,13 @@ class SQLTerminalController(val cl: SQLClient) : AbstractFxmlController<SplitPan
     private lateinit var codeArea: CodeArea
 
     @FXML
-    private lateinit var statement: Label
-
-    @FXML
-    private lateinit var exeStatus: Label
-
-    @FXML
-    private lateinit var exeTime: Label
-
-    @FXML
-    private lateinit var tableView: CustomTableView
+    private lateinit var exeInfo: TextArea
 
     @FXML
     private lateinit var tabPane: TabPane
+
+    @FXML
+    private lateinit var tableView: CustomTableView
 
     private val autoCompletePopup: SQLAutoCompletePopup
 
@@ -77,7 +71,8 @@ class SQLTerminalController(val cl: SQLClient) : AbstractFxmlController<SplitPan
                 return@setOnAction
             }
             tabPane.selectionModel.select(info)
-            this.statement.text = "> $sql"
+            this.exeInfo.clear()
+            this.exeInfo.appendText("> $sql\n")
             GlobalScope.launch { execute(sql) }
         }
         codeArea.inputMethodRequests = CodeAreaInputRequest()
@@ -100,8 +95,8 @@ class SQLTerminalController(val cl: SQLClient) : AbstractFxmlController<SplitPan
         }
         val end = System.currentTimeMillis()
         Platform.runLater {
-            this.exeStatus.text = "> $status"
-            this.exeTime.text = "> ${(end - start) / 1000.0}s"
+            this.exeInfo.appendText("> $status\n")
+            this.exeInfo.appendText("> ${(end - start) / 1000.0}s\n")
         }
     }
 

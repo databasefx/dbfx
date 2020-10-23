@@ -10,8 +10,8 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.Tooltip?>
 <?import org.fxmisc.flowless.VirtualizedScrollPane?>
-<?import javafx.scene.control.Label?>
 <?import cn.navigational.dbfx.controls.table.CustomTableView?>
+<?import javafx.scene.control.TextArea?>
 <SplitPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
            prefHeight="400.0" prefWidth="600.0" dividerPositions="0.75" orientation="VERTICAL">
@@ -34,11 +34,7 @@
     </VBox>
     <TabPane fx:id="tabPane">
         <Tab text="%label.info" closable="false" fx:id="info">
-            <VBox styleClass="exe-info">
-                <Label fx:id="statement" wrapText="true"/>
-                <Label fx:id="exeStatus" wrapText="true"/>
-                <Label fx:id="exeTime" wrapText="true"/>
-            </VBox>
+            <TextArea wrapText="true" fx:id="exeInfo" editable="false"/>
         </Tab>
         <Tab text="%label.result" closable="false" fx:id="exeResult">
             <CustomTableView fx:id="tableView"/>

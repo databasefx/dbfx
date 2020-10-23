@@ -38,3 +38,12 @@
 .keyword {
     -fx-fill: #c77032 !important;
 }
+
+.text-area {
+    -fx-background-insets: 0;
+}
+
+.text-area, .text-area .content {
+    -fx-border-width: 0;
+    -fx-background-color: #2b2b2b;
+}
