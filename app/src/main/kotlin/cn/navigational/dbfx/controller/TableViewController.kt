@@ -16,6 +16,9 @@ import cn.navigational.dbfx.utils.TableColumnUtils
 import javafx.application.Platform
 import javafx.beans.property.*
 import javafx.collections.ObservableList
+import javafx.event.ActionEvent
+import javafx.event.Event
+import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.scene.control.*
 import javafx.scene.layout.BorderPane
@@ -80,8 +83,6 @@ class TableViewController(private val provider: TableDataProvider) : AbstractFxm
 
 
     init {
-        tableView.tableSetting = AppSettings.getAppSettings().tableSetting
-        this.tableView.placeholder = Label("表中暂无数据")
         pageSelector.items.addAll("10", "100", "250", "500", "1000")
         pageSelector.selectionModel.select(0)
         last.graphic = SvgImageTranscoder.svgToImageView(LAST_ICON)
@@ -101,6 +102,8 @@ class TableViewController(private val provider: TableDataProvider) : AbstractFxm
                 load()
             }
         }
+        addRow.onAction = this.addNewRow()
+        delRow.onAction = this.delNewRow()
         next.setOnAction {
             this.pageIndexProperty.value = ++this.pageIndexProperty.value
             load()
@@ -140,6 +143,12 @@ class TableViewController(private val provider: TableDataProvider) : AbstractFxm
         flush.setOnAction {
             load()
         }
+        this.tableView.placeholder = Label("表中暂无数据")
+        this.tableView.tableSetting = AppSettings.getAppSettings().tableSetting
+        this.tableView.registerMenu(CustomTableView.CustomTableViewAction.FLUSH) { load() }
+        this.tableView.registerMenu(CustomTableView.CustomTableViewAction.EDIT, null)
+        this.tableView.registerMenu(CustomTableView.CustomTableViewAction.ADD_ROW, this.addNewRow())
+        this.tableView.registerMenu(CustomTableView.CustomTableViewAction.DELETE_ROW, this.delNewRow())
     }
 
     /**
@@ -165,6 +174,18 @@ class TableViewController(private val provider: TableDataProvider) : AbstractFxm
                 AlertUtils.showExDialog("加载数据失败", e);
             }
             tableView.isLoadStatus = false
+        }
+    }
+
+    private fun addNewRow(): EventHandler<ActionEvent> {
+        return EventHandler {
+
+        }
+    }
+
+    private fun delNewRow(): EventHandler<ActionEvent> {
+        return EventHandler {
+
         }
     }
 

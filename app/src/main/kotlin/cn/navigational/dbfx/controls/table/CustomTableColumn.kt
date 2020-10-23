@@ -25,6 +25,11 @@ class CustomTableColumn : TableColumn<ObservableList<StringProperty>, String> {
          * Default column max width
          */
         private const val MAX_COLUMN_WIDTH = 200.0
+
+        /**
+         * Default index column width
+         */
+        private const val INDEX_COLUMN_WIDTH = 40.0
         private val fieldIcon = SvgImageTranscoder.svgToImage(TABLE_FIELD_ICON);
         fun getFieldImage(dataType: DataType): Image {
             return fieldIcon
@@ -46,16 +51,9 @@ class CustomTableColumn : TableColumn<ObservableList<StringProperty>, String> {
     }
 
     constructor(indexColumn: Boolean) : super() {
-        sortNode = SvgImageTranscoder.svgToImageView(ASC_ICON)
-        sortTypeProperty().addListener { _, _, n ->
-            sortNode = if (n == SortType.ASCENDING) {
-                SvgImageTranscoder.svgToImageView(ASC_ICON)
-            } else {
-                SvgImageTranscoder.svgToImageView(DES_ICON)
-            }
-        }
         if (indexColumn) {
             isSortable = false
+            this.minWidth = INDEX_COLUMN_WIDTH
             this.styleClass.add("index-column")
             setCellFactory { IndexTableCell() }
         } else {

@@ -89,10 +89,6 @@
     -fx-background-color: #95998e;
 }
 
-.tab-pane .tab-header-area .control-buttons-tab .container .tab-down-button .arrow {
-    -fx-background-color: #AFB1B3;
-}
-
 .split-pane .split-pane-divider {
     -fx-pref-width: 0.2em;
     -fx-background-color: #323232;
@@ -106,7 +102,6 @@
 
 .context-menu {
     -fx-padding: 0;
-    -fx-min-width: 20em;
     -fx-border-width: 0 0.02em 0.02em 0.02em;
 }
 
@@ -127,7 +122,9 @@
     -fx-text-fill: #FEFFFC;
 }
 
-.menu-button .arrow-button .arrow {
+.menu .arrow,
+.menu-button .arrow-button .arrow,
+.tab-pane .tab-header-area .control-buttons-tab .container .tab-down-button .arrow {
     -fx-background-color: #AFB1B3;
 }
 
@@ -196,7 +193,6 @@
 }
 
 .table-view .index-column {
-    -fx-min-width: 3em;
     -fx-alignment: center;
     -fx-background-color: #3B3B3B;
 }
