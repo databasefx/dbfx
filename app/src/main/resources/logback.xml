@@ -32,6 +32,7 @@
         </triggeringPolicy>
     </appender>
     <logger name="io.netty" level="INFO"/>
+    <logger name="io.vertx" level="INFO"/>
     <root level="DEBUG">
         <appender-ref ref="SQL_CONSOLE"/>
         <appender-ref ref="CONSOLE"/>
