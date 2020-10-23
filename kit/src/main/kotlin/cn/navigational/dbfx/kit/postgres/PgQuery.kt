@@ -62,20 +62,21 @@ class PgQuery : SQLQuery {
 
     override suspend fun showTableField(category: String, table: String, client: SqlClient): List<TableColumnMeta> {
         val dbName = category.split(".")[0]
-        val scheme = category.split(".")[1]
-        val sql = "SELECT * FROM ${dbName}.information_schema.columns WHERE table_schema=$1 AND table_name=$2"
-        val tuple = Tuple.of(scheme, table)
-        val rowSet = SQLExecutor.executeSql(sql, Clients.POSTGRESQL, client, tuple)
+        val prefix = "$dbName.pg_catalog"
+        val sql = """SELECT col_description(a.attrelid,a.attnum) as comment,format_type(a.atttypid,a.atttypmod) as type,
+                a.attname as name, a.attnotnull as notnull,a.attlen as len,a.attnum pos FROM $prefix.pg_class as c,$prefix.pg_attribute as a 
+                WHERE c.relname ='$table' and a.attrelid = c.oid and a.attnum>0"""
         val list = arrayListOf<TableColumnMeta>()
+        val rowSet = SQLExecutor.executeSql(sql, Clients.POSTGRESQL, client)
         for (row in rowSet) {
             val columnMeta = TableColumnMeta()
-            columnMeta.colName = row.getString("column_name")
+            columnMeta.colName = row.getString("name")
             columnMeta.dataType = DataType.STRING
-            columnMeta.type = row.getString("data_type")
-            columnMeta.length = 0
-            columnMeta.position = row.getInteger("ordinal_position")
-            columnMeta.isNullable = row.getString("is_nullable") == "YES"
-            columnMeta.comment = ""
+            columnMeta.type = row.getString("type")
+            columnMeta.length = row.getInteger("len")
+            columnMeta.position = row.getInteger("pos")
+            columnMeta.isNullable = row.getBoolean("notnull")
+            columnMeta.comment = row.getString("comment")
             list.add(columnMeta)
         }
         return list
