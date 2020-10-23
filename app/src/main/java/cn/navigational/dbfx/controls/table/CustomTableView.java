@@ -26,7 +26,7 @@ public class CustomTableView extends TableView<ObservableList<StringProperty>> {
     /**
      * Current table view support menu list
      */
-    public static enum CustomTableViewAction {
+    public enum CustomTableViewAction {
         /**
          * Edit data
          */
@@ -72,7 +72,11 @@ public class CustomTableView extends TableView<ObservableList<StringProperty>> {
         } else {
             node = null;
         }
-        Platform.runLater(() -> this.setPlaceholder(node));
+        Platform.runLater(() -> {
+            this.setPlaceholder(node);
+            //Fix data refresh after scrollbar dispose issue
+            this.refresh();
+        });
     });
 
     public CustomTableView() {
