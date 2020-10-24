@@ -30,9 +30,14 @@ class CustomTableColumn : TableColumn<ObservableList<StringProperty>, String> {
          * Default index column width
          */
         private const val INDEX_COLUMN_WIDTH = 40.0
-        private val fieldIcon = SvgImageTranscoder.svgToImage(TABLE_FIELD_ICON);
-        fun getFieldImage(dataType: DataType): Image {
-            return fieldIcon
+        private val priKeyIcon = SvgImageTranscoder.svgToImage(PRI_KEY_ICON)
+        private val fieldIcon = SvgImageTranscoder.svgToImage(TABLE_FIELD_ICON)
+        fun getFieldImage(meta: TableColumnMeta): Image {
+            return if (meta.constrainTypes.contains(TableColumnMeta.ConstrainType.PRIMARY_KEY)) {
+                priKeyIcon
+            } else {
+                fieldIcon
+            }
         }
     }
 
@@ -72,7 +77,7 @@ class CustomTableColumn : TableColumn<ObservableList<StringProperty>, String> {
         this.tableColumnMeta.set(column)
         val label = Label()
         label.tooltip = Tooltip(tip)
-        label.graphic = ImageView(getFieldImage(column.dataType))
+        label.graphic = ImageView(getFieldImage(column))
         val mWidth = calColumnWidth(column)
         Platform.runLater {
             this.text = colName
@@ -84,7 +89,7 @@ class CustomTableColumn : TableColumn<ObservableList<StringProperty>, String> {
     private fun calColumnWidth(column: TableColumnMeta): Double {
         val fontSize = Font.getDefault().size
         val title = column.colName
-        val iWidth = getFieldImage(column.dataType).width
+        val iWidth = getFieldImage(column).width
         val tWidth = title.length * fontSize
         val txtWidth = column.length * fontSize
         val temp = iWidth + tWidth

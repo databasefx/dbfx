@@ -2,7 +2,6 @@ package cn.navigational.dbfx.kit.mysql
 
 import cn.navigational.dbfx.kit.SQLExecutor
 import cn.navigational.dbfx.kit.SQLQuery
-import cn.navigational.dbfx.kit.config.NULL_TAG
 import cn.navigational.dbfx.kit.enums.Clients
 import cn.navigational.dbfx.kit.model.TableColumnMeta
 import io.vertx.sqlclient.Row
@@ -60,6 +59,10 @@ class MysqlQuery : SQLQuery {
         return _showTable(sql, Tuple.of(category), client)
     }
 
+    /**
+     * More detail,please visit:
+     * <a href='https://dev.mysql.com/doc/refman/8.0/en/information-schema-columns-table.html'/>
+     */
     override suspend fun showTableField(category: String, table: String, client: SqlClient): List<TableColumnMeta> {
         val sql = """
             SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=? AND  TABLE_NAME=?
@@ -69,19 +72,23 @@ class MysqlQuery : SQLQuery {
         val list = arrayListOf<TableColumnMeta>()
         for (row in rowSet) {
             val columnMeta = TableColumnMeta()
+            val extra = row.getString("EXTRA")
             val column = row.getString("COLUMN_NAME")
             val comment = row.getString("COLUMN_COMMENT")
             val length = row.getInteger("CHARACTER_MAXIMUM_LENGTH")
             val type = row.getString("DATA_TYPE")
             val pos = row.getInteger("ORDINAL_POSITION")
             val nullable = row.getString("IS_NULLABLE") == "YES"
-            columnMeta.colName = column
-            columnMeta.comment = comment
-            columnMeta.length = length
+            val constrainStr = row.getString("COLUMN_KEY")
             columnMeta.type = type
             columnMeta.position = pos
+            columnMeta.length = length
+            columnMeta.colName = column
+            columnMeta.comment = comment
             columnMeta.isNullable = nullable
             columnMeta.dataType = getMyDataType(type)
+            columnMeta.extraAttr = MysqlHelper.getExtraAttr(extra)
+            columnMeta.constrainTypes = MysqlHelper.getTableConstrain(constrainStr)
             list.add(columnMeta)
         }
         list.sortBy { it.position }

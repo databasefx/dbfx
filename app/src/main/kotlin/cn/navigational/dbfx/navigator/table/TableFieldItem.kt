@@ -13,7 +13,7 @@ class TableFieldItem(columnMeta: TableColumnMeta, cl: Clients) : BaseTreeItem<St
         val hBox = HBox()
         val label = Label(columnMeta.colName)
         val note = Label(" ${columnMeta.type}")
-        val icon = ImageView(CustomTableColumn.getFieldImage(columnMeta.dataType))
+        val icon = ImageView(CustomTableColumn.getFieldImage(columnMeta))
         hBox.children.addAll(icon, label, note)
         note.styleClass.add("field-note")
         hBox.styleClass.add("table-field-item")

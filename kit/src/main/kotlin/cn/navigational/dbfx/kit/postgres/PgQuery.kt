@@ -10,6 +10,7 @@ import io.vertx.sqlclient.Row
 import io.vertx.sqlclient.RowSet
 import io.vertx.sqlclient.SqlClient
 import io.vertx.sqlclient.Tuple
+import java.util.HashMap
 
 class PgQuery : SQLQuery {
     /**
@@ -70,6 +71,7 @@ class PgQuery : SQLQuery {
         val rowSet = SQLExecutor.executeSql(sql, Clients.POSTGRESQL, client)
         for (row in rowSet) {
             val columnMeta = TableColumnMeta()
+            columnMeta.constrainTypes = arrayOf()
             columnMeta.colName = row.getString("name")
             columnMeta.dataType = DataType.STRING
             columnMeta.type = row.getString("type")
@@ -77,10 +79,32 @@ class PgQuery : SQLQuery {
             columnMeta.position = row.getInteger("pos")
             columnMeta.isNullable = row.getBoolean("notnull")
             columnMeta.comment = row.getString("comment")
+            columnMeta.extraAttr = if (columnMeta.type == "serial")
+                arrayOf(TableColumnMeta.TableColumnExtraAttr.AUTO_INCREMENT) else arrayOf()
             list.add(columnMeta)
+        }
+        val constrains = getTableConstrain(table, prefix, client)
+        for (meta in list) {
+            val value = constrains[meta.colName]
+            meta.constrainTypes = PgSQLHelper.getTableConstrain(value)
         }
         return list
     }
+
+    private suspend fun getTableConstrain(table: String, category: String, client: SqlClient): Map<String, String> {
+        val sql = "SELECT c.conname AS name,c.contype AS type " +
+                "FROM $category.pg_constraint c INNER JOIN $category.pg_class pc " +
+                "ON c.conrelid = pc.oid WHERE pc.relname =$1"
+        val constrains: MutableMap<String, String> = HashMap()
+        val rowSet = SQLExecutor.executeSql(sql, Clients.POSTGRESQL, client, Tuple.of(table))
+        for (row in rowSet) {
+            val type = row.getString("type")
+            val name = row.getString("name")
+            constrains[name] = type
+        }
+        return constrains
+    }
+
 
     override suspend fun pageQuery(category: String, table: String, pageIndex: Int, pageSize: Int, client: SqlClient): RowSet<Row> {
         val offset = (pageIndex - 1) * pageSize

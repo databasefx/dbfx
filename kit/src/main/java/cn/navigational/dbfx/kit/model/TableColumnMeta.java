@@ -45,6 +45,14 @@ public class TableColumnMeta {
      * Column null?
      */
     private boolean nullable;
+    /**
+     * Current column constrain types
+     */
+    private ConstrainType[] constrainTypes;
+    /**
+     * Current column extra attributes
+     */
+    private TableColumnExtraAttr[] extraAttr;
 
     public String getColName() {
         return colName;
@@ -110,6 +118,22 @@ public class TableColumnMeta {
         this.position = position;
     }
 
+    public ConstrainType[] getConstrainTypes() {
+        return constrainTypes;
+    }
+
+    public void setConstrainTypes(ConstrainType[] constrainTypes) {
+        this.constrainTypes = constrainTypes;
+    }
+
+    public TableColumnExtraAttr[] getExtraAttr() {
+        return extraAttr;
+    }
+
+    public void setExtraAttr(TableColumnExtraAttr[] extraAttr) {
+        this.extraAttr = extraAttr;
+    }
+
     /**
      * This method is called when there are only table column names and no more column metadata to create a default table raw data Java object mapping
      *
@@ -124,5 +148,41 @@ public class TableColumnMeta {
             meta.setDataType(DataType.STRING);
             return meta;
         }).collect(Collectors.toList());
+    }
+
+    /**
+     * Database table column constrain type
+     */
+    public enum ConstrainType {
+        /**
+         * No any constrain
+         */
+        NONE,
+        /**
+         * Primary key
+         */
+        PRIMARY_KEY,
+        /**
+         * Unique key
+         */
+        UNIQUE_KEY,
+        /**
+         * Foreign key constraint
+         */
+        FOREIGN_KEY
+    }
+
+    /**
+     * Current table column extra attribute
+     */
+    public enum TableColumnExtraAttr {
+        /**
+         * Auto-increment
+         */
+        AUTO_INCREMENT,
+        /**
+         * Auto update timestamp or datetime
+         */
+        ON_UPDATE_CURRENT_TIMESTAMP
     }
 }

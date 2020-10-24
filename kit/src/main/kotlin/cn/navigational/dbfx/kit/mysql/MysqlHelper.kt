@@ -1,5 +1,7 @@
 package cn.navigational.dbfx.kit.mysql
 
+import cn.navigational.dbfx.kit.model.TableColumnMeta
+import cn.navigational.dbfx.kit.model.TableColumnMeta.TableColumnExtraAttr
 import io.vertx.sqlclient.Row
 import io.vertx.sqlclient.RowSet
 
@@ -19,6 +21,30 @@ class MysqlHelper {
 
         fun transTableName(category: String, table: String): String {
             return "`$category`.`$table`"
+        }
+
+        /**
+         *
+         * Get mysql table column constrain type
+         *
+         */
+        fun getTableConstrain(colKey: String?): Array<TableColumnMeta.ConstrainType> {
+            return arrayOf(when (colKey) {
+                "PRI" -> TableColumnMeta.ConstrainType.PRIMARY_KEY
+                "UNI" -> TableColumnMeta.ConstrainType.UNIQUE_KEY
+                else -> TableColumnMeta.ConstrainType.NONE
+            })
+        }
+
+        /**
+         * Get mysql table column extra attr
+         */
+        fun getExtraAttr(str: String?): Array<TableColumnExtraAttr> {
+            return when (str) {
+                "AUTO_INCREMENT" -> arrayOf(TableColumnExtraAttr.AUTO_INCREMENT)
+                "ON UPDATE CURRENT_TIMESTAMP" -> arrayOf(TableColumnExtraAttr.ON_UPDATE_CURRENT_TIMESTAMP)
+                else -> arrayOf()
+            }
         }
     }
 }

@@ -36,6 +36,7 @@ const val DEL_ROW_ICON = "assets/icons/table/del.svg"
 const val ASC_ICON = "assets/icons/table/asc.svg"
 const val DES_ICON = "assets/icons/table/des.svg"
 const val TABLE_SETTING_ICON = "assets/icons/table/setting.svg"
+const val PRI_KEY_ICON = "assets/icons/table/field/pri_key_icon.svg"
 
 
 //dialog icon
