@@ -10,7 +10,7 @@ import io.vertx.core.file.FileSystemOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.logging.LogManager;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Vertx utils
@@ -21,62 +21,64 @@ import java.util.logging.LogManager;
 public class VertxUtils {
     private static Vertx vertx;
 
-    private volatile static boolean init = false;
-
     private static final Logger LOG = LoggerFactory.getLogger(VertxUtils.class);
 
+    /**
+     * Register EventBus address
+     *
+     * @param addr EB address
+     * @param <T>  Message type
+     * @return Consumer handler
+     */
+    public static <T> MessageConsumer<T> eventBusConsumer(String addr) {
+        return getVertx().eventBus().<T>consumer(addr);
+    }
 
-    public static synchronized Vertx initVertx() {
-        if (!init) {
+    /**
+     * Un-Register EventBus
+     *
+     * @param addr EB address
+     */
+    public static void unRegisterEventBus(String addr) {
+        getVertx().eventBus().unregisterCodec(addr);
+    }
+
+    /**
+     * Send event bus message
+     *
+     * @param addr Target eb address
+     * @param msg  message
+     * @param <T>  Message type
+     * @return Send result
+     */
+    public static <T> Future<Message<T>> sendEventBus(String addr, T msg) {
+        return getVertx().eventBus().<T>request(addr, msg);
+    }
+
+    /**
+     * Get vertx instance
+     *
+     * @return Vertx instance
+     */
+    public static synchronized Vertx getVertx() {
+        if (vertx == null) {
             LOG.debug("Start init vertx options.");
-            var vOptions = new VertxOptions();
-            var fOptions = new FileSystemOptions();
-            fOptions.setFileCachingEnabled(false);
-            vOptions.setWorkerPoolSize(10);
-            vOptions.setFileSystemOptions(fOptions);
+            var vOptions = new VertxOptions()
+                    .setWorkerPoolSize(10)
+                    .setMaxWorkerExecuteTime(5)
+                    .setMaxWorkerExecuteTimeUnit(TimeUnit.SECONDS)
+                    .setFileSystemOptions(new FileSystemOptions().setFileCachingEnabled(false));
+
             vertx = Vertx.vertx(vOptions);
-            init = true;
         }
         return vertx;
     }
 
-    public static <T> MessageConsumer<T> eventBusConsumer(String addr) {
-        if (!init) {
-            initVertx();
-        }
-        return vertx.eventBus().<T>consumer(addr);
-    }
-
-    public static void unRegisterEventBus(String addr) {
-        if (!init) {
-            initVertx();
-        }
-        vertx.eventBus().unregisterCodec(addr);
-    }
-
-    public static <T> Future<Message<T>> sendEventBus(String addr, T msg) {
-        if (!init) {
-            initVertx();
-        }
-        return vertx.eventBus().<T>request(addr, msg);
-    }
-
-
-    public static Vertx getVertx() {
-        final Vertx vertex;
-        if (!init) {
-            vertex = initVertx();
-        } else {
-            vertex = vertx;
-        }
-        return vertex;
-    }
-
+    /**
+     * Close current vertx instance occur resource
+     */
     public static void close() {
-        if (!init) {
-            return;
-        }
-        vertx.close(ar -> {
+        getVertx().close(ar -> {
             if (ar.failed()) {
                 LOG.error("Close vertex failed", ar.cause());
             } else {
@@ -85,6 +87,11 @@ public class VertxUtils {
         });
     }
 
+    /**
+     * Get current vertx belong {@link FileSystem}
+     *
+     * @return {@link FileSystem} instance
+     */
     public static FileSystem getFileSystem() {
         return getVertx().fileSystem();
     }
