@@ -83,7 +83,7 @@ class PgQuery : SQLQuery {
                 arrayOf(TableColumnMeta.TableColumnExtraAttr.AUTO_INCREMENT) else arrayOf()
             list.add(columnMeta)
         }
-        val constrains = getTableConstrain(table, prefix, client)
+        val constrains = getTableConstrain(table, dbName, client)
         for (meta in list) {
             val value = constrains[meta.colName]
             meta.constrainTypes = PgSQLHelper.getTableConstrain(value)
@@ -92,9 +92,10 @@ class PgQuery : SQLQuery {
     }
 
     private suspend fun getTableConstrain(table: String, category: String, client: SqlClient): Map<String, String> {
-        val sql = "SELECT c.conname AS name,c.contype AS type " +
-                "FROM $category.pg_constraint c INNER JOIN $category.pg_class pc " +
-                "ON c.conrelid = pc.oid WHERE pc.relname =$1"
+        val sql = "SELECT c.column_name AS name, tc.constraint_type AS type FROM $category.information_schema.table_constraints tc " +
+                "JOIN $category.information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_name) " +
+                "JOIN $category.information_schema.columns AS c ON c.table_schema = tc.constraint_schema " +
+                "AND tc.table_name = c.table_name AND ccu.column_name = c.column_name and tc.table_name = $1"
         val constrains: MutableMap<String, String> = HashMap()
         val rowSet = SQLExecutor.executeSql(sql, Clients.POSTGRESQL, client, Tuple.of(table))
         for (row in rowSet) {

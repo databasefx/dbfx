@@ -11,9 +11,9 @@ class PgSQLHelper {
          */
         fun getTableConstrain(colKey: String?): Array<TableColumnMeta.ConstrainType> {
             return arrayOf(when (colKey) {
-                "p" -> TableColumnMeta.ConstrainType.PRIMARY_KEY
-                "u" -> TableColumnMeta.ConstrainType.UNIQUE_KEY
-                "f" -> TableColumnMeta.ConstrainType.FOREIGN_KEY
+                "PRIMARY KEY" -> TableColumnMeta.ConstrainType.PRIMARY_KEY
+                "UNIQUE" -> TableColumnMeta.ConstrainType.UNIQUE_KEY
+                "FOREIGN KEY" -> TableColumnMeta.ConstrainType.FOREIGN_KEY
                 else -> TableColumnMeta.ConstrainType.NONE
             })
         }
