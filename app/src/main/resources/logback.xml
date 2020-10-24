@@ -22,8 +22,8 @@
             <charset>utf-8</charset>
         </encoder>
         <file>${user.home}/dbfx/logs/dbfx.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${user.home}/dbfx/logs/%d{yyyy-MM-dd}/dbfx.log.%i</fileNamePattern>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${user.home}/dbfx/logs/dbfx.log.%i</fileNamePattern>
             <maxHistory>6</maxHistory>
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
