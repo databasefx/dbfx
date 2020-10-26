@@ -11,8 +11,6 @@ import cn.navigational.dbfx.kit.enums.Clients
 
 class PgItem(uuid: String) : DatabaseItem(uuid, PG_ICON) {
 
-    private val schemeFolder = PgDbFolder()
-    private val pgRoleFolder = PgRoleFolder()
 
     override suspend fun startConnect() {
         this.initClient()
@@ -24,9 +22,9 @@ class PgItem(uuid: String) : DatabaseItem(uuid, PG_ICON) {
     }
 
     override suspend fun flush() {
-        if (!this.connectStatus.value) {
-            children.addAll(schemeFolder, pgRoleFolder)
-        }
+        val schemeFolder = PgDbFolder()
+        val pgRoleFolder = PgRoleFolder()
+        this.children.addAll(schemeFolder, pgRoleFolder)
         schemeFolder.initFolder()
         pgRoleFolder.initFolder()
     }

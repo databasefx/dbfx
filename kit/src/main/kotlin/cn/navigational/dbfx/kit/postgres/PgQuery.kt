@@ -33,7 +33,7 @@ class PgQuery : SQLQuery {
     }
 
     override suspend fun showDatabase(client: SqlClient): List<String> {
-        val sql = "SELECT datname FROM pg_database"
+        val sql = "SELECT datname FROM pg_database WHERE datistemplate!='true'"
         val rows = SQLExecutor.executeSql(sql, Clients.POSTGRESQL, client)
         val list = arrayListOf<String>()
         for (row in rows) {
@@ -47,7 +47,7 @@ class PgQuery : SQLQuery {
     }
 
     override suspend fun queryDbUser(client: SqlClient): List<String> {
-        val sql = "SELECT * FROM pg_roles"
+        val sql = "SELECT rolname FROM pg_roles"
         val rows = SQLExecutor.executeSql(sql, Clients.POSTGRESQL, client)
         val list = arrayListOf<String>()
         for (row in rows) {

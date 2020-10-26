@@ -17,13 +17,16 @@ class PgDbFolder : FolderItem() {
             this.children.clear()
         }
         val info = currentClient.dbInfo
-        if (StringUtils.isNotEmpty(info.database)) {
-            this.children.add(PgDbItem(info.database))
-            return
-        }
         val list = SQLQuery.getClQuery(Clients.POSTGRESQL).showDatabase(currentClient.client)
         for (s in list) {
-            this.children.add(PgDbItem(s))
+            if (StringUtils.isNotEmpty(info.database)) {
+                if (s == info.database) {
+                    this.children.add(PgDbItem(s))
+                    break
+                }
+            } else {
+                this.children.add(PgDbItem(s))
+            }
         }
     }
 }
