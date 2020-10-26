@@ -26,6 +26,17 @@ class PostgresqlClientTest : PostgresqlBaseTest() {
         }
     }
 
+    @Test(timeout = 1000)
+    fun `test delete role`(context: TestContext) {
+        val async = context.async()
+        GlobalScope.launch(vertx.dispatcher()) {
+            val sql = "DROP ROLE IF EXISTS vertx_pg_user"
+            val res = client.query(sql).execute().await()
+            context.assertTrue(res.rowCount() > 0)
+            async.complete()
+        }
+    }
+
     /**
      *
      *This test method is used to reproduce the problem that vertx PG client cannot correctly
@@ -48,14 +59,4 @@ class PostgresqlClientTest : PostgresqlBaseTest() {
         }
     }
 
-    @Test(timeout = 1000)
-    fun `test delete role`(context: TestContext) {
-        val async = context.async()
-        GlobalScope.launch(vertx.dispatcher()) {
-            val sql = "DROP ROLE vertx_pg_user"
-            val res = client.query(sql).execute().await()
-            context.assertTrue(res.rowCount() > 0)
-            async.complete()
-        }
-    }
 }
