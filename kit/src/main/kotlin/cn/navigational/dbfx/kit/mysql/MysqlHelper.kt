@@ -40,11 +40,11 @@ class MysqlHelper {
          * Get mysql table column extra attr
          */
         fun getExtraAttr(str: String?): Array<TableColumnExtraAttr> {
-            return when (str) {
-                "AUTO_INCREMENT" -> arrayOf(TableColumnExtraAttr.AUTO_INCREMENT)
-                "ON UPDATE CURRENT_TIMESTAMP" -> arrayOf(TableColumnExtraAttr.ON_UPDATE_CURRENT_TIMESTAMP)
-                else -> arrayOf()
-            }
+            return arrayOf(when (str) {
+                "AUTO_INCREMENT" -> TableColumnExtraAttr.AUTO_INCREMENT
+                "ON UPDATE CURRENT_TIMESTAMP" -> TableColumnExtraAttr.ON_UPDATE_CURRENT_TIMESTAMP
+                else -> TableColumnExtraAttr.NONE
+            })
         }
     }
 }

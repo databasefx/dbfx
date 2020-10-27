@@ -37,4 +37,15 @@ public class StringUtils {
     public static String uuid() {
         return UUID.randomUUID().toString();
     }
+
+    /**
+     * If target is empty return defaultVal otherwise return target
+     *
+     * @param target     target str
+     * @param defaultVal default value
+     * @return str
+     */
+    public static String getValueIfEmpty(String target, String defaultVal) {
+        return isEmpty(target) ? defaultVal : target;
+    }
 }

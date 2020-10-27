@@ -17,7 +17,6 @@ import javafx.application.Platform
 import javafx.beans.property.*
 import javafx.collections.ObservableList
 import javafx.event.ActionEvent
-import javafx.event.Event
 import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.scene.control.*

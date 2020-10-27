@@ -146,6 +146,8 @@ public class TableColumnMeta {
             meta.setLength(0);
             meta.setColName(it);
             meta.setDataType(DataType.STRING);
+            meta.setConstrainTypes(new ConstrainType[]{ConstrainType.NONE});
+            meta.setExtraAttr(new TableColumnExtraAttr[]{TableColumnExtraAttr.NONE});
             return meta;
         }).collect(Collectors.toList());
     }
@@ -176,6 +178,10 @@ public class TableColumnMeta {
      * Current table column extra attribute
      */
     public enum TableColumnExtraAttr {
+        /**
+         * No any extra attr
+         */
+        NONE,
         /**
          * Auto-increment
          */
