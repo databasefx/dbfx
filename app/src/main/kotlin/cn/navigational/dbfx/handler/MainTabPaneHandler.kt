@@ -78,6 +78,10 @@ class MainTabPaneHandler private constructor() {
         }
     }
 
+    fun containPath(path: String): Boolean {
+        return this.map.containsKey(path)
+    }
+
     /**
      *
      * Single instance create MainTabPaneController

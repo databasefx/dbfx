@@ -1,11 +1,8 @@
 package cn.navigational.dbfx.controls.tree
 
 import cn.navigational.dbfx.SQLClientManager
-import cn.navigational.dbfx.kit.enums.Clients
+import cn.navigational.dbfx.controls.tree.cell.NTreeCell
 import cn.navigational.dbfx.model.DbInfo
-import cn.navigational.dbfx.navigator.DatabaseItem
-import cn.navigational.dbfx.navigator.impl.MysqlItem
-import cn.navigational.dbfx.navigator.impl.PgItem
 import cn.navigational.dbfx.utils.AlertUtils
 import javafx.collections.ListChangeListener
 import javafx.scene.control.TreeItem
@@ -40,15 +37,12 @@ class CustomTreeView private constructor() : TreeView<String>() {
      * @param it Database info
      */
     private fun createClientTree(it: DbInfo) {
-        val uuid = it.uuid
-        val item = when (it.client) {
-            Clients.MYSQL -> MysqlItem(uuid)
-            else -> PgItem(uuid)
-        }
+        val item = DatabaseTreeItem(it)
+        item.text = it.name
         if (this.root == null) {
             this.root = TreeItem()
         }
-        this.root.children.add(item)
+        this.root.children.add(item.treeItem)
     }
 
     /**
@@ -58,22 +52,25 @@ class CustomTreeView private constructor() : TreeView<String>() {
      */
     private fun deleteClientTree(it: DbInfo) {
         for (child in root.children) {
-            val item = child as DatabaseItem
-            if (it.uuid == item.uuid) {
-                item.delete()
+            val item = (child as AbstractBaseTreeItem.InnerTreeItem).control as DatabaseTreeItem
+            if (it.uuid == item.getUuId()) {
+                item.delConnect()
                 break
             }
         }
     }
 
     fun updateConnection(dbInfo: DbInfo) {
-        val list = root.children.filter { (it as DatabaseItem).uuid == dbInfo.uuid }
+        val list = root.children.filter {
+            val item = ((it as AbstractBaseTreeItem.InnerTreeItem).control) as DatabaseTreeItem
+            item.getUuId() == dbInfo.uuid
+        }
         if (list.isEmpty()) {
             return
         }
-        val item = list[0] as DatabaseItem
-        item.update()
-        if (!item.getConnectionStatus()) {
+        val item = ((list[0] as AbstractBaseTreeItem.InnerTreeItem).control) as DatabaseTreeItem
+        item.update(dbInfo)
+        if (!item.conStatus()) {
             return
         }
         val result = AlertUtils.showSimpleConfirmDialog("当前连接已改变,是否重新连接?")
@@ -81,13 +78,7 @@ class CustomTreeView private constructor() : TreeView<String>() {
             return
         }
         //Start reconnection
-        GlobalScope.launch {
-            try {
-                item.startConnect()
-            } catch (e: Exception) {
-                AlertUtils.showExDialog("连接失败", e)
-            }
-        }
+        item.reConnect()
     }
 
     companion object {

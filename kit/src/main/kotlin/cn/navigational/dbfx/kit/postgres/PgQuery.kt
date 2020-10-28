@@ -5,7 +5,6 @@ import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.enums.Clients
 import cn.navigational.dbfx.kit.enums.DataType
 import cn.navigational.dbfx.kit.model.TableColumnMeta
-import io.vertx.kotlin.coroutines.await
 import io.vertx.sqlclient.Row
 import io.vertx.sqlclient.RowSet
 import io.vertx.sqlclient.SqlClient

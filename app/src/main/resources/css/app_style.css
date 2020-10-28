@@ -1,5 +1,5 @@
 * {
-    -fx-font-size: 1.3em;
+    -fx-font-size: 1.1em;
     -fx-background-color: #3C3F41;
     -fx-text-fill: #AFB6A6;
 }
@@ -132,11 +132,33 @@
     -fx-border-width: 0 0.1em;
 }
 
-.tree-view .tree-cell:selected {
+.tree-item-graphic .tree-item-data-indicator {
+    -fx-border-width: 0.1em;
+    -fx-border-color: #4c5052;
+    -fx-text-fill: #929999;
+    -fx-border-radius: 0.5em;
+    -fx-background-radius: 0.5em;
+}
+
+.tree-item-graphic .tree-item-data-indicator:hover {
+    -fx-background-color: #4c5052;
+    -fx-text-fill: #ffffff;
+}
+
+.tree-item-graphic, .tree-item-graphic * {
+    -fx-alignment: CENTER-LEFT;
+    -fx-spacing: 0.2em;
+}
+
+.tree-view .tree-cell:selected,
+.tree-view .tree-cell:selected .tree-item-text,
+.tree-view .tree-cell:selected .tree-item-graphic,
+.tree-view .tree-cell:selected .tree-item-content,
+.tree-view .tree-cell:selected .tree-item-suffix,
+.tree-view .tree-cell:selected .tree-item-prefix {
     -fx-background-color: #2F65CA;
 }
 
-/*TreeItem expand or collapse icon style*/
 .tree-cell .tree-disclosure-node > .arrow {
     -fx-background-color: #9B9EA0;
 }
@@ -284,10 +306,14 @@
     -fx-background-color: #2B2B2B;
 }
 
-.custom_table_view .progress-indicator {
-    -fx-progress-color: white;
+.tree-item-graphic .progress-indicator {
+    -fx-pref-width: 2em;
+    -fx-pref-height: 2em;
 }
 
+.custom_table_view .progress-indicator, .tree-item-graphic .progress-indicator {
+    -fx-progress-color: white;
+}
 
 .auto-complete-popup {
     -fx-pref-width: 100em;
