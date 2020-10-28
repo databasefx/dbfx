@@ -1,11 +1,13 @@
 package cn.navigational.dbfx.controls.tree.folder
 
 import cn.navigational.dbfx.config.FOLDER_ICON
+import cn.navigational.dbfx.controls.tree.TreeItemMenuHandler
 import cn.navigational.dbfx.controls.tree.table.TableTreeItem
 import cn.navigational.dbfx.controls.tree.impl.ProgressTreeItem
 import cn.navigational.dbfx.i18n.I18N
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
+import javafx.event.ActionEvent
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -33,5 +35,9 @@ class TableFolder(private val category: String, uuid: String) : ProgressTreeItem
                 loadStatus.set(false)
             }
         }
+    }
+
+    override fun onAction(event: ActionEvent, action: TreeItemMenuHandler.MenuAction) {
+
     }
 }

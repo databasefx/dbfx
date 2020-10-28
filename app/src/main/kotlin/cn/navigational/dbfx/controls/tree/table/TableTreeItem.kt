@@ -3,11 +3,13 @@ package cn.navigational.dbfx.controls.tree.table
 import cn.navigational.dbfx.config.TABLE_ICON
 import cn.navigational.dbfx.config.TABLE_VIEW_ICON
 import cn.navigational.dbfx.controls.tab.TableTab
+import cn.navigational.dbfx.controls.tree.TreeItemMenuHandler
 import cn.navigational.dbfx.controls.tree.impl.ProgressTreeItem
 import cn.navigational.dbfx.handler.MainTabPaneHandler
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.navigator.table.TableItem
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
+import javafx.event.ActionEvent
 import javafx.scene.input.MouseEvent
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -63,6 +65,9 @@ class TableTreeItem(
         GlobalScope.launch {
             MainTabPaneHandler.handler.addTabToPane(tab, path) as TableTab
         }
+    }
+
+    override fun onAction(event: ActionEvent, action: TreeItemMenuHandler.MenuAction) {
     }
 
 }

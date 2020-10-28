@@ -1,6 +1,5 @@
 package cn.navigational.dbfx.controls.tree;
 
-import cn.navigational.dbfx.BaseTreeItem;
 import cn.navigational.dbfx.SQLClientManager;
 import cn.navigational.dbfx.i18n.I18N;
 import cn.navigational.dbfx.kit.utils.StringUtils;
@@ -8,7 +7,6 @@ import cn.navigational.dbfx.model.SQLClient;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
-import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -28,7 +26,7 @@ import java.util.stream.Collectors;
  * @author yangkui
  * @since 1.0
  */
-public class AbstractBaseTreeItem {
+public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
     /**
      * Show text node
      */
@@ -184,51 +182,6 @@ public class AbstractBaseTreeItem {
     }
 
     /**
-     * Flush data
-     *
-     * @param event {@link ActionEvent}
-     */
-    protected void flush(ActionEvent event) {
-
-    }
-
-    /**
-     * Open connection
-     *
-     * @param event {@link ActionEvent}
-     */
-    protected void connect(ActionEvent event) {
-
-    }
-
-    /**
-     * Discount connection
-     *
-     * @param event
-     */
-    protected void discount(ActionEvent event) {
-
-    }
-
-    /**
-     * Edit connection
-     *
-     * @param event
-     */
-    protected void editConnect(ActionEvent event) {
-
-    }
-
-    /**
-     * Delete connection
-     *
-     * @param event
-     */
-    protected void delConnection(ActionEvent event) {
-
-    }
-
-    /**
      * Context menu action list
      */
     protected enum ContextMenuAction {
@@ -250,31 +203,6 @@ public class AbstractBaseTreeItem {
         DISABLE,
     }
 
-    /**
-     * {@link javafx.scene.control.TreeItem} current support menu
-     */
-    public enum MenuAction {
-        /**
-         * FLUSH
-         */
-        FLUSH,
-        /**
-         * Edit connect
-         */
-        EDIT_CONNECT,
-        /**
-         * Open connection
-         */
-        OPEN_CONNECT,
-        /**
-         * Delete a connect
-         */
-        DELETE_CONNECT,
-        /**
-         * Discount connect
-         */
-        DISCOUNT_CONNECT
-    }
 
     public class TreeItemContextMenu extends ContextMenu {
         private final MenuItem flush = new MenuItem(I18N.getString("label.flush"));
@@ -284,20 +212,20 @@ public class AbstractBaseTreeItem {
         private final MenuItem delConnect = new MenuItem(I18N.getString("navigation.menu.remove.connection"));
 
         public TreeItemContextMenu() {
-            this.flush.setOnAction(AbstractBaseTreeItem.this::flush);
-            this.discount.setOnAction(AbstractBaseTreeItem.this::discount);
-            this.connection.setOnAction(AbstractBaseTreeItem.this::connect);
-            this.editConnect.setOnAction(AbstractBaseTreeItem.this::editConnect);
-            this.delConnect.setOnAction(AbstractBaseTreeItem.this::delConnection);
+            this.flush.setOnAction(event -> onAction(event, MenuAction.FLUSH));
+            this.discount.setOnAction(event -> onAction(event, MenuAction.DISCOUNT_CONNECT));
+            this.connection.setOnAction(event -> onAction(event, MenuAction.OPEN_CONNECT));
+            this.editConnect.setOnAction(event -> onAction(event, MenuAction.EDIT_CONNECT));
+            this.delConnect.setOnAction(event -> onAction(event, MenuAction.DELETE_CONNECT));
         }
 
-        public void updateItem(ContextMenuAction action, MenuAction... targets) {
-            for (MenuAction target : targets) {
+        public void updateItem(ContextMenuAction action, TreeItemMenuHandler.MenuAction... targets) {
+            for (TreeItemMenuHandler.MenuAction target : targets) {
                 this.updateItem(action, target);
             }
         }
 
-        public void updateItem(ContextMenuAction action, MenuAction target) {
+        public void updateItem(ContextMenuAction action, TreeItemMenuHandler.MenuAction target) {
             switch (action) {
                 case ADD -> addMenuItem(target);
                 case DISABLE -> getItem(target).setDisable(true);
@@ -306,14 +234,14 @@ public class AbstractBaseTreeItem {
             }
         }
 
-        private void addMenuItem(MenuAction target) {
+        private void addMenuItem(TreeItemMenuHandler.MenuAction target) {
             var item = getItem(target);
             if (!getItems().contains(item)) {
                 getItems().add(item);
             }
         }
 
-        private MenuItem getItem(MenuAction target) {
+        private MenuItem getItem(TreeItemMenuHandler.MenuAction target) {
             return switch (target) {
                 case FLUSH -> flush;
                 case OPEN_CONNECT -> connection;

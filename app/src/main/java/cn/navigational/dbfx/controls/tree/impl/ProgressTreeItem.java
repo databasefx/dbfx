@@ -15,7 +15,7 @@ import javafx.scene.control.ProgressIndicator;
  * @author yangkui
  * @since 1.0
  */
-public class ProgressTreeItem extends AbstractBaseTreeItem {
+public abstract class ProgressTreeItem extends AbstractBaseTreeItem {
     /**
      * Load status
      */

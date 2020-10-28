@@ -1,6 +1,7 @@
 package cn.navigational.dbfx.controls.tree.folder
 
 import cn.navigational.dbfx.config.FOLDER_ICON
+import cn.navigational.dbfx.controls.tree.TreeItemMenuHandler
 import cn.navigational.dbfx.controls.tree.scheme.SchemeItem
 import cn.navigational.dbfx.controls.tree.impl.ProgressTreeItem
 import cn.navigational.dbfx.controls.tree.scheme.PgSchemeItem
@@ -10,6 +11,7 @@ import cn.navigational.dbfx.kit.enums.Clients
 import cn.navigational.dbfx.kit.postgres.PgQuery
 import cn.navigational.dbfx.model.SQLClient
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
+import javafx.event.ActionEvent
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -50,5 +52,9 @@ class SchemeFolder() : ProgressTreeItem() {
             PgSchemeItem(client.uuid, it, scheme)
         }
         this.addChildren(list)
+    }
+
+    override fun onAction(event: ActionEvent?, action: TreeItemMenuHandler.MenuAction?) {
+
     }
 }

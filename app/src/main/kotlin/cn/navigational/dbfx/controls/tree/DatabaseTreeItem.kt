@@ -21,6 +21,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
+
 class DatabaseTreeItem(private var info: DbInfo) : ProgressTreeItem() {
     /**
      * Current database connection status
@@ -32,8 +33,11 @@ class DatabaseTreeItem(private var info: DbInfo) : ProgressTreeItem() {
         this.update(info)
         this.contextMenu.updateItem(
                 ContextMenuAction.ADD,
-                MenuAction.OPEN_CONNECT, MenuAction.FLUSH,
-                MenuAction.DISCOUNT_CONNECT, MenuAction.EDIT_CONNECT, MenuAction.DELETE_CONNECT)
+                TreeItemMenuHandler.MenuAction.OPEN_CONNECT,
+                TreeItemMenuHandler.MenuAction.FLUSH,
+                TreeItemMenuHandler.MenuAction.DISCOUNT_CONNECT,
+                TreeItemMenuHandler.MenuAction.EDIT_CONNECT,
+                TreeItemMenuHandler.MenuAction.DELETE_CONNECT)
     }
 
     fun update(info: DbInfo) {
@@ -139,26 +143,14 @@ class DatabaseTreeItem(private var info: DbInfo) : ProgressTreeItem() {
 
     }
 
-    override fun connect(event: ActionEvent) {
-        this.startConnect()
-    }
-
-    override fun flush(event: ActionEvent?) {
-        this.reConnect()
-    }
-
-    override fun discount(event: ActionEvent?) {
-        GlobalScope.launch {
-            discount()
+    override fun onAction(event: ActionEvent?, action: TreeItemMenuHandler.MenuAction) {
+        when (action) {
+            TreeItemMenuHandler.MenuAction.OPEN_CONNECT -> this.startConnect()
+            TreeItemMenuHandler.MenuAction.FLUSH -> this.reConnect()
+            TreeItemMenuHandler.MenuAction.DISCOUNT_CONNECT -> GlobalScope.launch { discount() }
+            TreeItemMenuHandler.MenuAction.EDIT_CONNECT -> EditConViewController(info.uuid)
+            TreeItemMenuHandler.MenuAction.DELETE_CONNECT -> this.delConnect()
         }
-    }
-
-    override fun editConnect(event: ActionEvent?) {
-        EditConViewController(info.uuid).showStage()
-    }
-
-    override fun delConnection(event: ActionEvent?) {
-        this.delConnect()
     }
 
     override fun onMouseClicked(event: MouseEvent) {
