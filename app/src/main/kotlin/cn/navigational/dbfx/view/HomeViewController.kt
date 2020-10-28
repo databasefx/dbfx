@@ -1,6 +1,5 @@
 package cn.navigational.dbfx.view
 
-import cn.navigational.dbfx.BaseTreeItem
 import cn.navigational.dbfx.ViewController
 import cn.navigational.dbfx.config.HOME_PAGE
 import cn.navigational.dbfx.config.N_EVENT_LOG
@@ -72,20 +71,20 @@ class HomeViewController private constructor() : ViewController<BorderPane>(HOME
 
     @FXML
     fun openSQLTerminal() {
-        val temp = navigator.selectionModel.selectedItem
-        if (temp == null) {
-            AlertUtils.showSimpleDialog(I18N.getString("alert.please.client"))
-            return
-        }
-        val selectItem = temp as BaseTreeItem
-        try {
-            val path = selectItem.fullPath
-            val client = selectItem.currentClient
-            val terminal = SQLTerminalTab(client)
-            GlobalScope.launch { MainTabPaneHandler.addTabToPane(terminal, path) }
-        } catch (e: Exception) {
-            AlertUtils.showSimpleDialog(I18N.getString("alert.sure.open.connection"))
-        }
+//        val temp = navigator.selectionModel.selectedItem
+//        if (temp == null) {
+//            AlertUtils.showSimpleDialog(I18N.getString("alert.please.client"))
+//            return
+//        }
+//        val selectItem = temp as BaseTreeItem
+//        try {
+//            val path = selectItem.fullPath
+//            val client = selectItem.currentClient
+//            val terminal = SQLTerminalTab(client)
+//            GlobalScope.launch { MainTabPaneHandler.addTabToPane(terminal, path) }
+//        } catch (e: Exception) {
+//            AlertUtils.showSimpleDialog(I18N.getString("alert.sure.open.connection"))
+//        }
     }
 
     @FXML

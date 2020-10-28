@@ -6,7 +6,6 @@ import cn.navigational.dbfx.controls.tree.table.TableTreeItem
 import cn.navigational.dbfx.controls.tree.impl.ProgressTreeItem
 import cn.navigational.dbfx.i18n.I18N
 import cn.navigational.dbfx.kit.SQLQuery
-import cn.navigational.dbfx.navigator.table.TableItem
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
 import javafx.event.ActionEvent
 import kotlinx.coroutines.GlobalScope
@@ -32,8 +31,7 @@ class ViewFolder(private val uuid: String, private val category: String) : Progr
             try {
                 val views = query.showView(category, client.client)
                 val list = views.map {
-                    TableTreeItem(uuid, it, category,
-                            tableType = TableItem.TableType.VIEW)
+                    TableTreeItem(uuid, it, category, tableType = TableTreeItem.TableType.VIEW)
                 }.toList()
                 addChildren(list)
             } finally {

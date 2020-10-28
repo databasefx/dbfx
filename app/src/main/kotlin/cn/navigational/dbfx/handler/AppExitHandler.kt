@@ -26,7 +26,7 @@ fun closeAppOccurResource() {
             dialog.updateText(ProgressDialog.TextType.DES, "正在关闭所Tab...")
             MainTabPaneHandler.closeAllTab()
             dialog.updateText(ProgressDialog.TextType.DES, "正在关闭所有连接...")
-            SQLClientManager.manager.closeAllClient()
+            SQLClientManager.closeAllClient()
         } catch (e: Exception) {
             logger.debug("App exit close resource failed cause:[${e.message}]")
             logger.error("Close resource happen error.", e)

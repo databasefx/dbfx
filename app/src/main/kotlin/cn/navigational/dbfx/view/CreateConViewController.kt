@@ -129,7 +129,7 @@ class CreateConViewController : ViewController<BorderPane>(CREATE_CON_PAGE) {
                 return@launch
             }
             AlertUtils.showSimpleDialog("${cl.client}($version)")
-            SQLClientManager.manager.closeSQLClient(client)
+            SQLClientManager.closeSQLClient(client)
         }
     }
 
@@ -155,7 +155,7 @@ class CreateConViewController : ViewController<BorderPane>(CREATE_CON_PAGE) {
         }
         GlobalScope.launch {
             info.uuid = StringUtils.uuid()
-            SQLClientManager.manager.updateDbInfo(info)
+            SQLClientManager.updateDbInfo(info)
             Platform.runLater {
                 stage.close()
             }

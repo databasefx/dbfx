@@ -127,7 +127,7 @@ private suspend fun loadDbInfo() {
             val deStr = AseAlgorithm.decrypt(info.password, DEFAULT_KEY)
             info.password = deStr
         }
-        SQLClientManager.manager.getDbInfo().add(info)
+        SQLClientManager.getDbInfo().add(info)
     }
 }
 

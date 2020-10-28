@@ -20,7 +20,7 @@ class EditConViewController(private val uuid: String) : ViewController<BorderPan
     private val controller: ConInfoPaneController = ConInfoPaneController()
 
     init {
-        val dbInfo = SQLClientManager.manager.getDbInfo(uuid)
+        val dbInfo = SQLClientManager.getDbInfo(uuid)
         this.dbMeta = DatabaseMetaManager.manager.getDbMeta(dbInfo.client)
         this.stage.title = I18N.getString("stage.edit.connection")
         controller.initEdit(dbInfo)
@@ -40,7 +40,7 @@ class EditConViewController(private val uuid: String) : ViewController<BorderPan
         val info = controller.getDbInfo(dbMeta)
         info.uuid = uuid
         //Update local cached
-        SQLClientManager.manager.updateDbInfo(info)
+        SQLClientManager.updateDbInfo(info)
         //Require use select whether restart connection.
         CustomTreeView.customTreeView.updateConnection(info)
         this.stage.close()

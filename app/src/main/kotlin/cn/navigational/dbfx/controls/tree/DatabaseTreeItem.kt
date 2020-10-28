@@ -63,7 +63,7 @@ class DatabaseTreeItem(private var info: DbInfo) : ProgressTreeItem() {
                 initConnection(client)
                 conStatus.set(true)
             } catch (e: Exception) {
-                SQLClientManager.manager.removeClient(info.uuid)
+                SQLClientManager.removeClient(info.uuid)
                 AlertUtils.showExDialog("Connection failed!", e)
             } finally {
                 loadStatus.set(false)
@@ -73,9 +73,9 @@ class DatabaseTreeItem(private var info: DbInfo) : ProgressTreeItem() {
 
     private suspend fun createClient(): SQLClient {
         val query = SQLQuery.getClQuery(info.client)
-        val client = SQLClientManager.manager.createClient(info.uuid)
+        val client = SQLClientManager.createClient(info.uuid)
         client.version = query.showDbVersion(client.client)
-        SQLClientManager.manager.addClient(client)
+        SQLClientManager.addClient(client)
         return client
     }
 
@@ -96,7 +96,7 @@ class DatabaseTreeItem(private var info: DbInfo) : ProgressTreeItem() {
         loadStatus.set(true)
         try {
             clear()
-            SQLClientManager.manager.removeClient(info.uuid)
+            SQLClientManager.removeClient(info.uuid)
             conStatus.set(false)
         } finally {
             loadStatus.set(false)
@@ -124,7 +124,7 @@ class DatabaseTreeItem(private var info: DbInfo) : ProgressTreeItem() {
             discount()
             removeItem(treeItem)
             //Delete from disk
-            SQLClientManager.manager.removeDbInfo(info.uuid)
+            SQLClientManager.removeDbInfo(info.uuid)
         }
     }
 

@@ -17,7 +17,7 @@ import javafx.scene.input.MouseEvent
 class SchemeItem(private val scheme: String, private val uuid: String) : ProgressTreeItem() {
     init {
         this.text = scheme
-        val info = SQLClientManager.manager.getDbInfo(uuid)
+        val info = SQLClientManager.getDbInfo(uuid)
         if (info.database == scheme) {
             this.setSuffixTx(I18N.getString("label.current"))
         }
@@ -25,7 +25,7 @@ class SchemeItem(private val scheme: String, private val uuid: String) : Progres
     }
 
     private fun initScheme() {
-        val info = SQLClientManager.manager.getDbInfo(uuid)
+        val info = SQLClientManager.getDbInfo(uuid)
         if (info.client == Clients.MYSQL) {
             val viewFolder = ViewFolder(uuid, scheme)
             val tableFolder = TableFolder(scheme, uuid)

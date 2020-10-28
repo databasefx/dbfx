@@ -7,7 +7,6 @@ import cn.navigational.dbfx.controls.tree.TreeItemMenuHandler
 import cn.navigational.dbfx.controls.tree.impl.ProgressTreeItem
 import cn.navigational.dbfx.handler.MainTabPaneHandler
 import cn.navigational.dbfx.kit.SQLQuery
-import cn.navigational.dbfx.navigator.table.TableItem
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
 import javafx.event.ActionEvent
 import javafx.scene.input.MouseEvent
@@ -18,11 +17,11 @@ class TableTreeItem(
         private val uuid: String,
         private val table: String,
         private val category: String,
-        private val tableType: TableItem.TableType = TableItem.TableType.BASE_TABLE) : ProgressTreeItem() {
+        private val tableType: TableType = TableType.BASE_TABLE) : ProgressTreeItem() {
 
     init {
         text = table
-        val icon = if (tableType == TableItem.TableType.BASE_TABLE) TABLE_ICON else TABLE_VIEW_ICON
+        val icon = if (tableType == TableType.BASE_TABLE) TABLE_ICON else TABLE_VIEW_ICON
         prefixGra = SvgImageTranscoder.svgToImageView(icon)
         reListListener()
         initField()
@@ -57,7 +56,7 @@ class TableTreeItem(
     private fun openTab() {
         val path = fullPath
         val optional = getSqlClient(uuid)
-        if (optional.isEmpty || MainTabPaneHandler.containPath(path)) {
+        if (optional.isEmpty || MainTabPaneHandler.containPath(path,switch = true)) {
             return
         }
         this.treeItem.isExpanded = !this.treeItem.isExpanded
@@ -68,6 +67,11 @@ class TableTreeItem(
     }
 
     override fun onAction(event: ActionEvent, action: TreeItemMenuHandler.MenuAction) {
+    }
+
+    enum class TableType {
+        BASE_TABLE,
+        VIEW
     }
 
 }

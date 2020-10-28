@@ -259,7 +259,7 @@ public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
      * @return If current sql client exist return SQLClient otherwise return empty
      */
     protected Optional<SQLClient> getSqlClient(String uuid) {
-        var client = SQLClientManager.Companion.getManager().getClient(uuid);
+        var client = SQLClientManager.Companion.getClient(uuid);
         final Optional<SQLClient> optional;
         if (client == null) {
             optional = Optional.empty();

@@ -1,6 +1,5 @@
 package cn.navigational.dbfx.controls.tree.cell
 
-import cn.navigational.dbfx.BaseTreeItem
 import javafx.scene.control.ContextMenu
 import javafx.scene.control.TreeCell
 

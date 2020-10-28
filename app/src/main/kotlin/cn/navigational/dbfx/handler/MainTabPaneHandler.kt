@@ -76,8 +76,13 @@ class MainTabPaneHandler {
             }
         }
 
-        fun containPath(path: String): Boolean {
-            return this.map.containsKey(path)
+        fun containPath(path: String, switch: Boolean = false): Boolean {
+            val contain = this.map.containsKey(path)
+            if (contain && switch) {
+                val tab = this.map[path]
+                Platform.runLater { this.tabPane.selectionModel.select(tab) }
+            }
+            return contain
         }
 
     }

@@ -16,8 +16,8 @@ class CustomTreeView private constructor() : TreeView<String>() {
         isShowRoot = false
         styleClass.add("l-navigator")
         this.setCellFactory { NTreeCell() }
-        SQLClientManager.manager.getDbInfo().forEach(this::createClientTree)
-        SQLClientManager.manager.getDbInfo().addListener(ListChangeListener {
+        SQLClientManager.getDbInfo().forEach(this::createClientTree)
+        SQLClientManager.getDbInfo().addListener(ListChangeListener {
             while (it.next()) {
                 //Listener add operation
                 if (it.wasAdded()) {
