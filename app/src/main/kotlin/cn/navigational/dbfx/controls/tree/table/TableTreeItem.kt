@@ -57,13 +57,13 @@ class TableTreeItem(
     private fun openTab() {
         val path = fullPath
         val optional = getSqlClient(uuid)
-        if (optional.isEmpty || MainTabPaneHandler.handler.containPath(path)) {
+        if (optional.isEmpty || MainTabPaneHandler.containPath(path)) {
             return
         }
         this.treeItem.isExpanded = !this.treeItem.isExpanded
         val tab = TableTab(table, category, optional.get(), tableType)
         GlobalScope.launch {
-            MainTabPaneHandler.handler.addTabToPane(tab, path) as TableTab
+            MainTabPaneHandler.addTabToPane(tab, path) as TableTab
         }
     }
 

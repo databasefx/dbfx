@@ -33,13 +33,12 @@ class HomeViewController private constructor() : ViewController<BorderPane>(HOME
 
     private val navigator: CustomTreeView = CustomTreeView.customTreeView
 
-    private val tabHandler: MainTabPaneHandler = MainTabPaneHandler.handler
 
     private val expandPaneController: BottomNavigationExpandPaneAbstractFxmlController = BottomNavigationExpandPaneAbstractFxmlController()
 
     init {
         this.splitPane.items.add(this.navigator)
-        this.splitPane.items.add(tabHandler.getTabPane())
+        this.splitPane.items.add(MainTabPaneHandler.getTabPane())
         this.eventLog.graphic = SvgImageTranscoder.svgToImageView(N_EVENT_LOG)
         //Listener whether bottom expand pane should show
         this.expandPaneController.panePropertyProperty().addListener { _, _, obj ->
@@ -83,7 +82,7 @@ class HomeViewController private constructor() : ViewController<BorderPane>(HOME
             val path = selectItem.fullPath
             val client = selectItem.currentClient
             val terminal = SQLTerminalTab(client)
-            GlobalScope.launch { MainTabPaneHandler.handler.addTabToPane(terminal, path) }
+            GlobalScope.launch { MainTabPaneHandler.addTabToPane(terminal, path) }
         } catch (e: Exception) {
             AlertUtils.showSimpleDialog(I18N.getString("alert.sure.open.connection"))
         }

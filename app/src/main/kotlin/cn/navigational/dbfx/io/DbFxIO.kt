@@ -198,7 +198,7 @@ fun loadManifest() {
         val mf = VertxUtils.getFileSystem().readFileBlocking(buildPath).toString()
         val array = mf.split("\r\n")
         for (s in array) {
-            if (s.isEmpty) {
+            if (s.isEmpty()) {
                 continue
             }
             val k = s.split(":", limit = 2).toTypedArray()

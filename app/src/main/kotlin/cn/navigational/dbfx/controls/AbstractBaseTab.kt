@@ -33,7 +33,7 @@ abstract class AbstractBaseTab : Tab {
      * When current tab request close call that method
      */
     open suspend fun close() {
-        MainTabPaneHandler.handler.closeTab(getTabPath())
+        MainTabPaneHandler.closeTab(getTabPath())
     }
 
     /**

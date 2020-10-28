@@ -79,7 +79,7 @@ abstract class DatabaseItem(val uuid: String, icon: String) : BaseTreeItem<Strin
         if (sqlClient !== null) {
             SQLClientManager.manager.removeClient(sqlClient.uuid)
             //Close already open tab
-            MainTabPaneHandler.handler.closeTabByPathPrefix(fullPath)
+            MainTabPaneHandler.closeTabByPathPrefix(fullPath)
             client.value = null
         }
         this.children.clear()

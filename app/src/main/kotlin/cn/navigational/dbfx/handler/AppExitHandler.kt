@@ -24,7 +24,7 @@ fun closeAppOccurResource() {
     GlobalScope.launch {
         try {
             dialog.updateText(ProgressDialog.TextType.DES, "正在关闭所Tab...")
-            MainTabPaneHandler.handler.closeAllTab()
+            MainTabPaneHandler.closeAllTab()
             dialog.updateText(ProgressDialog.TextType.DES, "正在关闭所有连接...")
             SQLClientManager.manager.closeAllClient()
         } catch (e: Exception) {
