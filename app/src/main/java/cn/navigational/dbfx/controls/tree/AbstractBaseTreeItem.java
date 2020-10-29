@@ -1,5 +1,6 @@
 package cn.navigational.dbfx.controls.tree;
 
+import checkers.igj.quals.I;
 import cn.navigational.dbfx.SQLClientManager;
 import cn.navigational.dbfx.i18n.I18N;
 import cn.navigational.dbfx.kit.utils.StringUtils;
@@ -43,10 +44,6 @@ public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
      * Inner {@link TreeItem} object
      */
     private final InnerTreeItem treeItem;
-    /**
-     * Current {@link TreeItem} support menu list
-     */
-    private final List<MenuItem> menuItemList;
 
     private final TreeItemContextMenu contextMenu;
 
@@ -77,7 +74,6 @@ public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
         this.suffix = new Label();
         this.prefix = new Label();
         this.text = new Label(text);
-        this.menuItemList = new ArrayList<>();
         this.contextMenu = new TreeItemContextMenu();
         content.getChildren().add(this.text);
         graphics.getChildren().addAll(prefix, content, suffix);
@@ -173,6 +169,14 @@ public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
         this.suffix.textProperty().removeListener(this.suffixTextListener);
     }
 
+    public List<MenuAction> getMenuAction() {
+        return this.contextMenu
+                .getItems()
+                .stream()
+                .map(MenuItem::getUserData).map(it -> (MenuAction) it)
+                .collect(Collectors.toList());
+    }
+
     /**
      * Mouse event fire
      *
@@ -210,6 +214,7 @@ public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
         private final MenuItem connection = new MenuItem(I18N.getString("navigation.menu.open"));
         private final MenuItem editConnect = new MenuItem(I18N.getString("navigation.menu.edit.connection"));
         private final MenuItem delConnect = new MenuItem(I18N.getString("navigation.menu.remove.connection"));
+        private final MenuItem openTerminal = new MenuItem(I18N.getString("navigation.menu.sql.terminal"));
 
         public TreeItemContextMenu() {
             this.flush.setOnAction(event -> onAction(MenuAction.FLUSH));
@@ -217,6 +222,7 @@ public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
             this.connection.setOnAction(event -> onAction(MenuAction.OPEN_CONNECT));
             this.editConnect.setOnAction(event -> onAction(MenuAction.EDIT_CONNECT));
             this.delConnect.setOnAction(event -> onAction(MenuAction.DELETE_CONNECT));
+            this.openTerminal.setOnAction(event -> onAction(MenuAction.OPEN_TERMINAL));
         }
 
         public void updateItem(ContextMenuAction action, TreeItemMenuHandler.MenuAction... targets) {
@@ -236,6 +242,7 @@ public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
 
         private void addMenuItem(TreeItemMenuHandler.MenuAction target) {
             var item = getItem(target);
+            item.setUserData(target);
             if (!getItems().contains(item)) {
                 getItems().add(item);
             }
@@ -248,6 +255,7 @@ public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
                 case DISCOUNT_CONNECT -> discount;
                 case EDIT_CONNECT -> editConnect;
                 case DELETE_CONNECT -> delConnect;
+                case OPEN_TERMINAL -> openTerminal;
             };
         }
     }
@@ -344,9 +352,6 @@ public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
         return treeItem;
     }
 
-    public List<MenuItem> getMenuItemList() {
-        return menuItemList;
-    }
 
     public TreeItemContextMenu getContextMenu() {
         return contextMenu;

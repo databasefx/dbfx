@@ -20,12 +20,13 @@ class MainTabPaneHandler {
          * Close single tab
          * @param path Tab path
          */
-        fun closeTab(path: String) {
+        suspend fun closeTab(path: String) {
             //If map not contain current path,not any!
             if (!this.map.containsKey(path)) {
                 return
             }
-            val tab = this.map.remove(path)
+            val tab = this.map[path]
+            tab!!.close()
             logger.debug("Tab[path={}] close success!", path)
             Platform.runLater { this.tabPane.tabs.remove(tab) }
         }
@@ -35,7 +36,7 @@ class MainTabPaneHandler {
          *
          * @param prefix Tab path prefix
          */
-        fun closeTabByPathPrefix(prefix: String) {
+        suspend fun closeTabByPathPrefix(prefix: String) {
             val list = arrayListOf<String>()
             for (entry in this.map) {
                 val key = entry.key
@@ -43,7 +44,9 @@ class MainTabPaneHandler {
                     list.add(key)
                 }
             }
-            list.forEach(this::closeTab)
+            for (path in list) {
+                this.closeTab(path)
+            }
         }
 
         suspend fun addTabToPane(tab: AbstractBaseTab, tabPath: String): AbstractBaseTab {
@@ -70,7 +73,7 @@ class MainTabPaneHandler {
          * Close all tab
          *
          */
-        fun closeAllTab() {
+        suspend fun closeAllTab() {
             map.keys.forEach {
                 this.closeTab(it)
             }

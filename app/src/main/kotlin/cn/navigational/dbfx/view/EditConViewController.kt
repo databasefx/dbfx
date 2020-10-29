@@ -9,25 +9,26 @@ import cn.navigational.dbfx.controller.ConInfoPaneController
 import cn.navigational.dbfx.controls.tree.CustomTreeView
 import cn.navigational.dbfx.i18n.I18N
 import cn.navigational.dbfx.model.DatabaseMeta
+import cn.navigational.dbfx.model.DbInfo
 import javafx.fxml.FXML
+import javafx.scene.control.ScrollPane
 import javafx.scene.layout.BorderPane
 import javafx.stage.Modality
 
-class EditConViewController(private val uuid: String) : ViewController<BorderPane>(EDIT_CON_PAGE) {
+class EditConViewController(private val info: DbInfo) : ViewController<ScrollPane>(EDIT_CON_PAGE) {
 
     private val dbMeta: DatabaseMeta
 
     private val controller: ConInfoPaneController = ConInfoPaneController()
 
     init {
-        val dbInfo = SQLClientManager.getDbInfo(uuid)
-        this.dbMeta = DatabaseMetaManager.manager.getDbMeta(dbInfo.client)
-        this.stage.title = I18N.getString("stage.edit.connection")
-        controller.initEdit(dbInfo)
+        controller.initEdit(info)
+        this.setSizeWithScreen(0.5, 0.7)
         this.scene.stylesheets.add(APP_STYLE)
         this.stage.initModality(Modality.WINDOW_MODAL)
-        (scene.root as BorderPane).center = controller.parent
-        this.setSizeWithScreen(0.5, 0.7)
+        this.dbMeta = DatabaseMetaManager.getDbMeta(info.client)
+        (this.parent.content as BorderPane).center = controller.parent
+        this.stage.title = I18N.getString("stage.edit.connection")
     }
 
     @FXML
@@ -38,11 +39,11 @@ class EditConViewController(private val uuid: String) : ViewController<BorderPan
     @FXML
     fun saveEdit() {
         val info = controller.getDbInfo(dbMeta)
-        info.uuid = uuid
+        info.uuid = this.info.uuid
         //Update local cached
         SQLClientManager.updateDbInfo(info)
         //Require use select whether restart connection.
-        CustomTreeView.customTreeView.updateConnection(info)
+        CustomTreeView.getNavigator().updateConnection(info)
         this.stage.close()
     }
 }

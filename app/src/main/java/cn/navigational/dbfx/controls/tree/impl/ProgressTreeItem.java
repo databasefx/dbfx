@@ -31,24 +31,15 @@ public abstract class ProgressTreeItem extends AbstractBaseTreeItem {
     /**
      * Prefix graphic
      */
-    private Node prefixGra = null;
-
-
-    public ProgressTreeItem() {
-        this(null);
-    }
+    private final Node prefixGra;
 
     public ProgressTreeItem(Node prefixGra) {
+        this.prefixGra = prefixGra;
         this.setPrefixGra(prefixGra);
         this.statusListener = statusChange();
         this.indicator = new ProgressIndicator();
         this.loadStatus = new SimpleBooleanProperty(null, "loadStatus", false);
         this.loadStatus.addListener(this.statusListener);
-    }
-
-    public ProgressTreeItem(Node prefixGra, Node suffixGra) {
-        this(prefixGra);
-        this.setSuffixGra(suffixGra);
     }
 
     /**
@@ -60,7 +51,6 @@ public abstract class ProgressTreeItem extends AbstractBaseTreeItem {
         return ((observable, oldValue, newValue) -> {
             final Node node;
             if (newValue) {
-                prefixGra = getPrefixGra();
                 node = indicator;
             } else {
                 node = prefixGra;

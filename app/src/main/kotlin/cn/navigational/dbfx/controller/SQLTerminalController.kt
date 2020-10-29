@@ -1,6 +1,7 @@
 package cn.navigational.dbfx.controller
 
 import cn.navigational.dbfx.AbstractFxmlController
+import cn.navigational.dbfx.SQLClientManager
 import cn.navigational.dbfx.config.SQL_TERMINAL_PAGE
 import cn.navigational.dbfx.config.T_EXE_RESULT_ICON
 import cn.navigational.dbfx.config.T_INFO_ICON
@@ -25,11 +26,12 @@ import kotlinx.coroutines.launch
 import org.fxmisc.richtext.CodeArea
 import org.fxmisc.richtext.LineNumberFactory
 import java.lang.NullPointerException
+import java.util.*
 
 
-class SQLTerminalController(val cl: SQLClient) : AbstractFxmlController<SplitPane>(SQL_TERMINAL_PAGE) {
+class SQLTerminalController(val uuid: String, val scheme: String) : AbstractFxmlController<SplitPane>(SQL_TERMINAL_PAGE) {
     @FXML
-    private lateinit var info: Tab
+    private lateinit var infoTab: Tab
 
     @FXML
     private lateinit var execute: Button
@@ -51,26 +53,26 @@ class SQLTerminalController(val cl: SQLClient) : AbstractFxmlController<SplitPan
 
     private val autoCompletePopup: SQLAutoCompletePopup
 
-
     init {
+        val info = SQLClientManager.getDbInfo(uuid)
         this.tabPane.tabs.remove(exeResult)
-        this.autoCompletePopup = SQLAutoCompletePopup(cl.cl, codeArea);
-        codeArea.paragraphGraphicFactory = LineNumberFactory.get(codeArea)
-        info.graphic = SvgImageTranscoder.svgToImageView(T_INFO_ICON)
-        execute.graphic = SvgImageTranscoder.svgToImageView(T_START_ICON)
-        exeResult.graphic = SvgImageTranscoder.svgToImageView(T_EXE_RESULT_ICON)
-        codeArea.setOnInputMethodTextChanged {
+        this.autoCompletePopup = SQLAutoCompletePopup(info.client, codeArea);
+        this.codeArea.paragraphGraphicFactory = LineNumberFactory.get(codeArea)
+        this.infoTab.graphic = SvgImageTranscoder.svgToImageView(T_INFO_ICON)
+        this.execute.graphic = SvgImageTranscoder.svgToImageView(T_START_ICON)
+        this.exeResult.graphic = SvgImageTranscoder.svgToImageView(T_EXE_RESULT_ICON)
+        this.codeArea.setOnInputMethodTextChanged {
             if (it.committed != "") {
                 codeArea.replaceSelection("")
                 codeArea.insertText(codeArea.caretPosition, it.committed)
             }
         }
-        execute.setOnAction {
+        this.execute.setOnAction {
             val sql = codeArea.text
             if (sql.trim() == "") {
                 return@setOnAction
             }
-            tabPane.selectionModel.select(info)
+            tabPane.selectionModel.select(infoTab)
             this.exeInfo.clear()
             this.exeInfo.appendText("> $sql\n")
             GlobalScope.launch { execute(sql) }
@@ -79,6 +81,7 @@ class SQLTerminalController(val cl: SQLClient) : AbstractFxmlController<SplitPan
     }
 
     private suspend fun execute(rowTxt: String) {
+        val cl = SQLClientManager.getClient(uuid) ?: return
         //replace all wrapper symbol
         val sql = rowTxt.replace("\n", "")
         val start = System.currentTimeMillis()

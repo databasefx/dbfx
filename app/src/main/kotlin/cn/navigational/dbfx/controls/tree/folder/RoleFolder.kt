@@ -14,7 +14,7 @@ import javafx.event.ActionEvent
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class RoleFolder(uuid: String, category: String? = null) : ProgressTreeItem() {
+class RoleFolder(uuid: String, category: String? = null) : ProgressTreeItem(SvgImageTranscoder.svgToImageView(FOLDER_ICON)) {
     init {
         this.reListListener()
         getSqlClient(uuid).ifPresent {
@@ -30,7 +30,6 @@ class RoleFolder(uuid: String, category: String? = null) : ProgressTreeItem() {
             "label.role"
         }
         this.text = I18N.getString(txt)
-        this.prefixGra = SvgImageTranscoder.svgToImageView(FOLDER_ICON)
     }
 
     private fun initRole(client: SQLClient) {

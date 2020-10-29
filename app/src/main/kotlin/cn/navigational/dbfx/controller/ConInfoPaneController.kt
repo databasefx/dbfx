@@ -55,7 +55,7 @@ class ConInfoPaneController : AbstractFxmlController<BorderPane>(CON_INFO_PANE) 
     }
 
     fun initEdit(info: DbInfo) {
-        val meta = DatabaseMetaManager.manager.getDbMeta(info.client)
+        val meta = DatabaseMetaManager.getDbMeta(info.client)
         this.icon.image = SvgImageTranscoder.svgToImage(meta.icon)
         this.dDescribe.text = "Edit a ${meta.name} Database Connection."
         this.name.text = info.name

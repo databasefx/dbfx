@@ -3,8 +3,8 @@ package cn.navigational.dbfx.view
 import cn.navigational.dbfx.ViewController
 import cn.navigational.dbfx.config.*
 import cn.navigational.dbfx.controller.NavigatorToolBarController
-import cn.navigational.dbfx.handler.MainTabPaneHandler
 import cn.navigational.dbfx.controls.tree.CustomTreeView
+import cn.navigational.dbfx.handler.MainTabPaneHandler
 import cn.navigational.dbfx.handler.closeAppOccurResource
 import cn.navigational.dbfx.i18n.I18N
 import cn.navigational.dbfx.utils.AlertUtils
@@ -23,14 +23,11 @@ class HomeViewController private constructor() : ViewController<BorderPane>(HOME
     @FXML
     private lateinit var leftBox: VBox
 
-    private val navigator: CustomTreeView = CustomTreeView.customTreeView
-
-    private val nTController: NavigatorToolBarController = NavigatorToolBarController(navigator)
-
+    private val navigator: CustomTreeView = CustomTreeView.getNavigator()
 
     init {
         VBox.setVgrow(this.navigator, Priority.ALWAYS)
-        this.leftBox.children.addAll(this.nTController.parent, this.navigator)
+        this.leftBox.children.addAll(this.navigator.controlBar, this.navigator)
         this.splitPane.items.add(MainTabPaneHandler.getTabPane())
 
         //Listener whether bottom expand pane should show
@@ -44,10 +41,6 @@ class HomeViewController private constructor() : ViewController<BorderPane>(HOME
         AboutViewController().showStage()
     }
 
-    @FXML
-    fun createCon() {
-        CreateConViewController().showStage()
-    }
 
     @FXML
     fun exit() {

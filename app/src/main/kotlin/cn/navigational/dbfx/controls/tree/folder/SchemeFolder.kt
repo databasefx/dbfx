@@ -15,12 +15,11 @@ import javafx.event.ActionEvent
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class SchemeFolder() : ProgressTreeItem() {
+class SchemeFolder() : ProgressTreeItem(SvgImageTranscoder.svgToImageView(FOLDER_ICON)) {
 
     constructor(uuid: String, scheme: String? = null) : this() {
         this.reListListener()
         text = I18N.getString("label.database")
-        prefixGra = SvgImageTranscoder.svgToImageView(FOLDER_ICON)
         this.getSqlClient(uuid).ifPresent { this.initScheme(it, scheme) }
     }
 

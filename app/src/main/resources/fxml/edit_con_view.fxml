@@ -5,16 +5,19 @@
 
 <?import javafx.scene.control.Button?>
 <?import java.net.URL?>
-<BorderPane xmlns="http://javafx.com/javafx"
+<?import javafx.scene.control.ScrollPane?>
+<ScrollPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            prefHeight="600.0" prefWidth="700.0">
+            prefHeight="600.0" prefWidth="700.0" fitToHeight="true" fitToWidth="true">
     <stylesheets>
         <URL value="@/css/edit_con_style.css"/>
     </stylesheets>
-    <bottom>
-        <HBox styleClass="bottom-box">
-            <Button text="%label.cancel" onAction="#cancel"/>
-            <Button text="%label.save" fx:id="save" onAction="#saveEdit"/>
-        </HBox>
-    </bottom>
-</BorderPane>
+    <BorderPane>
+        <bottom>
+            <HBox styleClass="bottom-box">
+                <Button text="%label.cancel" onAction="#cancel"/>
+                <Button text="%label.save" fx:id="save" onAction="#saveEdit"/>
+            </HBox>
+        </bottom>
+    </BorderPane>
+</ScrollPane>

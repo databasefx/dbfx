@@ -1,12 +1,12 @@
 package cn.navigational.dbfx.controls.tree
 
 import cn.navigational.dbfx.SQLClientManager
-import cn.navigational.dbfx.config.MYSQL_ICON
-import cn.navigational.dbfx.config.PG_ICON
+import cn.navigational.dbfx.controls.tab.SQLTerminalTab
 import cn.navigational.dbfx.controls.tree.folder.RoleFolder
 import cn.navigational.dbfx.controls.tree.folder.SchemeFolder
 import cn.navigational.dbfx.controls.tree.impl.ProgressTreeItem
 import cn.navigational.dbfx.controls.tree.scheme.SchemeItem
+import cn.navigational.dbfx.handler.MainTabPaneHandler
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.kit.enums.Clients
 import cn.navigational.dbfx.kit.utils.StringUtils
@@ -15,19 +15,17 @@ import cn.navigational.dbfx.model.SQLClient
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
 import cn.navigational.dbfx.utils.AlertUtils
 import cn.navigational.dbfx.view.EditConViewController
-import javafx.event.ActionEvent
 import javafx.scene.input.MouseEvent
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
 
-class DatabaseTreeItem(private var info: DbInfo) : ProgressTreeItem() {
+class DatabaseTreeItem constructor(private var info: DbInfo) : ProgressTreeItem(SvgImageTranscoder.svgToImageView(SQLClient.getMiniIcon(info.client))) {
     /**
      * Current database connection status
      */
     private val conStatus: AtomicBoolean = AtomicBoolean(false)
-
 
     init {
         this.update(info)
@@ -35,6 +33,7 @@ class DatabaseTreeItem(private var info: DbInfo) : ProgressTreeItem() {
                 ContextMenuAction.ADD,
                 TreeItemMenuHandler.MenuAction.OPEN_CONNECT,
                 TreeItemMenuHandler.MenuAction.FLUSH,
+                TreeItemMenuHandler.MenuAction.OPEN_TERMINAL,
                 TreeItemMenuHandler.MenuAction.DISCOUNT_CONNECT,
                 TreeItemMenuHandler.MenuAction.EDIT_CONNECT,
                 TreeItemMenuHandler.MenuAction.DELETE_CONNECT)
@@ -43,7 +42,6 @@ class DatabaseTreeItem(private var info: DbInfo) : ProgressTreeItem() {
     fun update(info: DbInfo) {
         this.info = info
         this.text = info.name
-        this.setPrefixGra(info.client)
         this.setSuffixTx(info.comment)
         if (StringUtils.isNotEmpty(info.comment)) {
             this.suffix.styleClass.add(AbstractBaseTreeItem.DATA_INDICATOR_STYLE_CLASS)
@@ -128,6 +126,10 @@ class DatabaseTreeItem(private var info: DbInfo) : ProgressTreeItem() {
         }
     }
 
+    suspend fun openTerminal() {
+        MainTabPaneHandler.addTabToPane(SQLTerminalTab(getUuId()), fullPath)
+    }
+
     fun reConnect() {
         GlobalScope.launch {
             discount()
@@ -145,11 +147,12 @@ class DatabaseTreeItem(private var info: DbInfo) : ProgressTreeItem() {
 
     override fun onAction(action: TreeItemMenuHandler.MenuAction) {
         when (action) {
-            TreeItemMenuHandler.MenuAction.OPEN_CONNECT -> this.startConnect()
             TreeItemMenuHandler.MenuAction.FLUSH -> this.reConnect()
-            TreeItemMenuHandler.MenuAction.DISCOUNT_CONNECT -> GlobalScope.launch { discount() }
-            TreeItemMenuHandler.MenuAction.EDIT_CONNECT -> EditConViewController(info.uuid)
             TreeItemMenuHandler.MenuAction.DELETE_CONNECT -> this.delConnect()
+            TreeItemMenuHandler.MenuAction.OPEN_CONNECT -> this.startConnect()
+            TreeItemMenuHandler.MenuAction.DISCOUNT_CONNECT -> GlobalScope.launch { discount() }
+            TreeItemMenuHandler.MenuAction.EDIT_CONNECT -> EditConViewController(info).showStage()
+            TreeItemMenuHandler.MenuAction.OPEN_TERMINAL -> GlobalScope.launch { openTerminal() }
         }
     }
 
@@ -163,22 +166,6 @@ class DatabaseTreeItem(private var info: DbInfo) : ProgressTreeItem() {
 
     fun conStatus(): Boolean {
         return this.conStatus.get()
-    }
-
-
-    /**
-     * Dynamic setting prefix graphics
-     * @param clients client
-     */
-    private fun setPrefixGra(clients: Clients) {
-        val icon = when (clients) {
-            Clients.POSTGRESQL -> PG_ICON
-            Clients.MYSQL -> MYSQL_ICON
-            Clients.DB2 -> ""
-            Clients.MS_SQL -> ""
-        }
-        val gra = SvgImageTranscoder.svgToImageView(icon)
-        this.prefixGra = gra
     }
 
 

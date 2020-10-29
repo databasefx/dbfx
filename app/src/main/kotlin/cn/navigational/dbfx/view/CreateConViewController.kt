@@ -21,6 +21,7 @@ import javafx.scene.Node
 import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.control.Pagination
+import javafx.scene.control.ScrollPane
 import javafx.scene.image.ImageView
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.FlowPane
@@ -30,7 +31,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class CreateConViewController : ViewController<BorderPane>(CREATE_CON_PAGE) {
+class CreateConViewController(private val cl: Clients) : ViewController<ScrollPane>(CREATE_CON_PAGE) {
     @FXML
     private lateinit var last: Button
 
@@ -38,65 +39,24 @@ class CreateConViewController : ViewController<BorderPane>(CREATE_CON_PAGE) {
     private lateinit var next: Button
 
     @FXML
-    private lateinit var page: Pagination
-
-    @FXML
     private lateinit var test: Button
 
     @FXML
     private lateinit var finish: Button
 
-    private val firstPane: FlowPane = FlowPane()
-
     private val conInfoPaneController = ConInfoPaneController()
 
-    private val nextPane: BorderPane = conInfoPaneController.parent
-
-    /**
-     * Default no select any so that value -1
-     */
-    private var selectIndex: Int = -1
 
     init {
-        initFlow()
-        next.setOnAction {
-            page.currentPageIndex = 1
-            val item = firstPane.children[selectIndex] as FlowItem
-            conInfoPaneController.initMeta(item.getDBMeta())
-        }
-        last.setOnAction {
-            page.currentPageIndex = 0
-        }
-        page.setPageFactory {
-            pageFactory(it)
-        }
-        page.currentPageIndexProperty().addListener { _, _, n ->
-            if (n == 1) {
-                finish.isDisable = false
-                next.isDisable = true
-                last.isDisable = false
-                test.isDisable = false
-            } else {
-                finish.isDisable = true
-                next.isDisable = false
-                last.isDisable = true
-                test.isDisable = true
-
-            }
-        }
         this.stage.isResizable = false
         this.stage.initModality(Modality.APPLICATION_MODAL)
-        this.stage.title = I18N.getString("stage.create.connection")
         this.setSizeWithScreen(0.5, 0.7)
+        this.stage.title = I18N.getString("stage.create.connection")
+        this.conInfoPaneController.initMeta(DatabaseMetaManager.getDbMeta(cl))
+        (this.parent.content as BorderPane).center = conInfoPaneController.parent
+
     }
 
-    @FXML
-    fun pageFactory(index: Int): Node? {
-        return if (index == 0)
-            firstPane
-        else
-            nextPane
-    }
 
     @FXML
     fun cancel() {
@@ -105,7 +65,7 @@ class CreateConViewController : ViewController<BorderPane>(CREATE_CON_PAGE) {
 
     @FXML
     fun testCon() {
-        val meta = (firstPane.children[selectIndex] as FlowItem).getDBMeta()
+        val meta = DatabaseMetaManager.getDbMeta(cl)
         val info = conInfoPaneController.getDbInfo(meta)
         if (StringUtils.isEmpty(info.host)) {
             AlertUtils.showSimpleDialog("主机不能为空")
@@ -135,8 +95,8 @@ class CreateConViewController : ViewController<BorderPane>(CREATE_CON_PAGE) {
 
     @FXML
     private fun finish() {
-        val item = firstPane.children[selectIndex] as FlowItem
-        val info = conInfoPaneController.getDbInfo(item.getDBMeta())
+        var meta = DatabaseMetaManager.getDbMeta(cl)
+        val info = conInfoPaneController.getDbInfo(meta)
         if (StringUtils.isEmpty(info.name)) {
             AlertUtils.showSimpleDialog("连接名不能为空")
             return
@@ -163,56 +123,22 @@ class CreateConViewController : ViewController<BorderPane>(CREATE_CON_PAGE) {
 
     }
 
-    private fun initFlow() {
-        firstPane.styleClass.add("first-pane")
-        val items = DatabaseMetaManager.manager.getMetas().map { FlowItem(it) }
-        firstPane.children.addAll(items)
-    }
+//    private fun initFlow() {
+//        firstPane.styleClass.add("first-pane")
+//        val items = DatabaseMetaManager.getMetas().map { FlowItem(it) }
+//        firstPane.children.addAll(items)
+//    }
 
-    private fun selectChange(item: FlowItem) {
-        val items = firstPane.children
-        val index = items.indexOf(item)
-        if (selectIndex == -1) {
-            next.isDisable = false
-        }
-        if (selectIndex != -1) {
-            items[selectIndex].styleClass.remove("active")
-        }
-        item.styleClass.add("active")
-        selectIndex = index
-    }
-
-    inner class FlowItem(db: DatabaseMeta) : VBox() {
-
-        private val label: Label = Label()
-        private val imageView: ImageView = ImageView()
-        private val support: Boolean = db.support
-        private val client: Clients = Clients.getClient(db.name)
-        private val meta: DatabaseMeta = db
-
-        init {
-            val icon = db.icon
-            if (icon != null && icon != "") {
-                imageView.image = SvgImageTranscoder.svgToImage(icon)
-            }
-            label.text = client.name
-            this.children.addAll(imageView, label)
-            this.styleClass.add("flow-item")
-            this.setOnMouseClicked {
-                selectChange(this)
-            }
-        }
-
-        fun getDBMeta(): DatabaseMeta {
-            return meta
-        }
-
-        fun getClient(): Clients {
-            return client
-        }
-
-        fun getSupport(): Boolean {
-            return support;
-        }
-    }
+//    private fun selectChange(item: FlowItem) {
+//        val items = firstPane.children
+//        val index = items.indexOf(item)
+//        if (selectIndex == -1) {
+//            next.isDisable = false
+//        }
+//        if (selectIndex != -1) {
+//            items[selectIndex].styleClass.remove("active")
+//        }
+//        item.styleClass.add("active")
+//        selectIndex = index
+//    }
 }

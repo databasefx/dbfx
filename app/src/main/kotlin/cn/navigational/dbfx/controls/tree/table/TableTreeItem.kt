@@ -17,12 +17,14 @@ class TableTreeItem(
         private val uuid: String,
         private val table: String,
         private val category: String,
-        private val tableType: TableType = TableType.BASE_TABLE) : ProgressTreeItem() {
+        private val tableType: TableType = TableType.BASE_TABLE) : ProgressTreeItem(
+        SvgImageTranscoder.svgToImageView(if (tableType == TableType.BASE_TABLE)
+            TABLE_ICON
+        else
+            TABLE_VIEW_ICON)) {
 
     init {
         text = table
-        val icon = if (tableType == TableType.BASE_TABLE) TABLE_ICON else TABLE_VIEW_ICON
-        prefixGra = SvgImageTranscoder.svgToImageView(icon)
         reListListener()
         initField()
     }
@@ -56,7 +58,7 @@ class TableTreeItem(
     private fun openTab() {
         val path = fullPath
         val optional = getSqlClient(uuid)
-        if (optional.isEmpty || MainTabPaneHandler.containPath(path,switch = true)) {
+        if (optional.isEmpty || MainTabPaneHandler.containPath(path, switch = true)) {
             return
         }
         this.treeItem.isExpanded = !this.treeItem.isExpanded

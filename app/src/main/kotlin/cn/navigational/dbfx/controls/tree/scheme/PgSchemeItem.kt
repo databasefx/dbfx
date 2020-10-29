@@ -9,10 +9,9 @@ import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
 import javafx.event.ActionEvent
 import javafx.scene.input.MouseEvent
 
-class PgSchemeItem(private val uuid: String, private val scheme: String, private val category: String) : ProgressTreeItem() {
+class PgSchemeItem(private val uuid: String, private val scheme: String, private val category: String) : ProgressTreeItem( SvgImageTranscoder.svgToImageView(PG_DB_ICON)) {
     init {
         this.text = scheme
-        this.prefixGra = SvgImageTranscoder.svgToImageView(PG_DB_ICON)
     }
 
     private fun initScheme() {

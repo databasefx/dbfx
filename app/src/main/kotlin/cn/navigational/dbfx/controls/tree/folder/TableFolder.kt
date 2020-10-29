@@ -11,10 +11,9 @@ import javafx.event.ActionEvent
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class TableFolder(private val category: String, uuid: String) : ProgressTreeItem() {
+class TableFolder(private val category: String, uuid: String) : ProgressTreeItem(SvgImageTranscoder.svgToImageView(FOLDER_ICON)) {
     init {
         text = I18N.getString("label.table")
-        prefixGra = SvgImageTranscoder.svgToImageView(FOLDER_ICON)
         this.reListListener()
         this.initTable(uuid)
     }

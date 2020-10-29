@@ -2,16 +2,15 @@
 
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 
 <ToolBar fx:id="toolBar" xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml">
     <MenuButton fx:id="dbList"/>
     <Button fx:id="duplicate"/>
     <Separator orientation="VERTICAL"/>
-    <Button fx:id="flush"/>
-    <Button fx:id="dbConfig"/>
-    <Button fx:id="stop"/>
+    <Button fx:id="flush" disable="true"/>
+    <Button fx:id="dbConfig" disable="true"/>
+    <Button fx:id="stop" disable="true"/>
     <Separator orientation="VERTICAL"/>
-    <Button fx:id="terminal"/>
+    <Button fx:id="terminal" disable="true"/>
 </ToolBar>

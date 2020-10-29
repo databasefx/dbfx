@@ -11,10 +11,9 @@ import javafx.event.ActionEvent
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class ViewFolder(private val uuid: String, private val category: String) : ProgressTreeItem() {
+class ViewFolder(private val uuid: String, private val category: String) : ProgressTreeItem(SvgImageTranscoder.svgToImageView(FOLDER_ICON)) {
     init {
         text = I18N.getString("label.view")
-        prefixGra = SvgImageTranscoder.svgToImageView(FOLDER_ICON)
         this.reListListener()
         this.initView()
     }

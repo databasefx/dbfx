@@ -33,7 +33,7 @@
         </VirtualizedScrollPane>
     </VBox>
     <TabPane fx:id="tabPane">
-        <Tab text="%label.info" closable="false" fx:id="info">
+        <Tab text="%label.info" closable="false" fx:id="infoTab">
             <TextArea wrapText="true" fx:id="exeInfo" editable="false"/>
         </Tab>
         <Tab text="%label.result" closable="false" fx:id="exeResult">

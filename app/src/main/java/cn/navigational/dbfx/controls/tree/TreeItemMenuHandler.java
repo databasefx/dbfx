@@ -1,7 +1,5 @@
 package cn.navigational.dbfx.controls.tree;
 
-import javafx.event.ActionEvent;
-
 /**
  * {@link AbstractBaseTreeItem} menu handler
  *
@@ -17,6 +15,10 @@ public interface TreeItemMenuHandler {
          * FLUSH
          */
         FLUSH,
+        /**
+         * Open terminal
+         */
+        OPEN_TERMINAL,
         /**
          * Edit connect
          */

@@ -12,10 +12,10 @@ import kotlinx.coroutines.launch
 
 abstract class AbstractBaseTab : Tab {
     constructor() : super() {
-        setOnCloseRequest {
-            val that = this
+        this.setOnCloseRequest {
+            it.consume()
             GlobalScope.launch {
-                that.close()
+                MainTabPaneHandler.closeTab(getTabPath())
             }
         }
     }
@@ -33,7 +33,6 @@ abstract class AbstractBaseTab : Tab {
      * When current tab request close call that method
      */
     open suspend fun close() {
-        MainTabPaneHandler.closeTab(getTabPath())
     }
 
     /**

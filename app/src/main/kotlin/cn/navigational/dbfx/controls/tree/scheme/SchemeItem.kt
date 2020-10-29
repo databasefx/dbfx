@@ -2,26 +2,31 @@ package cn.navigational.dbfx.controls.tree.scheme
 
 import cn.navigational.dbfx.SQLClientManager
 import cn.navigational.dbfx.config.SCHEME_ICON
+import cn.navigational.dbfx.controller.SQLTerminalController
+import cn.navigational.dbfx.controls.tab.SQLTerminalTab
 import cn.navigational.dbfx.controls.tree.TreeItemMenuHandler
 import cn.navigational.dbfx.controls.tree.folder.RoleFolder
 import cn.navigational.dbfx.controls.tree.folder.SchemeFolder
 import cn.navigational.dbfx.controls.tree.folder.TableFolder
 import cn.navigational.dbfx.controls.tree.folder.ViewFolder
 import cn.navigational.dbfx.controls.tree.impl.ProgressTreeItem
+import cn.navigational.dbfx.handler.MainTabPaneHandler
 import cn.navigational.dbfx.i18n.I18N
 import cn.navigational.dbfx.kit.enums.Clients
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
 import javafx.event.ActionEvent
 import javafx.scene.input.MouseEvent
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-class SchemeItem(private val scheme: String, private val uuid: String) : ProgressTreeItem() {
+class SchemeItem(private val scheme: String, private val uuid: String) : ProgressTreeItem(SvgImageTranscoder.svgToImageView(SCHEME_ICON)) {
     init {
         this.text = scheme
         val info = SQLClientManager.getDbInfo(uuid)
         if (info.database == scheme) {
             this.setSuffixTx(I18N.getString("label.current"))
         }
-        this.prefixGra = SvgImageTranscoder.svgToImageView(SCHEME_ICON)
+        this.contextMenu.updateItem(ContextMenuAction.ADD, TreeItemMenuHandler.MenuAction.OPEN_TERMINAL)
     }
 
     private fun initScheme() {
@@ -45,5 +50,10 @@ class SchemeItem(private val scheme: String, private val uuid: String) : Progres
     }
 
     override fun onAction(action: TreeItemMenuHandler.MenuAction) {
+        if (action == TreeItemMenuHandler.MenuAction.OPEN_TERMINAL) {
+            GlobalScope.launch {
+                MainTabPaneHandler.addTabToPane(SQLTerminalTab(uuid, scheme), fullPath)
+            }
+        }
     }
 }

@@ -181,7 +181,7 @@ private suspend fun loadDbMetaData() {
         }
         items.add(json.mapTo(DatabaseMeta::class.java))
     }
-    DatabaseMetaManager.manager.addDbMeta(items)
+    DatabaseMetaManager.addDbMeta(items)
 }
 
 /**
