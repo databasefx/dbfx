@@ -93,6 +93,7 @@ class DatabaseTreeItem constructor(private var info: DbInfo) : ProgressTreeItem(
         }
         loadStatus.set(true)
         try {
+            MainTabPaneHandler.closeTabByPathPrefix(fullPath)
             clear()
             SQLClientManager.removeClient(info.uuid)
             conStatus.set(false)
