@@ -39,6 +39,10 @@ public interface TreeItemMenuHandler {
          * Create copy
          */
         CREATE_COPY,
+        /**
+         * Edit table
+         */
+        EDIT_TABLE
     }
 
     /**

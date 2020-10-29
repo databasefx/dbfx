@@ -32,6 +32,11 @@
         </tooltip>
     </Button>
     <Separator orientation="VERTICAL"/>
+    <Button fx:id="editTable">
+        <tooltip>
+            <Tooltip text="%navigation.menu.edit.table"/>
+        </tooltip>
+    </Button>
     <Button fx:id="terminal">
         <tooltip>
             <Tooltip text="%navigation.menu.sql.terminal"/>

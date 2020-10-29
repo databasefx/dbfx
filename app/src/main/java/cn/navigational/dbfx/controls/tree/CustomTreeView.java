@@ -107,6 +107,7 @@ public class CustomTreeView extends TreeView<String> implements NavigatorToolBar
             case TERMINAL -> control.onAction(TreeItemMenuHandler.MenuAction.OPEN_TERMINAL);
             case DB_CONFIG -> control.onAction(TreeItemMenuHandler.MenuAction.EDIT_CONNECT);
             case DUPLICATE -> control.onAction(TreeItemMenuHandler.MenuAction.CREATE_COPY);
+            case EDIT_TABLE -> control.onAction(TreeItemMenuHandler.MenuAction.EDIT_TABLE);
             default -> {
 
             }

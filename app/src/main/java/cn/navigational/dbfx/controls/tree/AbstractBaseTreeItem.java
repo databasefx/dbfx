@@ -79,9 +79,9 @@ public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
         graphics.setOnContextMenuRequested(event ->
                 this.contextMenu.show(graphics, event.getScreenX(), event.getScreenY()));
         //register css class
-        this.text.getStyleClass().add(TEXT_DEFAULT_STYLE_CLASS);
         content.getStyleClass().add(CONTENT_DEFAULT_STYLE_CLASS);
         graphics.getStyleClass().add(GRAPHIC_DEFAULT_STYLE_CLASS);
+        this.text.getStyleClass().add(TEXT_DEFAULT_STYLE_CLASS);
         this.suffix.getStyleClass().add(SUFFIX_DEFAULT_STYLE_CLASS);
         this.prefix.getStyleClass().add(PREFIX_DEFAULT_STYLE_CLASS);
 
@@ -214,6 +214,7 @@ public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
         private final MenuItem delConnect = new MenuItem(I18N.getString("navigation.menu.remove.connection"));
         private final MenuItem openTerminal = new MenuItem(I18N.getString("navigation.menu.sql.terminal"));
         private final MenuItem createCopy = new MenuItem(I18N.getString("navigation.menu.sql.create.copy"));
+        private final MenuItem editTable = new MenuItem(I18N.getString("navigation.menu.edit.table"));
 
         public TreeItemContextMenu() {
             this.flush.setOnAction(event -> onAction(MenuAction.FLUSH));
@@ -223,6 +224,7 @@ public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
             this.delConnect.setOnAction(event -> onAction(MenuAction.DELETE_CONNECT));
             this.openTerminal.setOnAction(event -> onAction(MenuAction.OPEN_TERMINAL));
             this.createCopy.setOnAction(event -> onAction(MenuAction.CREATE_COPY));
+            this.editTable.setOnAction(event -> onAction(MenuAction.EDIT_TABLE));
         }
 
         public void updateItem(ContextMenuAction action, TreeItemMenuHandler.MenuAction... targets) {
@@ -251,12 +253,13 @@ public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
         private MenuItem getItem(TreeItemMenuHandler.MenuAction target) {
             return switch (target) {
                 case FLUSH -> flush;
+                case EDIT_TABLE -> editTable;
+                case CREATE_COPY -> createCopy;
                 case OPEN_CONNECT -> connection;
-                case DISCOUNT_CONNECT -> discount;
                 case EDIT_CONNECT -> editConnect;
+                case DISCOUNT_CONNECT -> discount;
                 case DELETE_CONNECT -> delConnect;
                 case OPEN_TERMINAL -> openTerminal;
-                case CREATE_COPY -> createCopy;
             };
         }
     }

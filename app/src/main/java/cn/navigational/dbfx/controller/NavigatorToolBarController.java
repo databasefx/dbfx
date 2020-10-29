@@ -49,6 +49,9 @@ public class NavigatorToolBarController extends AbstractFxmlController<ToolBar> 
     @FXML
     private MenuButton dbList;
 
+    @FXML
+    private Button editTable;
+
 
     public NavigatorToolBarController(CustomTreeView treeView) {
         super(N_TOP_BAR);
@@ -60,6 +63,7 @@ public class NavigatorToolBarController extends AbstractFxmlController<ToolBar> 
         this.stop.setGraphic(SvgImageTranscoder.svgToImageView(STOP_X16));
         this.dbList.setGraphic(SvgImageTranscoder.svgToImageView(ADD_X16));
         this.flush.setGraphic(SvgImageTranscoder.svgToImageView(FLUSH_X16));
+        this.editTable.setGraphic(SvgImageTranscoder.svgToImageView(TABLE_X16));
         this.terminal.setGraphic(SvgImageTranscoder.svgToImageView(TERMINAL_X16));
         this.dbConfig.setGraphic(SvgImageTranscoder.svgToImageView(DB_CONFIG_X16));
         this.duplicate.setGraphic(SvgImageTranscoder.svgToImageView(DUPLICATE_X16));
@@ -70,6 +74,7 @@ public class NavigatorToolBarController extends AbstractFxmlController<ToolBar> 
         this.dbConfig.setOnAction(event -> treeView.onAction(ToolBarAction.DB_CONFIG, this.control));
         this.duplicate.setOnAction(event -> treeView.onAction(ToolBarAction.DUPLICATE, this.control));
         this.duplicate.setOnAction(event -> treeView.onAction(ToolBarAction.DUPLICATE, this.control));
+        this.editTable.setOnAction(event -> treeView.onAction(ToolBarAction.EDIT_TABLE, this.control));
         for (DatabaseMeta meta : DatabaseMetaManager.Companion.getMetas()) {
             var name = meta.getName();
             var cl = Clients.getClient(name);
@@ -96,6 +101,7 @@ public class NavigatorToolBarController extends AbstractFxmlController<ToolBar> 
         }
         var actions = control.getMenuAction();
         this.flush.setDisable(!actions.contains(TreeItemMenuHandler.MenuAction.FLUSH));
+        this.editTable.setDisable(!actions.contains(TreeItemMenuHandler.MenuAction.EDIT_TABLE));
         this.duplicate.setDisable(!actions.contains(TreeItemMenuHandler.MenuAction.CREATE_COPY));
         this.dbConfig.setDisable(!actions.contains(TreeItemMenuHandler.MenuAction.EDIT_CONNECT));
         this.terminal.setDisable(!actions.contains(TreeItemMenuHandler.MenuAction.OPEN_TERMINAL));
@@ -141,6 +147,10 @@ public class NavigatorToolBarController extends AbstractFxmlController<ToolBar> 
         /**
          * Open Sql terminal
          */
-        TERMINAL
+        TERMINAL,
+        /**
+         * Edit table
+         */
+        EDIT_TABLE
     }
 }

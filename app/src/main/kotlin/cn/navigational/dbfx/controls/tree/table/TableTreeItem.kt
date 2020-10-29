@@ -27,6 +27,7 @@ class TableTreeItem(
         text = table
         reListListener()
         initField()
+        this.contextMenu.updateItem(ContextMenuAction.ADD, TreeItemMenuHandler.MenuAction.EDIT_TABLE)
     }
 
     private fun initField() {
@@ -69,6 +70,9 @@ class TableTreeItem(
     }
 
     override fun onAction(action: TreeItemMenuHandler.MenuAction) {
+        if (action == TreeItemMenuHandler.MenuAction.EDIT_TABLE) {
+            this.openTab()
+        }
     }
 
     enum class TableType {
