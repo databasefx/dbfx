@@ -19,6 +19,6 @@ class RoleItem(uuid: String, name: String) : AbstractBaseTreeItem() {
         }
     }
 
-    override fun onAction(event: ActionEvent?, action: TreeItemMenuHandler.MenuAction?) {
+    override fun onAction(action: TreeItemMenuHandler.MenuAction?) {
     }
 }

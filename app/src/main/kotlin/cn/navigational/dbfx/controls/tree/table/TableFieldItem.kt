@@ -14,6 +14,6 @@ class TableFieldItem(tableColumnMeta: TableColumnMeta) : AbstractBaseTreeItem() 
         this.prefixGra = ImageView(CustomTableColumn.getFieldImage(tableColumnMeta))
     }
 
-    override fun onAction(event: ActionEvent, action: TreeItemMenuHandler.MenuAction) {
+    override fun onAction(action: TreeItemMenuHandler.MenuAction) {
     }
 }

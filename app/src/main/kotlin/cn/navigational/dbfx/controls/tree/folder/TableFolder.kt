@@ -37,7 +37,7 @@ class TableFolder(private val category: String, uuid: String) : ProgressTreeItem
         }
     }
 
-    override fun onAction(event: ActionEvent, action: TreeItemMenuHandler.MenuAction) {
+    override fun onAction(action: TreeItemMenuHandler.MenuAction) {
 
     }
 }

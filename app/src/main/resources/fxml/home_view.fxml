@@ -3,8 +3,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <?import java.net.URL?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
@@ -13,72 +11,18 @@
         <URL value="@/css/home_style.css"/>
     </stylesheets>
     <top>
-        <VBox>
-            <MenuBar useSystemMenuBar="true">
-                <Menu text="%menu.title.file">
-                    <MenuItem text="%menu.title.file.exit" onAction="#exit"/>
-                </Menu>
-                <Menu text="%menu.title.help">
-                    <MenuItem text="%menu.title.help.about" onAction="#about"/>
-                </Menu>
-            </MenuBar>
-            <ToolBar>
-                <Button onAction="#createCon">
-                    <graphic>
-                        <ImageView>
-                            <Image url="@/assets/icons/home/con_icon.png" smooth="true" requestedHeight="25"
-                                   requestedWidth="25"/>
-                        </ImageView>
-                    </graphic>
-                    <tooltip>
-                        <Tooltip text="%tool.bar.create.connection"/>
-                    </tooltip>
-                </Button>
-<!--                <Button>-->
-<!--                    <graphic>-->
-<!--                        <ImageView>-->
-<!--                            <Image url="@/assets/icons/home/recon-icon.png" smooth="true" requestedHeight="25"-->
-<!--                                   requestedWidth="25"/>-->
-<!--                        </ImageView>-->
-<!--                    </graphic>-->
-<!--                    <tooltip>-->
-<!--                        <Tooltip text="%tool.bar.reconnection"/>-->
-<!--                    </tooltip>-->
-<!--                </Button>-->
-<!--                <Button>-->
-<!--                    <graphic>-->
-<!--                        <ImageView>-->
-<!--                            <Image url="@/assets/icons/home/break_off_icon.png" smooth="true" requestedHeight="25"-->
-<!--                                   requestedWidth="25"/>-->
-<!--                        </ImageView>-->
-<!--                    </graphic>-->
-<!--                    <tooltip>-->
-<!--                        <Tooltip text="%tool.bar.discount.connection"/>-->
-<!--                    </tooltip>-->
-<!--                </Button>-->
-                <Button onAction="#openSQLTerminal">
-                    <graphic>
-                        <ImageView>
-                            <Image url="@/assets/icons/home/sql_edit_icon.png" smooth="true" requestedHeight="25"
-                                   requestedWidth="25"/>
-                        </ImageView>
-                    </graphic>
-                    <tooltip>
-                        <Tooltip text="%tool.bar.sql.editor"/>
-                    </tooltip>
-                </Button>
-            </ToolBar>
-        </VBox>
+        <MenuBar useSystemMenuBar="true">
+            <Menu text="%menu.title.file">
+                <MenuItem text="%menu.title.file.exit" onAction="#exit"/>
+            </Menu>
+            <Menu text="%menu.title.help">
+                <MenuItem text="%menu.title.help.about" onAction="#about"/>
+            </Menu>
+        </MenuBar>
     </top>
     <center>
-        <SplitPane fx:id="mSPane" orientation="VERTICAL">
-            <SplitPane dividerPositions="0.2" fx:id="splitPane"/>
+        <SplitPane dividerPositions="0.2" fx:id="splitPane">
+            <VBox fx:id="leftBox"/>
         </SplitPane>
     </center>
-    <bottom>
-        <ToolBar HBox.hgrow="ALWAYS" nodeOrientation="LEFT_TO_RIGHT" styleClass="b-navigator">
-<!--            <Button fx:id="terminal" text="%tool.bar.terminal" onAction="#openTerminal"/>-->
-            <Button text="%tool.bar.log" fx:id="eventLog" alignment="TOP_CENTER" onAction="#openLog"/>
-        </ToolBar>
-    </bottom>
 </BorderPane>

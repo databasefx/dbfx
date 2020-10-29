@@ -212,11 +212,11 @@ public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
         private final MenuItem delConnect = new MenuItem(I18N.getString("navigation.menu.remove.connection"));
 
         public TreeItemContextMenu() {
-            this.flush.setOnAction(event -> onAction(event, MenuAction.FLUSH));
-            this.discount.setOnAction(event -> onAction(event, MenuAction.DISCOUNT_CONNECT));
-            this.connection.setOnAction(event -> onAction(event, MenuAction.OPEN_CONNECT));
-            this.editConnect.setOnAction(event -> onAction(event, MenuAction.EDIT_CONNECT));
-            this.delConnect.setOnAction(event -> onAction(event, MenuAction.DELETE_CONNECT));
+            this.flush.setOnAction(event -> onAction(MenuAction.FLUSH));
+            this.discount.setOnAction(event -> onAction(MenuAction.DISCOUNT_CONNECT));
+            this.connection.setOnAction(event -> onAction(MenuAction.OPEN_CONNECT));
+            this.editConnect.setOnAction(event -> onAction(MenuAction.EDIT_CONNECT));
+            this.delConnect.setOnAction(event -> onAction(MenuAction.DELETE_CONNECT));
         }
 
         public void updateItem(ContextMenuAction action, TreeItemMenuHandler.MenuAction... targets) {

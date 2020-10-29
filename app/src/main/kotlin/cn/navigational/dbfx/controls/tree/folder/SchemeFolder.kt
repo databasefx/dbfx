@@ -54,7 +54,7 @@ class SchemeFolder() : ProgressTreeItem() {
         this.addChildren(list)
     }
 
-    override fun onAction(event: ActionEvent?, action: TreeItemMenuHandler.MenuAction?) {
+    override fun onAction(action: TreeItemMenuHandler.MenuAction?) {
 
     }
 }

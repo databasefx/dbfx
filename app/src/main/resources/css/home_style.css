@@ -6,3 +6,16 @@
     -fx-border-width: 0;
     -fx-background-color: transparent;
 }
+
+.menu-bar {
+    -fx-border-width: 0 0 0.1em 0;
+    -fx-border-color: #323232;
+}
+
+.tool-bar {
+    -fx-border-width: 0 0 0.1em 0;
+}
+
+.tool-bar .menu-button:hover, .tool-bar .button:hover {
+    -fx-background-color: #4c5052;
+}

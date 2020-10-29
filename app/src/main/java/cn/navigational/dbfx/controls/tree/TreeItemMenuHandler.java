@@ -38,8 +38,7 @@ public interface TreeItemMenuHandler {
     /**
      * When any {@link javafx.scene.control.MenuItem} has clicked callback that method.
      *
-     * @param event  {@link ActionEvent} event source
      * @param action Some action
      */
-    void onAction(ActionEvent event, MenuAction action);
+    void onAction(MenuAction action);
 }

@@ -47,7 +47,7 @@ class RoleFolder(uuid: String, category: String? = null) : ProgressTreeItem() {
         }
     }
 
-    override fun onAction(event: ActionEvent?, action: TreeItemMenuHandler.MenuAction?) {
+    override fun onAction(action: TreeItemMenuHandler.MenuAction?) {
 
     }
 }

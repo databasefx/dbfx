@@ -143,7 +143,7 @@ class DatabaseTreeItem(private var info: DbInfo) : ProgressTreeItem() {
 
     }
 
-    override fun onAction(event: ActionEvent?, action: TreeItemMenuHandler.MenuAction) {
+    override fun onAction(action: TreeItemMenuHandler.MenuAction) {
         when (action) {
             TreeItemMenuHandler.MenuAction.OPEN_CONNECT -> this.startConnect()
             TreeItemMenuHandler.MenuAction.FLUSH -> this.reConnect()

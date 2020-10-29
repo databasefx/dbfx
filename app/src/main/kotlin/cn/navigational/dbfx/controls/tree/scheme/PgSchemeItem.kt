@@ -28,6 +28,6 @@ class PgSchemeItem(private val uuid: String, private val scheme: String, private
         }
     }
 
-    override fun onAction(event: ActionEvent, action: TreeItemMenuHandler.MenuAction) {
+    override fun onAction(action: TreeItemMenuHandler.MenuAction) {
     }
 }

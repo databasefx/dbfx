@@ -1,16 +1,15 @@
 package cn.navigational.dbfx.controls.tree
 
 import cn.navigational.dbfx.SQLClientManager
+import cn.navigational.dbfx.controller.NavigatorToolBarController
 import cn.navigational.dbfx.controls.tree.cell.NTreeCell
 import cn.navigational.dbfx.model.DbInfo
 import cn.navigational.dbfx.utils.AlertUtils
 import javafx.collections.ListChangeListener
 import javafx.scene.control.TreeItem
 import javafx.scene.control.TreeView
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
-class CustomTreeView private constructor() : TreeView<String>() {
+class CustomTreeView private constructor() : TreeView<String>(), NavigatorToolBarController.NavigatorToolBarHandler {
 
     init {
         isShowRoot = false
@@ -79,6 +78,10 @@ class CustomTreeView private constructor() : TreeView<String>() {
         }
         //Start reconnection
         item.reConnect()
+    }
+
+    override fun onAction(action: NavigatorToolBarController.ToolBarAction) {
+        println(action)
     }
 
     companion object {

@@ -40,6 +40,6 @@ class ViewFolder(private val uuid: String, private val category: String) : Progr
         }
     }
 
-    override fun onAction(event: ActionEvent, action: TreeItemMenuHandler.MenuAction) {
+    override fun onAction(action: TreeItemMenuHandler.MenuAction) {
     }
 }

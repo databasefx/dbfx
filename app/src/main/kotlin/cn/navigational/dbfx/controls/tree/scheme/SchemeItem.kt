@@ -44,6 +44,6 @@ class SchemeItem(private val scheme: String, private val uuid: String) : Progres
         }
     }
 
-    override fun onAction(event: ActionEvent, action: TreeItemMenuHandler.MenuAction) {
+    override fun onAction(action: TreeItemMenuHandler.MenuAction) {
     }
 }

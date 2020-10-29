@@ -66,7 +66,7 @@ class TableTreeItem(
         }
     }
 
-    override fun onAction(event: ActionEvent, action: TreeItemMenuHandler.MenuAction) {
+    override fun onAction(action: TreeItemMenuHandler.MenuAction) {
     }
 
     enum class TableType {
