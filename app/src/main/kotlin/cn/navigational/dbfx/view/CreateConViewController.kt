@@ -13,6 +13,7 @@ import cn.navigational.dbfx.i18n.I18N
 import cn.navigational.dbfx.utils.AlertUtils
 import cn.navigational.dbfx.kit.utils.StringUtils
 import cn.navigational.dbfx.kit.utils.VertxUtils
+import cn.navigational.dbfx.model.DbInfo
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
 import io.vertx.sqlclient.SqlConnectOptions
 import javafx.application.Platform
@@ -55,6 +56,10 @@ class CreateConViewController(private val cl: Clients) : ViewController<ScrollPa
         this.conInfoPaneController.initMeta(DatabaseMetaManager.getDbMeta(cl))
         (this.parent.content as BorderPane).center = conInfoPaneController.parent
 
+    }
+
+    constructor(info: DbInfo) : this(info.client) {
+        conInfoPaneController.initEdit(info)
     }
 
 

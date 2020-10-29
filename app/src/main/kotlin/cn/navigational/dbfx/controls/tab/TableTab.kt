@@ -38,8 +38,8 @@ class TableTab(
 
 
     override suspend fun close() {
-        this.controller.dispose()
         super.close()
+        this.controller.dispose()
     }
 
     override suspend fun getDataTotal(): Long {

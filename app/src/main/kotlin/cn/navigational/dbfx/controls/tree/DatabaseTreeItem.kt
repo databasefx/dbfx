@@ -14,6 +14,7 @@ import cn.navigational.dbfx.model.DbInfo
 import cn.navigational.dbfx.model.SQLClient
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
 import cn.navigational.dbfx.utils.AlertUtils
+import cn.navigational.dbfx.view.CreateConViewController
 import cn.navigational.dbfx.view.EditConViewController
 import javafx.scene.input.MouseEvent
 import kotlinx.coroutines.GlobalScope
@@ -32,6 +33,7 @@ class DatabaseTreeItem constructor(private var info: DbInfo) : ProgressTreeItem(
         this.contextMenu.updateItem(
                 ContextMenuAction.ADD,
                 TreeItemMenuHandler.MenuAction.OPEN_CONNECT,
+                TreeItemMenuHandler.MenuAction.CREATE_COPY,
                 TreeItemMenuHandler.MenuAction.FLUSH,
                 TreeItemMenuHandler.MenuAction.OPEN_TERMINAL,
                 TreeItemMenuHandler.MenuAction.DISCOUNT_CONNECT,
@@ -154,6 +156,8 @@ class DatabaseTreeItem constructor(private var info: DbInfo) : ProgressTreeItem(
             TreeItemMenuHandler.MenuAction.DISCOUNT_CONNECT -> GlobalScope.launch { discount() }
             TreeItemMenuHandler.MenuAction.EDIT_CONNECT -> EditConViewController(info).showStage()
             TreeItemMenuHandler.MenuAction.OPEN_TERMINAL -> GlobalScope.launch { openTerminal() }
+            TreeItemMenuHandler.MenuAction.CREATE_COPY -> CreateConViewController(info).showStage()
+
         }
     }
 

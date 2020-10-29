@@ -5,12 +5,36 @@
 
 <ToolBar fx:id="toolBar" xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml">
-    <MenuButton fx:id="dbList"/>
-    <Button fx:id="duplicate"/>
+    <MenuButton fx:id="dbList">
+        <tooltip>
+            <Tooltip text="%stage.create.connection"/>
+        </tooltip>
+    </MenuButton>
+    <Button fx:id="duplicate">
+        <tooltip>
+            <Tooltip text="%navigation.menu.sql.create.copy"/>
+        </tooltip>
+    </Button>
     <Separator orientation="VERTICAL"/>
-    <Button fx:id="flush" disable="true"/>
-    <Button fx:id="dbConfig" disable="true"/>
-    <Button fx:id="stop" disable="true"/>
+    <Button fx:id="flush">
+        <tooltip>
+            <Tooltip text="%label.flush"/>
+        </tooltip>
+    </Button>
+    <Button fx:id="dbConfig">
+        <tooltip>
+            <Tooltip text="%navigation.menu.edit.connection"/>
+        </tooltip>
+    </Button>
+    <Button fx:id="stop">
+        <tooltip>
+            <Tooltip text="%tool.bar.discount.connection"/>
+        </tooltip>
+    </Button>
     <Separator orientation="VERTICAL"/>
-    <Button fx:id="terminal" disable="true"/>
+    <Button fx:id="terminal">
+        <tooltip>
+            <Tooltip text="%navigation.menu.sql.terminal"/>
+        </tooltip>
+    </Button>
 </ToolBar>

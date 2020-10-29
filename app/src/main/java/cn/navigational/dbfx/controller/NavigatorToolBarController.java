@@ -14,6 +14,7 @@ import cn.navigational.dbfx.tool.svg.SvgImageTranscoder;
 import cn.navigational.dbfx.view.CreateConViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -51,6 +52,11 @@ public class NavigatorToolBarController extends AbstractFxmlController<ToolBar> 
 
     public NavigatorToolBarController(CustomTreeView treeView) {
         super(N_TOP_BAR);
+        for (Node item : this.getParent().getItems()) {
+            if (item instanceof Button) {
+                item.setDisable(true);
+            }
+        }
         this.stop.setGraphic(SvgImageTranscoder.svgToImageView(STOP_X16));
         this.dbList.setGraphic(SvgImageTranscoder.svgToImageView(ADD_X16));
         this.flush.setGraphic(SvgImageTranscoder.svgToImageView(FLUSH_X16));
@@ -62,6 +68,7 @@ public class NavigatorToolBarController extends AbstractFxmlController<ToolBar> 
         this.flush.setOnAction(event -> treeView.onAction(ToolBarAction.FLUSH, this.control));
         this.terminal.setOnAction(event -> treeView.onAction(ToolBarAction.TERMINAL, this.control));
         this.dbConfig.setOnAction(event -> treeView.onAction(ToolBarAction.DB_CONFIG, this.control));
+        this.duplicate.setOnAction(event -> treeView.onAction(ToolBarAction.DUPLICATE, this.control));
         this.duplicate.setOnAction(event -> treeView.onAction(ToolBarAction.DUPLICATE, this.control));
         for (DatabaseMeta meta : DatabaseMetaManager.Companion.getMetas()) {
             var name = meta.getName();
@@ -89,6 +96,7 @@ public class NavigatorToolBarController extends AbstractFxmlController<ToolBar> 
         }
         var actions = control.getMenuAction();
         this.flush.setDisable(!actions.contains(TreeItemMenuHandler.MenuAction.FLUSH));
+        this.duplicate.setDisable(!actions.contains(TreeItemMenuHandler.MenuAction.CREATE_COPY));
         this.dbConfig.setDisable(!actions.contains(TreeItemMenuHandler.MenuAction.EDIT_CONNECT));
         this.terminal.setDisable(!actions.contains(TreeItemMenuHandler.MenuAction.OPEN_TERMINAL));
     }

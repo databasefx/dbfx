@@ -25,10 +25,10 @@ class MainTabPaneHandler {
             if (!this.map.containsKey(path)) {
                 return
             }
-            val tab = this.map[path]
-            tab!!.close()
-            logger.debug("Tab[path={}] close success!", path)
+            val tab = this.map[path]!!.also { it.close() }
+            this.map.remove(path)
             Platform.runLater { this.tabPane.tabs.remove(tab) }
+            logger.debug("Tab[path={}] close success!", path)
         }
 
         /**

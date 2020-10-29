@@ -34,7 +34,11 @@ public interface TreeItemMenuHandler {
         /**
          * Discount connect
          */
-        DISCOUNT_CONNECT
+        DISCOUNT_CONNECT,
+        /**
+         * Create copy
+         */
+        CREATE_COPY,
     }
 
     /**

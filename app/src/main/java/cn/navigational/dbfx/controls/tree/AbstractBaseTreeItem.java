@@ -1,6 +1,5 @@
 package cn.navigational.dbfx.controls.tree;
 
-import checkers.igj.quals.I;
 import cn.navigational.dbfx.SQLClientManager;
 import cn.navigational.dbfx.i18n.I18N;
 import cn.navigational.dbfx.kit.utils.StringUtils;
@@ -16,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -215,6 +213,7 @@ public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
         private final MenuItem editConnect = new MenuItem(I18N.getString("navigation.menu.edit.connection"));
         private final MenuItem delConnect = new MenuItem(I18N.getString("navigation.menu.remove.connection"));
         private final MenuItem openTerminal = new MenuItem(I18N.getString("navigation.menu.sql.terminal"));
+        private final MenuItem createCopy = new MenuItem(I18N.getString("navigation.menu.sql.create.copy"));
 
         public TreeItemContextMenu() {
             this.flush.setOnAction(event -> onAction(MenuAction.FLUSH));
@@ -223,6 +222,7 @@ public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
             this.editConnect.setOnAction(event -> onAction(MenuAction.EDIT_CONNECT));
             this.delConnect.setOnAction(event -> onAction(MenuAction.DELETE_CONNECT));
             this.openTerminal.setOnAction(event -> onAction(MenuAction.OPEN_TERMINAL));
+            this.createCopy.setOnAction(event -> onAction(MenuAction.CREATE_COPY));
         }
 
         public void updateItem(ContextMenuAction action, TreeItemMenuHandler.MenuAction... targets) {
@@ -256,6 +256,7 @@ public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
                 case EDIT_CONNECT -> editConnect;
                 case DELETE_CONNECT -> delConnect;
                 case OPEN_TERMINAL -> openTerminal;
+                case CREATE_COPY -> createCopy;
             };
         }
     }
