@@ -7,7 +7,6 @@ import cn.navigational.dbfx.controls.tree.impl.ProgressTreeItem
 import cn.navigational.dbfx.i18n.I18N
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
-import javafx.event.ActionEvent
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 

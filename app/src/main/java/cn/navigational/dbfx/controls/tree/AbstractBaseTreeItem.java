@@ -215,6 +215,7 @@ public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
         private final MenuItem openTerminal = new MenuItem(I18N.getString("navigation.menu.sql.terminal"));
         private final MenuItem createCopy = new MenuItem(I18N.getString("navigation.menu.sql.create.copy"));
         private final MenuItem editTable = new MenuItem(I18N.getString("navigation.menu.edit.table"));
+        private final MenuItem exportData = new MenuItem(I18N.getString("navigation.export.data"));
 
         public TreeItemContextMenu() {
             this.flush.setOnAction(event -> onAction(MenuAction.FLUSH));
@@ -225,6 +226,7 @@ public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
             this.openTerminal.setOnAction(event -> onAction(MenuAction.OPEN_TERMINAL));
             this.createCopy.setOnAction(event -> onAction(MenuAction.CREATE_COPY));
             this.editTable.setOnAction(event -> onAction(MenuAction.EDIT_TABLE));
+            this.exportData.setOnAction(event -> onAction(MenuAction.EXPORT_DATA_TO_FILE));
         }
 
         public void updateItem(ContextMenuAction action, TreeItemMenuHandler.MenuAction... targets) {
@@ -260,6 +262,7 @@ public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
                 case DISCOUNT_CONNECT -> discount;
                 case DELETE_CONNECT -> delConnect;
                 case OPEN_TERMINAL -> openTerminal;
+                case EXPORT_DATA_TO_FILE -> exportData;
             };
         }
     }

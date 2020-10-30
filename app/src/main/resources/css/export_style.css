@@ -1,0 +1,42 @@
+.options {
+    -fx-spacing: 1em;
+    -fx-padding: 0.2em 0.5em;
+}
+
+.options VBox {
+    -fx-spacing: 0.5em;
+}
+
+.list-view {
+    -fx-border-color: #323232;
+    -fx-pref-height: 10em;
+    -fx-border-width: 0.1em;
+}
+
+.choice-box {
+    -fx-pref-width: 18em;
+}
+
+.file-selector {
+    -fx-border-width: 0.1em;
+    -fx-border-color: #646464;
+}
+
+.file-selector .button, .file-selector .text-field {
+    -fx-border-width: 0;
+}
+
+.file-selector, .file-selector * {
+    -fx-background-color: #45494A;
+}
+
+
+.bottom-box {
+    -fx-padding: 0.5em;
+    -fx-spacing: 0.5em;
+    -fx-alignment: CENTER-RIGHT;
+}
+
+.bottom-box .cancel {
+    -fx-background-color: #4c5052;
+}

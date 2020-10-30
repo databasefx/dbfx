@@ -42,7 +42,11 @@ public interface TreeItemMenuHandler {
         /**
          * Edit table
          */
-        EDIT_TABLE
+        EDIT_TABLE,
+        /**
+         * Export data
+         */
+        EXPORT_DATA_TO_FILE
     }
 
     /**

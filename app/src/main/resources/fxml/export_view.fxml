@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml">
+    <stylesheets>
+        <URL value="@/css/export_style.css"/>
+    </stylesheets>
+    <center>
+        <VBox styleClass="options">
+            <VBox>
+                <Label text="%export.source"/>
+                <ListView HBox.hgrow="ALWAYS" fx:id="listView"/>
+            </VBox>
+            <VBox>
+                <Label text="%export.format"/>
+                <HBox>
+                    <ChoiceBox HBox.hgrow="ALWAYS" fx:id="extras"/>
+                </HBox>
+            </VBox>
+            <VBox>
+                <Label text="%export.output.path"/>
+                <HBox styleClass="file-selector">
+                    <TextField HBox.hgrow="ALWAYS" fx:id="path" editable="false"/>
+                    <Button fx:id="openFileSelector"/>
+                </HBox>
+            </VBox>
+        </VBox>
+    </center>
+    <bottom>
+        <HBox styleClass="bottom-box">
+            <Button text="%export.data.exe"/>
+            <Button text="%label.cancel" styleClass="cancel" onAction="#cancel"/>
+        </HBox>
+    </bottom>
+</BorderPane>

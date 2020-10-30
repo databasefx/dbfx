@@ -8,6 +8,7 @@ import cn.navigational.dbfx.controls.tree.impl.ProgressTreeItem
 import cn.navigational.dbfx.handler.MainTabPaneHandler
 import cn.navigational.dbfx.kit.SQLQuery
 import cn.navigational.dbfx.tool.svg.SvgImageTranscoder
+import cn.navigational.dbfx.view.ExportViewController
 import javafx.event.ActionEvent
 import javafx.scene.input.MouseEvent
 import kotlinx.coroutines.GlobalScope
@@ -27,7 +28,9 @@ class TableTreeItem(
         text = table
         reListListener()
         initField()
-        this.contextMenu.updateItem(ContextMenuAction.ADD, TreeItemMenuHandler.MenuAction.EDIT_TABLE)
+        this.contextMenu.updateItem(ContextMenuAction.ADD,
+                TreeItemMenuHandler.MenuAction.EDIT_TABLE,
+                TreeItemMenuHandler.MenuAction.EXPORT_DATA_TO_FILE)
     }
 
     private fun initField() {
@@ -72,6 +75,9 @@ class TableTreeItem(
     override fun onAction(action: TreeItemMenuHandler.MenuAction) {
         if (action == TreeItemMenuHandler.MenuAction.EDIT_TABLE) {
             this.openTab()
+        }
+        if (action == TreeItemMenuHandler.MenuAction.EXPORT_DATA_TO_FILE) {
+            ExportViewController(uuid, "$category.$table", ExportViewController.ExportTarget.TABLE).showStage()
         }
     }
 
