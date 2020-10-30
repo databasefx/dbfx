@@ -21,28 +21,21 @@ you can support and sponsor projects through the following ways (click link or s
 ![support project](./SNAPSHOTS/donate/alipay.png)
 ![support project](./SNAPSHOTS/donate/wechat.png)
 
+## Supported database systems
+Database support capability level: __Planned__ / __Part__ / __support(:100:)__
+
+| Database       | Version | SQL Query     | Data Edit   | Design Table  | Export    | Import    |   Smart Tips    | Modeling | Data synchronization |
+|-------------|---------|--------------|------------|----------|---------|--------|---------------|-------|---------|
+| MySQL       | 5.7 +   | support:100: | Planned | Planned | Planned | Planned | Part | Planned  | Planned |
+| MariaDB     | 10.0 +  | support:100: | Planned| Planned | Planned | Planned | Part | Planned  | Planned |
+| PostgreSQL  | 9.0 +   | support:100: | Planned | Planned | Planned | Planned | Planned | Planned  | Planned |
+| Redis       |         | Planned   | Planned   | Planned   | Planned   | Planned   | Planned   | Planned  | Planned |
+| DB2         |         |           |           |           |           |           |           |          |         |
+| SQL Server  |         |           |           |           |           |           |           |          |         |
+
 ## Snapshots
 
-### Create  connection
 ![Loading Fail](./SNAPSHOTS/a.png)
 
-### Edit connection
-![Loading Fail](./SNAPSHOTS/b.png)
-
-### Data table
-![Loading Fail](./SNAPSHOTS/c.png)
-
-### SQL Statement real time output
-![Loading Fail](./SNAPSHOTS/e.png)
-
-### SQL Statement Terminal
-#### Execute Result
-![Loading Fail](./SNAPSHOTS/f.png)
-
-#### Smart Tips
-![Loading Fail](./SNAPSHOTS/g.png)
-
-### About
-![Loading Fail](SNAPSHOTS/d.png)
 
 
