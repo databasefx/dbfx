@@ -13,13 +13,13 @@ gradlew run
 ```
 NOTE : DatabaseFX requires Java 15 and above.
 
-##Support and sponsorship projects
+## Support and sponsorship projects
 If you think that the Dbfx database management tool is useful and willing to support its continuous enrichment functions,
 you can support and sponsor projects through the following ways (click link or scan code through PayPal / WeChat support / Alipay payment).<br/>
 
-![support project](./SNAPSHOTS/donate/paypal.png)&nbsp;&nbsp;&nbsp;
-![support project](./SNAPSHOTS/donate/alipay.png)&nbsp;&nbsp;&nbsp;
-![support project](./SNAPSHOTS/donate/wechat.png)&nbsp;&nbsp;&nbsp;
+![support project](./SNAPSHOTS/donate/paypal.png)
+![support project](./SNAPSHOTS/donate/alipay.png)
+![support project](./SNAPSHOTS/donate/wechat.png)
 
 ## Snapshots
 
