@@ -71,7 +71,7 @@ abstract class AbstractBaseTab : Tab {
         this.tabPath.set(tabPath)
     }
 
-    fun getTabPath(): String {
+    private fun getTabPath(): String {
         return tabPath.get()
     }
 
