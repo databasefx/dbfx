@@ -1,6 +1,6 @@
 # These are supported funding model platforms
 
-github: GZYangKui
+github: [ GZYangKui ]
 open_collective: databasefx
 #ko_fi: # Replace with a single Ko-fi username
 tidelift: # Replace with a single Tidelift platform-name/package-name e.g., npm/babel
