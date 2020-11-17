@@ -48,4 +48,20 @@ public class StringUtils {
     public static String getValueIfEmpty(String target, String defaultVal) {
         return isEmpty(target) ? defaultVal : target;
     }
+
+    final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
+
+    public static String bytesToHex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (int j = 0; j < bytes.length; j++) {
+            int v = bytes[j] & 0xFF;
+            char x = hexArray[v >>> 4];
+            char y = hexArray[v & 0x0F];
+            sb.append(x).append(y);
+            if (j!=bytes.length-1){
+                sb.append(" ");
+            }
+        }
+        return sb.toString();
+    }
 }

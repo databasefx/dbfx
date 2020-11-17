@@ -1,8 +1,10 @@
 package cn.navigational.dbfx.convert;
 
 import cn.navigational.dbfx.kit.config.ConstantsKt;
+import cn.navigational.dbfx.kit.utils.StringUtils;
 import cn.navigational.dbfx.model.TableSetting;
 import cn.navigational.dbfx.utils.DateUtils;
+import io.vertx.core.buffer.impl.BufferImpl;
 import io.vertx.sqlclient.Row;
 import io.vertx.sqlclient.RowSet;
 import javafx.application.Platform;
@@ -14,6 +16,7 @@ import javafx.scene.control.TableView;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -58,6 +61,9 @@ public class RowSetConvert {
             //format data time
             if (value instanceof LocalDateTime) {
                 value = DateUtils.formatLocalTime((LocalDateTime) value, setting.getDtFormat());
+            }
+            if (value instanceof BufferImpl) {
+                value = StringUtils.bytesToHex(((BufferImpl) value).getBytes());
             }
             item.add(new SimpleStringProperty(value.toString()));
         }

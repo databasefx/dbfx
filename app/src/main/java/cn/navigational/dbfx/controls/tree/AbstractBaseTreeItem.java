@@ -171,7 +171,8 @@ public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
         return this.contextMenu
                 .getItems()
                 .stream()
-                .map(MenuItem::getUserData).map(it -> (MenuAction) it)
+                .map(MenuItem::getUserData)
+                .map(it -> (MenuAction) it)
                 .collect(Collectors.toList());
     }
 
@@ -219,13 +220,13 @@ public abstract class AbstractBaseTreeItem implements TreeItemMenuHandler {
 
         public TreeItemContextMenu() {
             this.flush.setOnAction(event -> onAction(MenuAction.FLUSH));
-            this.discount.setOnAction(event -> onAction(MenuAction.DISCOUNT_CONNECT));
+            this.editTable.setOnAction(event -> onAction(MenuAction.EDIT_TABLE));
+            this.createCopy.setOnAction(event -> onAction(MenuAction.CREATE_COPY));
             this.connection.setOnAction(event -> onAction(MenuAction.OPEN_CONNECT));
             this.editConnect.setOnAction(event -> onAction(MenuAction.EDIT_CONNECT));
             this.delConnect.setOnAction(event -> onAction(MenuAction.DELETE_CONNECT));
+            this.discount.setOnAction(event -> onAction(MenuAction.DISCOUNT_CONNECT));
             this.openTerminal.setOnAction(event -> onAction(MenuAction.OPEN_TERMINAL));
-            this.createCopy.setOnAction(event -> onAction(MenuAction.CREATE_COPY));
-            this.editTable.setOnAction(event -> onAction(MenuAction.EDIT_TABLE));
             this.exportData.setOnAction(event -> onAction(MenuAction.EXPORT_DATA_TO_FILE));
         }
 
