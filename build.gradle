@@ -1,6 +1,6 @@
 buildscript {
     ext.kotlin_version = '1.4.10'
-    ext.vertx_version = '4.0.0.Beta3'
+    ext.vertx_version = '4.0.0'
     repositories {
         maven {
             url "https://maven.aliyun.com/repository/google"
